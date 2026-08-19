@@ -36,7 +36,13 @@ Os tokens vivem em `app/tokens.css`. Use as variáveis CSS — nunca hex direto 
 Tipografia: Inter (sans) e IBM Plex Mono (rótulos, stack, anos, contadores).
 O mono marca **dado**. O sans marca **narrativa**. Essa separação é regra do site inteiro.
 
-Escala e tracking estão em `tokens.css` nas classes `.t-hero`, `.t-h2`, `.t-h3`, `.t-label`.
+Escala e tracking estão em `tokens.css` nas classes `.t-hero`, `.t-titulo`, `.t-h2`, `.t-h3`, `.t-label`.
+
+Semântica dos títulos:
+
+- `.t-hero` → h1 da home, exclusivo
+- `.t-titulo` → h1 de página de conteúdo (sobre, contato, projeto individual)
+- `.t-h2` → título de seção dentro de uma página, e h1 de página de listagem
 
 ### Proibido
 

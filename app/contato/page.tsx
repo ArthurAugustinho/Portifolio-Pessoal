@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ContatoPage() {
   return (
     <div className={styles.pagina}>
-      <h1 className="t-h2">Contato</h1>
+      <h1 className="t-titulo">Contato</h1>
       <p className="t-dim">TODO: frase de contato</p>
 
       <p className={styles.emailDireto}>
