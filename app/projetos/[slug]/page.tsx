@@ -58,7 +58,7 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
         <Link href="/projetos" className="t-label">
           ← Projetos
         </Link>
-        <h1 className="t-hero">{projeto.nome}</h1>
+        <h1 className="t-titulo">{projeto.nome}</h1>
         <p className="t-dim">{projeto.resumo}</p>
       </header>
 

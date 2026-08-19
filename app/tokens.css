@@ -18,6 +18,7 @@
   /* ---- Tipografia ------------------------------------------- */
   /* --font-sans e --font-mono vêm de next/font (ver fonts.ts) */
   --text-hero: clamp(3.25rem, 8vw, 5.25rem);  /* 52 → 84px */
+  --text-titulo: clamp(2.5rem, 6vw, 3.5rem);  /* 40 → 56px */
   --text-h2: clamp(2.25rem, 5.5vw, 4rem);     /* 36 → 64px */
   --text-h3: clamp(1.5rem, 3vw, 2.25rem);     /* 24 → 36px */
   --text-lead: 1.25rem;                       /* 20px */
@@ -26,6 +27,7 @@
   --text-label: 0.75rem;                      /* 12px */
 
   --track-hero: -0.04em;
+  --track-titulo: -0.035em;
   --track-h2: -0.03em;
   --track-h3: -0.02em;
   --track-label: 0.12em;
@@ -72,11 +74,21 @@ body {
 
 /* ---- Tipografia --------------------------------------------- */
 
+/* Home apenas. Título de página interna é .t-titulo. */
 .t-hero {
   font-size: var(--text-hero);
   font-weight: 700;
   letter-spacing: var(--track-hero);
   line-height: var(--leading-tight);
+}
+
+/* h1 de qualquer página interna. .t-h2 é título de seção
+   dentro da página, não o h1 da página em si. */
+.t-titulo {
+  font-size: var(--text-titulo);
+  font-weight: 700;
+  letter-spacing: var(--track-titulo);
+  line-height: 1.05;
 }
 
 .t-h2 {
