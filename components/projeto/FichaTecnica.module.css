@@ -1,0 +1,28 @@
+.grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: var(--space-3);
+  row-gap: var(--space-2);
+  align-items: baseline;
+}
+
+.grid dd {
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-1);
+  }
+
+  .grid dd {
+    margin-bottom: var(--space-2);
+  }
+}

@@ -1,0 +1,64 @@
+.card {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  transition: background var(--dur-base) var(--ease);
+}
+
+.card:hover {
+  background: var(--surface-2);
+}
+
+.capa {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.corpo {
+  padding: var(--space-3);
+}
+
+.nome {
+  margin: 0;
+}
+
+.link {
+  color: inherit;
+}
+
+.link:hover {
+  color: inherit;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.resumo {
+  margin: var(--space-1) 0 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+}
+
+.meta {
+  margin: var(--space-2) 0 0;
+}

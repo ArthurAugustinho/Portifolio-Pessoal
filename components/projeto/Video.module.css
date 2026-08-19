@@ -1,0 +1,30 @@
+.wrapper {
+  position: relative;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.botao {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.botao:hover {
+  background: var(--surface-2);
+}

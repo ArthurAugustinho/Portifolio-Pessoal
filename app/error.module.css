@@ -1,0 +1,37 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .pagina {
+    padding-inline: var(--space-4);
+  }
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.botao {
+  background: var(--surface);
+  color: var(--ink);
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font-family: inherit;
+  font-size: var(--text-body);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.botao:hover {
+  background: var(--surface-2);
+}

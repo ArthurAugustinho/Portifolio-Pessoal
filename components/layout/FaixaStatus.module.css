@@ -1,0 +1,29 @@
+.faixa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  padding-inline: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .faixa {
+    padding-inline: var(--space-4);
+  }
+}
+
+.direita {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .direita {
+    display: inline;
+  }
+}

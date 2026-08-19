@@ -1,0 +1,18 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: var(--space-4) var(--space-3) var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .pagina {
+    padding-inline: var(--space-4);
+  }
+}
+
+.emailDireto {
+  margin-bottom: var(--space-2);
+}
