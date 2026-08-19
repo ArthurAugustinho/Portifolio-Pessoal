@@ -47,7 +47,7 @@ Estes itens quebram a direção visual e devem ser recusados mesmo se parecerem 
 - `#FFFFFF` puro em texto — use `--ink`
 - Borda em card. A separação vem de mudança de superfície e espaço
 - `border-radius` de 4px. Use `--radius` (14px), `--radius-sm` (10px) ou zero
-- Peso de fonte 700 ou superior
+- Peso de fonte 700 ou superior, exceto em `.t-hero`, `.t-h2` e `.t-h3`
 - Acento em mais de três lugares na mesma tela
 - Emoji na interface
 
