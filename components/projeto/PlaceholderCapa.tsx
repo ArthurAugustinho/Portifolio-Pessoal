@@ -11,7 +11,7 @@ export function PlaceholderCapa({ nome, arredondamento = 'completo' }: Placehold
       className={`${styles.placeholder} ${arredondamento === 'topo' ? styles.topo : styles.completo}`}
       aria-hidden="true"
     >
-      <span className="t-label">{nome}</span>
+      <span className={`t-label ${styles.texto}`}>{nome}</span>
     </div>
   )
 }

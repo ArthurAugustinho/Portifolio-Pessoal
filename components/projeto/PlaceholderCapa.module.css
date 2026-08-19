@@ -9,6 +9,13 @@
   padding: var(--space-2);
 }
 
+/* .t-label usa --ink-dim, que fica em 3.85:1 sobre --surface-2 (falha
+   WCAG AA). --ink dá 12.8:1 aqui. Especificidade de dois seletores para
+   não depender da ordem de carga do CSS global x módulo. */
+.placeholder .texto {
+  color: var(--ink);
+}
+
 .topo {
   border-radius: var(--radius) var(--radius) 0 0;
 }
