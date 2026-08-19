@@ -22,10 +22,3 @@
   flex-direction: column;
   gap: var(--space-2);
 }
-
-.nome {
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
-  font-weight: 600;
-  letter-spacing: var(--track-hero);
-  line-height: var(--leading-tight);
-}

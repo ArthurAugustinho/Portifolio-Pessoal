@@ -10,7 +10,7 @@ export const sans = Inter({
   variable: '--font-sans',
   display: 'swap',
   // Só os dois pesos usados no site. Cada peso extra é payload.
-  weight: ['400', '500', '600'],
+  weight: ['400', '700'],
 })
 
 export const mono = IBM_Plex_Mono({

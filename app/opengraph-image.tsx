@@ -13,7 +13,7 @@ const INK = '#f5f5f7'
 const INK_DIM = '#86868b'
 
 export default async function Image() {
-  const interSemiBold = await readFile(path.join(process.cwd(), 'app/Inter-SemiBold.woff'))
+  const interBold = await readFile(path.join(process.cwd(), 'app/Inter-Bold.woff'))
 
   return new ImageResponse(
     (
@@ -31,9 +31,9 @@ export default async function Image() {
         <div
           style={{
             fontFamily: 'Inter',
-            fontWeight: 600,
+            fontWeight: 700,
             fontSize: 72,
-            letterSpacing: '-0.035em',
+            letterSpacing: '-0.04em',
             color: INK,
           }}
         >
@@ -43,7 +43,7 @@ export default async function Image() {
           style={{
             marginTop: 24,
             fontFamily: 'Inter',
-            fontWeight: 600,
+            fontWeight: 700,
             fontSize: 28,
             color: INK_DIM,
           }}
@@ -57,8 +57,8 @@ export default async function Image() {
       fonts: [
         {
           name: 'Inter',
-          data: interSemiBold,
-          weight: 600,
+          data: interBold,
+          weight: 700,
           style: 'normal',
         },
       ],

@@ -14,7 +14,7 @@ export default function ProjetosPage() {
       ) : (
         <div className={styles.grid}>
           {projetos.map((projeto) => (
-            <ProjetoCard key={projeto.slug} projeto={projeto} />
+            <ProjetoCard key={projeto.slug} projeto={projeto} nivelTitulo="h2" />
           ))}
         </div>
       )}

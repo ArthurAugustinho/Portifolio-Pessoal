@@ -23,11 +23,6 @@
   gap: var(--space-2);
 }
 
-.frase {
-  /* 20px, pedido explícito — não corresponde a nenhum heading */
-  font-size: 1.25rem;
-}
-
 .acoes {
   display: flex;
   gap: var(--space-3);

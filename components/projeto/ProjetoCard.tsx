@@ -6,9 +6,14 @@ import styles from './ProjetoCard.module.css'
 
 type ProjetoCardProps = {
   projeto: Projeto
+  // A tag semântica depende de onde o card entra na hierarquia da
+  // página — o estilo visual (t-h3) não muda com ela.
+  nivelTitulo?: 'h2' | 'h3'
 }
 
-export function ProjetoCard({ projeto }: ProjetoCardProps) {
+export function ProjetoCard({ projeto, nivelTitulo = 'h3' }: ProjetoCardProps) {
+  const Titulo = nivelTitulo
+
   return (
     <article className={styles.card}>
       {projeto.capa ? (
@@ -25,11 +30,11 @@ export function ProjetoCard({ projeto }: ProjetoCardProps) {
       )}
 
       <div className={styles.corpo}>
-        <h3 className={`t-h3 ${styles.nome}`}>
+        <Titulo className={`t-h3 ${styles.nome}`}>
           <Link href={`/projetos/${projeto.slug}`} className={styles.link}>
             {projeto.nome}
           </Link>
-        </h3>
+        </Titulo>
 
         <p className={`t-dim ${styles.resumo}`}>{projeto.resumo}</p>
 

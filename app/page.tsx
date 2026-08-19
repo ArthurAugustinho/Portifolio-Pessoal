@@ -27,7 +27,7 @@ export default function Home() {
       <div className={styles.wrapper}>
         <section id="hero" aria-label="Início" className={styles.hero}>
           <h1 className="t-hero">Arthur Augustinho</h1>
-          <p className={`t-dim ${styles.frase}`}>TODO: frase do hero</p>
+          <p className="t-lead">TODO: frase do hero</p>
           <div className={styles.acoes}>
             <Link href="/projetos">Ver projetos</Link>
             <Link href="/contato">Contato</Link>
@@ -42,7 +42,7 @@ export default function Home() {
           {destaques.length > 0 && (
             <div className={styles.grid}>
               {destaques.map((projeto) => (
-                <ProjetoCard key={projeto.slug} projeto={projeto} />
+                <ProjetoCard key={projeto.slug} projeto={projeto} nivelTitulo="h2" />
               ))}
             </div>
           )}
