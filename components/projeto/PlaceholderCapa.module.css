@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  aspect-ratio: 16 / 9;
   background: var(--surface-2);
   text-align: center;
   padding: var(--space-2);
@@ -14,6 +13,14 @@
    não depender da ordem de carga do CSS global x módulo. */
 .placeholder .texto {
   color: var(--ink);
+}
+
+.proporcao169 {
+  aspect-ratio: 16 / 9;
+}
+
+.proporcao45 {
+  aspect-ratio: 4 / 5;
 }
 
 .topo {

@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Foto pessoal — não versionada
+/public/imagens/retrato.*

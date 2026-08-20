@@ -1,0 +1,62 @@
+.trajetoria {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 900px) {
+  .trajetoria {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+
+  .foto {
+    flex: 0 0 40%;
+  }
+
+  .texto {
+    flex: 1;
+  }
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: var(--space-3);
+  row-gap: var(--space-2);
+  align-items: baseline;
+  margin-top: var(--space-2);
+}
+
+.dados dd {
+  margin: 0;
+}
+
+.valor {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.icone {
+  color: var(--ink-dim);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .dados {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-1);
+  }
+
+  .dados dd {
+    margin-bottom: var(--space-2);
+  }
+}
