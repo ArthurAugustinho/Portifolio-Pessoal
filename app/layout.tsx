@@ -5,7 +5,8 @@ import { sans, mono } from './fonts'
 import './globals.css'
 import './tokens.css'
 
-const DESCRICAO = 'TODO: descrição do portfólio'
+const DESCRICAO =
+  'Portfólio de Arthur Augustinho, desenvolvedor full stack em Anápolis, Goiás. Aplicações web, backend e infraestrutura.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

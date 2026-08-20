@@ -48,7 +48,7 @@ export default async function Image() {
             color: INK_DIM,
           }}
         >
-          TODO: subtítulo do portfólio
+          Desenvolvedor full stack. Construo aplicações web e infraestrutura de redes.
         </div>
       </div>
     ),

@@ -27,7 +27,9 @@ export default function Home() {
       <div className={styles.wrapper}>
         <section id="hero" aria-label="Início" className={styles.hero}>
           <h1 className="t-hero">Arthur Augustinho</h1>
-          <p className="t-lead">TODO: frase do hero</p>
+          <p className="t-lead">
+            Desenvolvedor full stack. Construo aplicações web e infraestrutura de redes.
+          </p>
           <div className={styles.acoes}>
             <Link href="/projetos">Ver projetos</Link>
             <Link href="/contato">Contato</Link>
