@@ -48,7 +48,7 @@ export default async function Image() {
             color: INK_DIM,
           }}
         >
-          Desenvolvedor full stack. Construo aplicações web e infraestrutura de redes.
+          Desenvolvedor full stack
         </div>
       </div>
     ),

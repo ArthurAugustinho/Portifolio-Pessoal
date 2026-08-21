@@ -1,0 +1,135 @@
+---
+slug: pass-mais
+nome: "Pass+"
+resumo: "Plataforma de agendamento e gestão de consultas médicas, com perfis para paciente, médico, secretário e administrador."
+ano: 2025
+stack:
+  - Java 17
+  - Spring Boot 3
+  - Spring Security
+  - PostgreSQL
+  - Flyway
+  - Next.js
+  - Docker
+  - AWS
+destaque: true
+papel: "Backend e pesquisa de campo — equipe de 4"
+periodo: "2022 — 2025 (TCC, ao longo da graduação)"
+links:
+  - label: "Repositório backend"
+    url: "https://github.com/ArthurAugustinho/passmais-backend"
+  - label: "Repositório frontend"
+    url: "https://github.com/Guilherme549/PassMais-frontend"
+capa: imagens/projetos/pass-mais/capa.png
+capturas: []
+---
+
+## O problema
+
+Clínicas e consultórios que agendam consulta por telefone, papel ou planilha
+convivem com um conjunto previsível de falhas: horários sobrepostos,
+cancelamentos que ninguém registra, paciente que aparece num dia em que o médico
+não atende. Cada erro desses vira retrabalho para a secretaria e espera para o
+paciente.
+
+O agravante é que as quatro pessoas envolvidas — paciente, médico, secretário e
+administrador — trabalham com informações diferentes e desatualizadas entre si.
+A agenda que o médico vê não é a mesma que a secretaria consulta.
+
+Antes de escrever código, conduzi a pesquisa de campo do projeto: conversas com
+clínicas para entender como o agendamento acontecia na prática e onde ele
+quebrava. Foi essa etapa que definiu o escopo — o problema não era falta de
+sistema, era falta de um sistema onde os quatro perfis enxergassem os mesmos
+dados.
+
+## O que construí
+
+Fui responsável pelo **backend** da aplicação, em Java 17 com Spring Boot 3.
+
+A API expõe as operações dos quatro perfis, cada um com permissões distintas
+sobre os mesmos dados:
+
+**Paciente** busca médicos por especialidade, consulta disponibilidade, agenda e
+cancela consultas.
+
+**Médico** gerencia a própria agenda, edita o perfil profissional e move consultas
+entre os estados pendente, confirmada e cancelada.
+
+**Secretário** registra pacientes, remarca e cancela consultas, administra agendas.
+
+**Administrador** gerencia usuários, aprova ou reprova cadastros de médicos e
+acessa estatísticas.
+
+Autenticação com JWT e senhas em BCrypt, validação nas entradas com Bean
+Validation, migrations versionadas com Flyway, mapeamento de DTO com MapStruct e
+documentação da API em Swagger. Testes unitários com JUnit 5 e Mockito.
+
+## Decisões
+
+**Clean Architecture no backend.** O código é dividido em quatro camadas: `domain`
+com entidades e regras puras, `application` com casos de uso, `infrastructure`
+com repositórios JPA e configuração, e `interfaces` com controllers e DTOs. Custa
+mais arquivos que a estrutura padrão de pacotes do Spring, mas mantém a regra de
+negócio independente do framework e do banco — trocar Hibernate por outra coisa
+não tocaria no domínio.
+
+**PostgreSQL com migrations versionadas.** Agendamento é um domínio de
+relacionamentos rígidos: um horário pertence a um médico, uma consulta ocupa
+exatamente um horário, dois pacientes não ocupam o mesmo. Isso é restrição de
+chave e transação, não documento flexível. O Flyway garantiu que o esquema
+evoluísse igual em todas as máquinas da equipe e em produção.
+
+**Cortar a detecção de criticalidade hospitalar.** O escopo original previa um
+módulo de triagem por gravidade, para uso em ambiente hospitalar. Depois de
+avaliar a complexidade — classificação de risco tem implicação clínica, não é só
+lógica de negócio — decidimos remover e entregar bem o gerenciamento de clínicas
+e consultórios. Era o tipo de funcionalidade que teria consumido o prazo inteiro
+e ficado pela metade.
+
+**Containers no ECS Fargate.** Backend e frontend em containers Docker, imagens no
+ECR, banco no RDS. Para uma equipe de quatro pessoas sem ninguém dedicado a
+infraestrutura, gerenciar instância EC2 teria consumido tempo que foi para a
+aplicação.
+
+## Arquitetura
+
+Aplicação em duas partes, em repositórios separados: frontend em Next.js e
+backend em Spring Boot, conversando por API REST. O backend é um monolito
+modular — uma aplicação, um banco — organizado nas quatro camadas da Clean
+Architecture.
+
+```
+Next.js  ──REST──>  Spring Boot  ──JPA──>  PostgreSQL
+                    │
+                    ├── interfaces      controllers, DTOs
+                    ├── application     casos de uso
+                    ├── domain          entidades, regras
+                    └── infrastructure  JPA, security, config
+```
+
+Em produção, os dois containers rodam no ECS Fargate com banco gerenciado no RDS
+e balanceador na frente. O deploy é automatizado por GitHub Actions.
+
+TODO: redesenhar esse diagrama em imagem (Excalidraw serve). O bloco de texto
+funciona, mas um diagrama real fica melhor na página.
+
+## Resultado
+
+O sistema foi entregue com o fluxo completo funcionando: cadastro, busca de
+médico por especialidade, agendamento, confirmação e cancelamento, com os quatro
+perfis operando sobre os mesmos dados. O backend acumulou 256 commits ao longo do
+desenvolvimento.
+
+Como projeto de conclusão de curso, foi desenvolvido ao longo da graduação em
+Engenharia de Software, entre 2022 e 2025.
+
+O Pass+ não chegou a ter clientes reais e não está mais hospedado — a validação
+foi feita em ambiente de testes, não em operação de clínica.
+
+## O que ficou de fora
+
+- Detecção de criticalidade hospitalar, cortada por decisão de escopo
+- Histórico médico vinculado a prontuário eletrônico
+- Integração com sistemas públicos de saúde como o e-SUS
+- Notificações por SMS — só o e-mail foi implementado
+- Testes de carga em produção real
