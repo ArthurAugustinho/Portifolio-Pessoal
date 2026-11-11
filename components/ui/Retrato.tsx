@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { PlaceholderCapa } from '@/components/projeto/PlaceholderCapa'
 import styles from './Retrato.module.css'
 
-const EXTENSOES_RETRATO = ['jpg', 'jpeg', 'png', 'webp']
+const EXTENSOES_RETRATO = ['webp', 'jpg', 'jpeg', 'png']
 
 function resolverRetrato(): string | undefined {
   for (const extensao of EXTENSOES_RETRATO) {

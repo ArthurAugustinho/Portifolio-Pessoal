@@ -4,13 +4,8 @@ import { ProjetoCard } from '@/components/projeto/ProjetoCard'
 import { getProjetos, ordenarProjetos } from '@/lib/projetos'
 import styles from './page.module.css'
 
-// stack real deste site, conforme documentado em CLAUDE.md — não é uma
-// lista genérica de habilidades, é o que constrói este portfólio.
-const STACK = ['Next.js', 'TypeScript', 'Tailwind CSS', 'MDX', 'Vercel']
-
 const SECOES = [
   { id: 'hero', nome: 'Início' },
-  { id: 'stack', nome: 'Stack' },
   { id: 'projetos', nome: 'Projetos' },
   { id: 'contato', nome: 'Contato' },
 ]
@@ -34,10 +29,6 @@ export default function Home() {
             <Link href="/projetos">Ver projetos</Link>
             <Link href="/contato">Contato</Link>
           </div>
-        </section>
-
-        <section id="stack" aria-label="Stack">
-          <p className="t-label">{STACK.join(' · ')}</p>
         </section>
 
         <section id="projetos" aria-label="Projetos">
