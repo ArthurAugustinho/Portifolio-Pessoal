@@ -26,5 +26,5 @@ Decisão do autor. O motivo registrado é o do contexto: o público principal, n
 
 ## Consequências
 - Positivas: menos conteúdo para manter e revisar; arquitetura mais simples; nenhuma dependência nova.
-- Negativas / custos assumidos: sem versão em português para clientes no Brasil; todo texto em inglês, inclusive a trajetória e o Pass+, precisa ser revisado pelo autor antes de publicar; a `/` deixa de precisar de redirect e a localização passa a ser "Europe".
+- Negativas / custos assumidos: sem versão em português para clientes no Brasil; todo texto em inglês, inclusive a trajetória e o Pass+, precisa ser revisado pelo autor antes de publicar; a `/` deixa de precisar de redirect e a localização passa a ser "Brazil and Europe".
 - O que faria esta decisão ser revista: demanda real de clientes no Brasil, ou dados de acesso mostrando visitantes que não leem inglês.
