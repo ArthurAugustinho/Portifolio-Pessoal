@@ -1,5 +1,10 @@
 import { z } from 'zod'
 
+// O Zod 4 testa Function('') para ativar o JIT; com a CSP do ADR 0008 (sem
+// 'unsafe-eval') isso vira uma violação no console. Sem JIT, o schema
+// continua igual, só um pouco mais lento (irrelevante para 5 campos).
+z.config({ jitless: true })
+
 // Schema único, usado tanto no formulário (cliente) quanto na
 // revalidação do Worker (servidor) — nunca duplicar estas regras.
 // .strict() rejeita campo desconhecido em vez de descartá-lo em silêncio.

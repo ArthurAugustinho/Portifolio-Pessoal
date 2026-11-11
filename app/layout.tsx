@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Header } from '@/components/layout/Header'
 import { Rodape } from '@/components/layout/Rodape'
 import { SITE_URL } from '@/lib/site'
 import { sans, mono } from './fonts'
 import './globals.css'
 import './tokens.css'
+
+// Cloudflare Web Analytics (ADR 0009): só em produção e só com o token.
+const TOKEN_ANALYTICS = process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN
+const CARREGAR_ANALYTICS = process.env.NODE_ENV === 'production' && Boolean(TOKEN_ANALYTICS)
 
 const DESCRICAO =
   'Portfolio of Arthur Augustinho, full stack developer in Brazil and Europe. Web applications, backend and infrastructure.'
@@ -38,6 +43,13 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <Header />
         <main id="main">{children}</main>
         <Rodape />
+        {CARREGAR_ANALYTICS && (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: TOKEN_ANALYTICS })}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   )
