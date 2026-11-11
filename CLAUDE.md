@@ -1,108 +1,63 @@
-# CLAUDE.md
+# Portfólio — Arthur Augustinho
 
-Contexto permanente deste repositório. Leia antes de qualquer alteração.
+Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já construídos, melhor do que o GitHub mostra. Público: recrutadores e tech leads (principalmente Irlanda e Reino Unido) e clientes de freelance; o visitante típico passa menos de dois minutos no site. Não é objetivo demonstrar variedade de tecnologias: menos stack é melhor.
 
-## O que é
-
-Portfólio pessoal de Arthur Augustinho. Site estático, sem backend, sem banco de dados.
-
-**Objetivo:** mostrar com clareza os projetos já construídos — melhor do que o GitHub mostra.
-**Não é objetivo:** demonstrar variedade de tecnologias. Menos stack é melhor.
-
-O visitante típico é recrutador ou tech lead e passa menos de dois minutos no site.
+Estado: reformulação em andamento, seguindo o Playbook do Devkit. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site bilíngue com inglês padrão (0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
 
 ## Stack
+- Next.js (App Router) · TypeScript estrito · CSS Modules com os tokens de `app/tokens.css`
+- Conteúdo em MDX em `content/projetos/`, compilado com `@mdx-js/mdx` (0003) e validado com Zod em `lib/projetos.ts`
+- `next/font` para tipografia · Lucide para ícones · React Hook Form + Zod no formulário · Resend para o e-mail
+- Hospedagem: Cloudflare (migração da Vercel em andamento)
+- Decisões e motivos: `docs/decisions/` (use a skill "Registrar decisão técnica (ADR)" do Devkit para novas)
 
-Não adicione nada fora desta lista sem perguntar antes.
+Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de componentes (shadcn, MUI, Chakra), gerenciador de estado, ORM, cliente HTTP, biblioteca de animação. Fase posterior, ainda não instalar: Motion, GSAP ScrollTrigger, React Three Fiber.
 
-- Next.js (App Router) · TypeScript · Tailwind CSS
-- Conteúdo em MDX no diretório `content/`
-- `next/font` para tipografia · Lucide para ícones
-- Deploy na Vercel
+## Comandos
+- Instalar: `npm ci`
+- Desenvolvimento: `npm run dev`
+- Antes de todo commit: `npm run lint && npm run typecheck && npm run build`
 
-Fase posterior, ainda não instalar: Motion, GSAP ScrollTrigger, React Three Fiber.
-
-**Nunca adicione:** biblioteca de componentes (shadcn, MUI, Chakra), gerenciador de estado, ORM, cliente HTTP, biblioteca de animação não listada acima.
-
-## Design system
-
-Os tokens vivem em `app/tokens.css`. Use as variáveis CSS — nunca hex direto no componente.
-
-```
---bg #0B0B0D   --surface #1C1C1E   --surface-2 #2C2C2E   --rule #38383A
---ink #F5F5F7  --ink-dim #86868B   --accent #0A84FF
-```
-
-Tipografia: Inter (sans) e IBM Plex Mono (rótulos, stack, anos, contadores).
-O mono marca **dado**. O sans marca **narrativa**. Essa separação é regra do site inteiro.
-
-Escala e tracking estão em `tokens.css` nas classes `.t-hero`, `.t-titulo`, `.t-h2`, `.t-h3`, `.t-label`.
-
-Semântica dos títulos:
-
-- `.t-hero` → h1 da home, exclusivo
-- `.t-titulo` → h1 de página de conteúdo (sobre, contato, projeto individual)
-- `.t-h2` → título de seção dentro de uma página, e h1 de página de listagem
-
-### Proibido
-
-Estes itens quebram a direção visual e devem ser recusados mesmo se parecerem melhorar a aparência:
-
-- `backdrop-filter: blur` em card (glassmorphism)
-- `box-shadow` colorido, borda com gradiente, texto com gradiente, glow
-- `#FFFFFF` puro em texto — use `--ink`
-- Borda em card. A separação vem de mudança de superfície e espaço
-- `border-radius` de 4px. Use `--radius` (14px), `--radius-sm` (10px) ou zero
-- Peso de fonte 700 ou superior, exceto em `.t-hero`, `.t-h2` e `.t-h3`
-- Acento em mais de três lugares na mesma tela
-- Emoji na interface
-
-## Conteúdo
-
-Todo conteúdo vem de arquivos MDX em `content/projetos/`. Componentes leem via `lib/projetos.ts`.
-
-**Nunca invente conteúdo de projeto.** Se faltar texto, use `TODO: [descrição do que falta]` e me avise ao final. Texto de preenchimento plausível é pior que um TODO visível, porque passa despercebido e vai para produção.
-
-Frontmatter obrigatório: `slug`, `nome`, `resumo`, `ano`, `stack[]`, `destaque`, `papel`, `periodo`.
-
-Opcionais: `links[]` (`label`, `url`), `capa`, `video` (`src`, `poster`),
-`capturas[]` (`src`, `legenda`, `moldura?`). Caminhos de mídia que não
-existem em `public/` caem no placeholder — nunca uma imagem quebrada.
-
-## Piso de qualidade
-
-Não é opcional e não precisa ser pedido:
-
-- Responsivo de 375px a 1920px
-- `:focus-visible` visível em tudo que recebe foco
-- `prefers-reduced-motion` respeitado
-- `alt` descritivo em toda imagem — nunca "imagem do projeto"
-- Hierarquia de headings correta, um `h1` por página
-- `lang="pt-BR"` no html
-- Imagens sempre via `next/image`
-
-## Como trabalhar
-
-- Uma tarefa por vez. Não avance para a próxima sem eu confirmar.
-- Antes de instalar qualquer pacote, pergunte.
-- Antes de criar um arquivo fora da estrutura abaixo, pergunte.
-- Prefira menos componentes maiores a muitos arquivos minúsculos.
-- Comentário só onde a decisão não é óbvia pelo código.
-- Nada de README gerado automaticamente, nada de badge, nada de emoji em commit.
+## Convenções
+- Design: seguir `design-system/portfolio/MASTER.md`. Nunca hex direto em componente; use as variáveis de `app/tokens.css`.
+- Mobile-first: testar em 375px antes de considerar uma seção pronta; responsivo até 1920px.
+- Conteúdo de projeto só em `content/projetos/*.mdx`, nunca espalhado em componentes. O schema do frontmatter está em `lib/projetos.ts`; o nome do arquivo é o `slug`.
+- Mídia ausente em `public/` cai no placeholder, nunca numa imagem quebrada. Imagens via `next/image`, com `width`/`height` explícitos, já otimizadas (WebP/AVIF) no repositório.
+- Uma tarefa por vez. Não avance para a próxima sem confirmação.
+- Antes de instalar qualquer pacote ou criar arquivo fora da estrutura abaixo, pergunte.
+- Prefira menos componentes maiores a muitos arquivos minúsculos. Comentário só onde a decisão não é óbvia pelo código.
+- Commits no formato `tipo: descrição` em português (feat, fix, style, docs, content), sem emoji. Nada de README gerado automaticamente nem badge.
 - Ao terminar, liste em uma frase o que mudou e o que ficou pendente.
 
-## Estrutura
+## Piso de qualidade
+Não é opcional e não precisa ser pedido:
+- `:focus-visible` visível em tudo que recebe foco
+- `prefers-reduced-motion` respeitado
+- `alt` descritivo em toda imagem, nunca "imagem do projeto"
+- Um `h1` por página e hierarquia de headings correta
+- `lang` correto no `<html>`
 
+## Estrutura
 ```
 app/
-  layout.tsx  page.tsx  tokens.css  fonts.ts
-  sobre/  projetos/  projetos/[slug]/  contato/
+  layout.tsx  page.tsx  tokens.css  globals.css  fonts.ts
+  sobre/  projetos/  projetos/[slug]/  contato/  api/contato/
 components/
   ui/  layout/  projeto/
 content/projetos/*.mdx
-lib/projetos.ts
+lib/            projetos.ts  schemas.ts  site.ts
 public/imagens/  public/video/
+design-system/portfolio/MASTER.md
+docs/decisions/NNNN-titulo.md
+.github/workflows/
 ```
+A estrutura muda com a reformulação (`app/[lang]/`, Worker do formulário); siga o ADR correspondente.
+
+## Restrições
+- Nunca ler, criar ou alterar arquivos `.env`. Variáveis novas vão para `.env.example` com valor vazio.
+- Nunca invente conteúdo de projeto, depoimento, número, cliente ou dado de contato. Se faltar texto, use `TODO: [o que falta]` e avise ao final: texto de preenchimento plausível passa despercebido e vai para produção. O build falha com `TODO:` no conteúdo quando `NEXT_PUBLIC_INDEXAVEL=true`.
+- MDX é executado no build: só compile arquivos do próprio repositório (0003).
+- Nenhum cookie ou script de terceiro sem atualizar a CSP (0008) e a política de privacidade.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
