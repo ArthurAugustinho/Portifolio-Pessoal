@@ -24,7 +24,7 @@ export function Retrato({ alt }: RetratoProps) {
   const caminho = resolverRetrato()
 
   if (!caminho) {
-    return <PlaceholderCapa nome="TODO: foto" proporcao="4/5" />
+    return <PlaceholderCapa nome="TODO: photo" proporcao="4/5" />
   }
 
   return (

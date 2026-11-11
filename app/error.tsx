@@ -17,14 +17,14 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
 
   return (
     <div className={styles.pagina}>
-      <p className="t-label">Erro</p>
-      <h1 className="t-h2">Algo deu errado</h1>
-      <p className="t-dim">Tente de novo ou volte para a home.</p>
+      <p className="t-label">Error</p>
+      <h1 className="t-h2">Something went wrong</h1>
+      <p className="t-dim">Try again or go back to the home page.</p>
       <div className={styles.acoes}>
         <button type="button" onClick={reset} className={styles.botao}>
-          Tentar de novo
+          Try again
         </button>
-        <Link href="/">Voltar para a home</Link>
+        <Link href="/">Back to home</Link>
       </div>
     </div>
   )

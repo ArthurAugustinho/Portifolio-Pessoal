@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { contatoSchema, type ContatoInput } from '@/lib/schemas'
 
-const MENSAGEM_ERRO_GENERICA = 'Não foi possível enviar sua mensagem agora. Tente novamente mais tarde.'
+const MENSAGEM_ERRO_GENERICA = 'Your message could not be sent right now. Please try again later.'
 
 const LIMITE_ENVIOS = 3
 const JANELA_MS = 10 * 60 * 1000
@@ -65,7 +65,7 @@ async function enviarEmail(dados: ContatoInput) {
         from: process.env.CONTACT_FROM_EMAIL,
         to: [process.env.CONTACT_TO_EMAIL],
         reply_to: dados.email,
-        subject: `Novo contato de ${dados.nome}`,
+        subject: `New contact from ${dados.nome}`,
         text: `${dados.mensagem}\n\n— ${dados.nome} (${dados.email})`,
       }),
       signal: controlador.signal,
@@ -99,7 +99,7 @@ export async function POST(request: Request) {
     try {
       corpo = await request.json()
     } catch {
-      return NextResponse.json({ erro: 'Requisição inválida.' }, { status: 400 })
+      return NextResponse.json({ erro: 'Invalid request.' }, { status: 400 })
     }
 
     // honeypot: um visitante real nunca preenche "empresa". Se veio
@@ -116,14 +116,14 @@ export async function POST(request: Request) {
     const ip = obterIp(request)
     if (!estaDentroDoLimite(ip)) {
       return NextResponse.json(
-        { erro: 'Você enviou várias mensagens recentemente. Tente novamente em alguns minutos.' },
+        { erro: 'You have sent several messages recently. Please try again in a few minutes.' },
         { status: 429 },
       )
     }
 
     const resultado = contatoSchema.safeParse(corpo)
     if (!resultado.success) {
-      return NextResponse.json({ erro: 'Confira os campos e tente novamente.' }, { status: 400 })
+      return NextResponse.json({ erro: 'Check the fields and try again.' }, { status: 400 })
     }
 
     const variaveisFaltando = ['RESEND_API_KEY', 'CONTACT_TO_EMAIL', 'CONTACT_FROM_EMAIL'].filter(

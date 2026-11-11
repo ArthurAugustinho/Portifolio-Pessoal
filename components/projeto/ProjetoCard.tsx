@@ -19,7 +19,7 @@ export function ProjetoCard({ projeto, nivelTitulo = 'h3' }: ProjetoCardProps) {
       {projeto.capa ? (
         <Image
           src={projeto.capa}
-          alt={`Captura de tela do projeto ${projeto.nome}`}
+          alt={`Screenshot of the ${projeto.nome} project`}
           width={640}
           height={360}
           sizes="(min-width: 640px) 50vw, 100vw"

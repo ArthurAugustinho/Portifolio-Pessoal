@@ -6,7 +6,7 @@ import './globals.css'
 import './tokens.css'
 
 const DESCRICAO =
-  'Portfólio de Arthur Augustinho, desenvolvedor full stack no Brasil e na Europa. Aplicações web, backend e infraestrutura.'
+  'Portfolio of Arthur Augustinho, full stack developer in Brazil and Europe. Web applications, backend and infrastructure.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description: DESCRICAO,
     url: SITE_URL,
     siteName: 'Arthur Augustinho',
-    locale: 'pt_BR',
+    locale: 'en_GB',
     type: 'website',
   },
   twitter: {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${mono.variable}`}>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body>
         <main>{children}</main>
         <Rodape />

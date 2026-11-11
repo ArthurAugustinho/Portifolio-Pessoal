@@ -4,9 +4,9 @@ import { getProjetos, ordenarProjetos } from '@/lib/projetos'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Projetos',
+  title: 'Projects',
   description:
-    'Projetos de Arthur Augustinho: aplicações web, backend e infraestrutura, com stack, papel e resultado de cada um.',
+    'Projects by Arthur Augustinho: web applications, backend and infrastructure, with the stack, role and outcome of each.',
 }
 
 export default function ProjetosPage() {
@@ -14,10 +14,10 @@ export default function ProjetosPage() {
 
   return (
     <div className={styles.pagina}>
-      <h1 className="t-h2">Projetos</h1>
+      <h1 className="t-h2">Projects</h1>
 
       {projetos.length === 0 ? (
-        <p className="t-dim">Nenhum projeto publicado ainda.</p>
+        <p className="t-dim">No projects published yet.</p>
       ) : (
         <div className={styles.grid}>
           {projetos.map((projeto) => (

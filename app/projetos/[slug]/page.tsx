@@ -56,7 +56,7 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
     <article className={styles.pagina}>
       <header className={`${styles.coluna} ${styles.cabecalho}`}>
         <Link href="/projetos" className="t-label">
-          ← Projetos
+          ← Projects
         </Link>
         <h1 className="t-titulo">{projeto.nome}</h1>
         <p className="t-dim">{projeto.resumo}</p>

@@ -1,7 +1,7 @@
 ---
 slug: pass-mais
 nome: "Pass+"
-resumo: "Plataforma de agendamento e gestão de consultas médicas, com perfis para paciente, médico, secretário e administrador."
+resumo: "Platform for scheduling and managing medical appointments, with profiles for patient, doctor, secretary and administrator."
 ano: 2025
 stack:
   - Java 17
@@ -13,123 +13,125 @@ stack:
   - Docker
   - AWS
 destaque: true
-papel: "Backend e pesquisa de campo — equipe de 4"
-periodo: "2022 — 2025 (TCC, ao longo da graduação)"
+papel: "Backend and field research — team of 4"
+periodo: "2022 — 2025 (capstone project, throughout the degree)"
 links:
-  - label: "Repositório backend"
+  - label: "Backend repository"
     url: "https://github.com/ArthurAugustinho/passmais-backend"
-  - label: "Repositório frontend"
+  - label: "Frontend repository"
     url: "https://github.com/Guilherme549/PassMais-frontend"
 capa: imagens/projetos/pass-mais/capa.png
 capturas: []
 ---
 
-## O problema
+## The problem
 
-Clínicas e consultórios que agendam consulta por telefone, papel ou planilha
-convivem com um conjunto previsível de falhas: horários sobrepostos,
-cancelamentos que ninguém registra, paciente que aparece num dia em que o médico
-não atende. Cada erro desses vira retrabalho para a secretaria e espera para o
-paciente.
+Clinics and doctors' offices that schedule appointments by phone, paper or
+spreadsheet live with a predictable set of failures: overlapping time slots,
+cancellations nobody records, a patient showing up on a day the doctor does not
+see patients. Each of these errors turns into rework for the secretary and
+waiting for the patient.
 
-O agravante é que as quatro pessoas envolvidas — paciente, médico, secretário e
-administrador — trabalham com informações diferentes e desatualizadas entre si.
-A agenda que o médico vê não é a mesma que a secretaria consulta.
+The aggravating factor is that the four people involved — patient, doctor,
+secretary and administrator — work with different information that is out of
+sync between them. The schedule the doctor sees is not the same one the
+secretary consults.
 
-Antes de escrever código, conduzi a pesquisa de campo do projeto: conversas com
-clínicas para entender como o agendamento acontecia na prática e onde ele
-quebrava. Foi essa etapa que definiu o escopo — o problema não era falta de
-sistema, era falta de um sistema onde os quatro perfis enxergassem os mesmos
-dados.
+Before writing code, I conducted the project's field research: conversations
+with clinics to understand how scheduling happened in practice and where it
+broke down. That stage defined the scope — the problem was not a lack of
+systems, it was the lack of a system where the four profiles saw the same data.
 
-## O que construí
+## What I built
 
-Fui responsável pelo **backend** da aplicação, em Java 17 com Spring Boot 3.
+I was responsible for the application's **backend**, in Java 17 with Spring
+Boot 3.
 
-A API expõe as operações dos quatro perfis, cada um com permissões distintas
-sobre os mesmos dados:
+The API exposes the operations of the four profiles, each with distinct
+permissions over the same data:
 
-**Paciente** busca médicos por especialidade, consulta disponibilidade, agenda e
-cancela consultas.
+**Patient** searches for doctors by specialty, checks availability, books and
+cancels appointments.
 
-**Médico** gerencia a própria agenda, edita o perfil profissional e move consultas
-entre os estados pendente, confirmada e cancelada.
+**Doctor** manages their own schedule, edits their professional profile and
+moves appointments between the pending, confirmed and cancelled states.
 
-**Secretário** registra pacientes, remarca e cancela consultas, administra agendas.
+**Secretary** registers patients, reschedules and cancels appointments, manages
+schedules.
 
-**Administrador** gerencia usuários, aprova ou reprova cadastros de médicos e
-acessa estatísticas.
+**Administrator** manages users, approves or rejects doctor registrations and
+accesses statistics.
 
-Autenticação com JWT e senhas em BCrypt, validação nas entradas com Bean
-Validation, migrations versionadas com Flyway, mapeamento de DTO com MapStruct e
-documentação da API em Swagger. Testes unitários com JUnit 5 e Mockito.
+Authentication with JWT and BCrypt passwords, input validation with Bean
+Validation, versioned migrations with Flyway, DTO mapping with MapStruct and API
+documentation in Swagger. Unit tests with JUnit 5 and Mockito.
 
-## Decisões
+## Decisions
 
-**Clean Architecture no backend.** O código é dividido em quatro camadas: `domain`
-com entidades e regras puras, `application` com casos de uso, `infrastructure`
-com repositórios JPA e configuração, e `interfaces` com controllers e DTOs. Custa
-mais arquivos que a estrutura padrão de pacotes do Spring, mas mantém a regra de
-negócio independente do framework e do banco — trocar Hibernate por outra coisa
-não tocaria no domínio.
+**Clean Architecture on the backend.** The code is split into four layers:
+`domain` with pure entities and rules, `application` with use cases,
+`infrastructure` with JPA repositories and configuration, and `interfaces` with
+controllers and DTOs. It costs more files than Spring's standard package
+structure, but it keeps the business rules independent of the framework and the
+database — swapping Hibernate for something else would not touch the domain.
 
-**PostgreSQL com migrations versionadas.** Agendamento é um domínio de
-relacionamentos rígidos: um horário pertence a um médico, uma consulta ocupa
-exatamente um horário, dois pacientes não ocupam o mesmo. Isso é restrição de
-chave e transação, não documento flexível. O Flyway garantiu que o esquema
-evoluísse igual em todas as máquinas da equipe e em produção.
+**PostgreSQL with versioned migrations.** Scheduling is a domain of rigid
+relationships: a time slot belongs to one doctor, an appointment occupies
+exactly one slot, two patients do not occupy the same one. That is a key and
+transaction constraint, not a flexible document. Flyway ensured the schema
+evolved identically on every machine of the team and in production.
 
-**Cortar a detecção de criticalidade hospitalar.** O escopo original previa um
-módulo de triagem por gravidade, para uso em ambiente hospitalar. Depois de
-avaliar a complexidade — classificação de risco tem implicação clínica, não é só
-lógica de negócio — decidimos remover e entregar bem o gerenciamento de clínicas
-e consultórios. Era o tipo de funcionalidade que teria consumido o prazo inteiro
-e ficado pela metade.
+**Cutting hospital criticality detection.** The original scope included a
+severity triage module, for use in a hospital setting. After assessing the
+complexity — risk classification has clinical implications, it is not just
+business logic — we decided to remove it and deliver clinic and doctor's-office
+management well. It was the kind of feature that would have consumed the entire
+deadline and been left half-finished.
 
-**Containers no ECS Fargate.** Backend e frontend em containers Docker, imagens no
-ECR, banco no RDS. Para uma equipe de quatro pessoas sem ninguém dedicado a
-infraestrutura, gerenciar instância EC2 teria consumido tempo que foi para a
-aplicação.
+**Containers on ECS Fargate.** Backend and frontend in Docker containers, images
+in ECR, database on RDS. For a team of four with nobody dedicated to
+infrastructure, managing EC2 instances would have consumed time that went into
+the application instead.
 
-## Arquitetura
+## Architecture
 
-Aplicação em duas partes, em repositórios separados: frontend em Next.js e
-backend em Spring Boot, conversando por API REST. O backend é um monolito
-modular — uma aplicação, um banco — organizado nas quatro camadas da Clean
+The application is in two parts, in separate repositories: a Next.js frontend
+and a Spring Boot backend, talking over a REST API. The backend is a modular
+monolith — one application, one database — organised in the four layers of Clean
 Architecture.
 
 ```
 Next.js  ──REST──>  Spring Boot  ──JPA──>  PostgreSQL
                     │
                     ├── interfaces      controllers, DTOs
-                    ├── application     casos de uso
-                    ├── domain          entidades, regras
+                    ├── application     use cases
+                    ├── domain          entities, rules
                     └── infrastructure  JPA, security, config
 ```
 
-Em produção, os dois containers rodam no ECS Fargate com banco gerenciado no RDS
-e balanceador na frente. O deploy é automatizado por GitHub Actions.
+In production, the two containers run on ECS Fargate with a managed database on
+RDS and a load balancer in front. Deployment is automated with GitHub Actions.
 
-TODO: redesenhar esse diagrama em imagem (Excalidraw serve). O bloco de texto
-funciona, mas um diagrama real fica melhor na página.
+TODO: redraw this diagram as an image (Excalidraw works). The text block works,
+but a real diagram looks better on the page.
 
-## Resultado
+## Outcome
 
-O sistema foi entregue com o fluxo completo funcionando: cadastro, busca de
-médico por especialidade, agendamento, confirmação e cancelamento, com os quatro
-perfis operando sobre os mesmos dados. O backend acumulou 256 commits ao longo do
-desenvolvimento.
+The system was delivered with the complete flow working: registration, doctor
+search by specialty, booking, confirmation and cancellation, with the four
+profiles operating on the same data. The backend accumulated 256 commits over the
+course of development.
 
-Como projeto de conclusão de curso, foi desenvolvido ao longo da graduação em
-Engenharia de Software, entre 2022 e 2025.
+As a capstone project, it was developed throughout the degree in Software
+Engineering, between 2022 and 2025.
 
-O Pass+ não chegou a ter clientes reais e não está mais hospedado — a validação
-foi feita em ambiente de testes, não em operação de clínica.
+Pass+ never had real clients and is no longer hosted — validation was done in a
+test environment, not in clinic operation.
 
-## O que ficou de fora
+## What was left out
 
-- Detecção de criticalidade hospitalar, cortada por decisão de escopo
-- Histórico médico vinculado a prontuário eletrônico
-- Integração com sistemas públicos de saúde como o e-SUS
-- Notificações por SMS — só o e-mail foi implementado
-- Testes de carga em produção real
+- Detection of hospital criticality, cut as a scope decision
+- Medical history linked to an electronic health record
+- Integration with public health systems such as e-SUS
+- SMS notifications — only email was implemented
+- Load testing in real production

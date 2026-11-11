@@ -11,10 +11,10 @@ type FichaTecnicaProps = {
 export function FichaTecnica({ papel, periodo, stack, links }: FichaTecnicaProps) {
   return (
     <dl className={styles.grid}>
-      <dt className="t-label">Papel</dt>
+      <dt className="t-label">Role</dt>
       <dd>{papel}</dd>
 
-      <dt className="t-label">Período</dt>
+      <dt className="t-label">Period</dt>
       <dd>{periodo}</dd>
 
       <dt className="t-label">Stack</dt>

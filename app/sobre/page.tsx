@@ -3,15 +3,15 @@ import { Trajetoria } from './Trajetoria'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Sobre',
+  title: 'About',
   description:
-    'Desenvolvedor full stack com passagem por infraestrutura de redes. Trajetória na Fábrica de Tecnologias Turing, na Telgo Telecom e como freelancer.',
+    'Full stack developer with a background in network infrastructure. Career at Fábrica de Tecnologias Turing, at Telgo Telecom and as a freelancer.',
 }
 
 export default function SobrePage() {
   return (
     <div className={styles.pagina}>
-      <h1 className="t-titulo">Sobre</h1>
+      <h1 className="t-titulo">About</h1>
       <Trajetoria />
     </div>
   )

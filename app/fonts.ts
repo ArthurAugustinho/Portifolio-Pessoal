@@ -33,11 +33,11 @@ export const mono = IBM_Plex_Mono({
 //   children: React.ReactNode
 // }) {
 //   return (
-//     <html lang="pt-BR" className={`${sans.variable} ${mono.variable}`}>
+//     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
 //       <body>{children}</body>
 //     </html>
 //   )
 // }
 //
-// O lang="pt-BR" não é detalhe: define hifenização, corretor
+// O lang="en" não é detalhe: define hifenização, corretor
 // ortográfico e o idioma anunciado por leitor de tela.

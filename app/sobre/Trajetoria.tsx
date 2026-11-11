@@ -4,55 +4,57 @@ import styles from './Trajetoria.module.css'
 
 export function Trajetoria() {
   return (
-    <section aria-label="Trajetória" className={styles.trajetoria}>
+    <section aria-label="Background" className={styles.trajetoria}>
       <div className={styles.foto}>
-        <Retrato alt="Arthur Augustinho" />
+        <Retrato alt="Portrait of Arthur Augustinho" />
       </div>
 
       <div className={styles.texto}>
-        <h2 className="t-h2">Trajetória</h2>
+        <h2 className="t-h2">Background</h2>
         <p className="t-lead">
-          Desenvolvedor full stack com passagem por infraestrutura de redes.
+          Full stack developer with a background in network infrastructure.
         </p>
 
         <p>
-          Comecei a programar na pandemia, fazendo projetos pequenos com colegas de classe e
-          estudando por conta. Tudo mudou quando um amigo que cursava engenharia de software me
-          chamou para pegar trabalhos profissionais junto com ele — ali parei de escrever código
-          que só funcionava e comecei a me preocupar com arquitetura e legibilidade.
+          I started programming during the pandemic, building small projects with classmates and
+          studying on my own. Everything changed when a friend who was studying software
+          engineering invited me to take on professional work together with him — that is when I
+          stopped writing code that merely worked and started to care about architecture and
+          readability.
         </p>
         <p>
-          Na Fábrica de Tecnologias Turing, da UniEVANGÉLICA, passei um ano e meio como
-          desenvolvedor full stack. Atuei em três sistemas — Psicologia, Odontologia e Segurança
-          do Campus — construindo APIs em Node.js, Django e Spring Boot, modelando banco em
-          PostgreSQL e SQL Server, e implementando autenticação e controle de acesso. Foi onde
-          aprendi a investigar causa raiz de bug em produção em vez de apagar incêndio.
+          At the Fábrica de Tecnologias Turing of UniEVANGÉLICA, I spent a year and a half as a
+          full stack developer. I worked on three systems — Psychology, Dentistry and Campus
+          Security — building APIs in Node.js, Django and Spring Boot, modelling databases in
+          PostgreSQL and SQL Server, and implementing authentication and access control. It is
+          where I learned to investigate the root cause of production bugs instead of just
+          firefighting.
         </p>
         <p>
-          Depois passei um ano e quatro meses como analista de redes na Telgo Telecom,
-          monitorando infraestrutura com Zabbix e Grafana, configurando switches e roteadores e
-          atendendo clientes corporativos em incidentes críticos. Não era uma vaga de
-          desenvolvimento, mas mudou como eu escrevo software: passei a pensar em latência, ponto
-          de falha e no que acontece quando a rede cai no meio de uma requisição.
+          Afterwards I spent a year and four months as a network analyst at Telgo Telecom,
+          monitoring infrastructure with Zabbix and Grafana, configuring switches and routers and
+          supporting corporate clients during critical incidents. It was not a development role,
+          but it changed how I write software: I started thinking about latency, points of
+          failure and what happens when the network drops in the middle of a request.
         </p>
         <p>
-          Desde então trabalho como freelancer em aplicações web. O que quero desenvolver agora é
-          a ponte entre as duas experiências — backend, containers e observabilidade de
-          aplicação, melhorando assim minha capacidade de entender e solucionar problemas.
+          Since then I have worked as a freelancer on web applications. What I want to develop
+          now is the bridge between the two experiences — backend, containers and application
+          observability, thereby improving my ability to understand and solve problems.
         </p>
 
         <dl className={styles.dados}>
-          <dt className="t-label">Localização</dt>
+          <dt className="t-label">Location</dt>
           <dd className={styles.valor}>
             <MapPin size={16} className={styles.icone} aria-hidden="true" />
             Brazil and Europe
           </dd>
 
-          <dt className="t-label">Formação</dt>
-          <dd>Bacharel em Engenharia de Software, UniEVANGÉLICA</dd>
+          <dt className="t-label">Education</dt>
+          <dd>Bachelor’s degree in Software Engineering, UniEVANGÉLICA</dd>
 
-          <dt className="t-label">Disponibilidade</dt>
-          <dd>Freelance e posições remotas</dd>
+          <dt className="t-label">Availability</dt>
+          <dd>Freelance work and remote positions</dd>
         </dl>
       </div>
     </section>
