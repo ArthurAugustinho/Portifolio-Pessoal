@@ -28,5 +28,5 @@ A. MDX no repositório, com frontmatter lido por `gray-matter` em `lib/projetos.
 
 ## Consequências
 - Positivas: build totalmente estático; conteúdo portável para qualquer framework; histórico de cada texto no Git.
-- Negativas / custos assumidos: o frontmatter não é validado hoje, e um campo obrigatório ausente vira `undefined` sem erro (a validação com Zod na CI resolve isso); com o site bilíngue (0004), cada projeto passa a ter dois arquivos para manter.
+- Negativas / custos assumidos: o frontmatter não é validado hoje, e um campo obrigatório ausente vira `undefined` sem erro (a validação com Zod na CI resolve isso).
 - O que faria esta decisão ser revista: outra pessoa precisar editar sem Git, ou o volume crescer para dezenas de entradas com atualização frequente (por exemplo, um blog ativo).

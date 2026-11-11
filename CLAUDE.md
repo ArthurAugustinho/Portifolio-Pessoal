@@ -2,7 +2,7 @@
 
 Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já construídos, melhor do que o GitHub mostra. Público: recrutadores e tech leads (principalmente Irlanda e Reino Unido) e clientes de freelance; o visitante típico passa menos de dois minutos no site. Não é objetivo demonstrar variedade de tecnologias: menos stack é melhor.
 
-Estado: reformulação em andamento, seguindo o Playbook do Devkit. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site bilíngue com inglês padrão (0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
+Estado: reformulação em andamento, seguindo o Playbook do Devkit. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
 
 ## Stack
 - Next.js (App Router) · TypeScript estrito · CSS Modules com os tokens de `app/tokens.css`
@@ -51,7 +51,7 @@ design-system/portfolio/MASTER.md
 docs/decisions/NNNN-titulo.md
 .github/workflows/
 ```
-A estrutura muda com a reformulação (`app/[lang]/`, Worker do formulário); siga o ADR correspondente.
+A estrutura muda com a reformulação (Worker do formulário, export estático); siga o ADR correspondente.
 
 ## Restrições
 - Nunca ler, criar ou alterar arquivos `.env`. Variáveis novas vão para `.env.example` com valor vazio.

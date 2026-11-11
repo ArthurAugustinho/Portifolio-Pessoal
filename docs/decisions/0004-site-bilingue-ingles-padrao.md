@@ -1,6 +1,6 @@
 # 0004. Site bilíngue, com inglês como idioma padrão
 
-- Status: Proposta (falta confirmar o esquema de URLs descrito na Decisão)
+- Status: Substituída por 0011
 - Data: 2026-11-10
 
 ## Contexto
