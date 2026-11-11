@@ -45,7 +45,7 @@ export function Trajetoria() {
           <dt className="t-label">Localização</dt>
           <dd className={styles.valor}>
             <MapPin size={16} className={styles.icone} aria-hidden="true" />
-            Anápolis, Goiás — disponível para remoto
+            Brazil and Europe
           </dd>
 
           <dt className="t-label">Formação</dt>

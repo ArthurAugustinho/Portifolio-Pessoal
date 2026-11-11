@@ -6,7 +6,7 @@ import './globals.css'
 import './tokens.css'
 
 const DESCRICAO =
-  'Portfólio de Arthur Augustinho, desenvolvedor full stack em Anápolis, Goiás. Aplicações web, backend e infraestrutura.'
+  'Portfólio de Arthur Augustinho, desenvolvedor full stack no Brasil e na Europa. Aplicações web, backend e infraestrutura.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
