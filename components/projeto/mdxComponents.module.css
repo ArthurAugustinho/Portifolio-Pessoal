@@ -36,3 +36,24 @@
   border-left: 2px solid var(--rule);
   color: var(--ink-dim);
 }
+
+/* Bloco de código: rola na horizontal dentro do próprio bloco, em vez de
+   alargar a página. */
+.pre {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+/* O code dentro de pre não leva o estilo de código inline. */
+.pre code {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: inherit;
+}

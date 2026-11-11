@@ -8,6 +8,8 @@ export const mdxComponents: MDXComponents = {
   ul: (props) => <ul className={styles.lista} {...props} />,
   ol: (props) => <ol className={styles.lista} {...props} />,
   a: (props) => <a {...props} />,
+  // tabIndex: bloco rolável precisa ser alcançável pelo teclado.
+  pre: (props) => <pre className={styles.pre} tabIndex={0} {...props} />,
   code: (props) => <code className={styles.code} {...props} />,
   blockquote: (props) => <blockquote className={styles.blockquote} {...props} />,
 }
