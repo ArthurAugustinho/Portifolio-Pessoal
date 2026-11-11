@@ -41,17 +41,18 @@ Não é opcional e não precisa ser pedido:
 ```
 app/
   layout.tsx  page.tsx  tokens.css  globals.css  fonts.ts
-  sobre/  projetos/  projetos/[slug]/  contato/  api/contato/
+  sobre/  projetos/  projetos/[slug]/  contato/
 components/
   ui/  layout/  projeto/
 content/projetos/*.mdx
 lib/            projetos.ts  schemas.ts  site.ts
 public/imagens/  public/video/
+worker/index.ts   wrangler.jsonc   (Worker do formulário, ADR 0007)
 design-system/portfolio/MASTER.md
 docs/decisions/NNNN-titulo.md
 .github/workflows/
 ```
-A estrutura muda com a reformulação (Worker do formulário, export estático); siga o ADR correspondente.
+A estrutura muda com a reformulação (privacidade, headers, analytics); siga o ADR correspondente.
 
 ## Restrições
 - Nunca ler, criar ou alterar arquivos `.env`. Variáveis novas vão para `.env.example` com valor vazio.

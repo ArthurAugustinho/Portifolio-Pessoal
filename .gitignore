@@ -37,6 +37,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# wrangler (estado local e variáveis de teste do Worker)
+.wrangler/
+.dev.vars
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

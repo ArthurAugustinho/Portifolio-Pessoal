@@ -1,7 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  // Export estático (ADR 0005): o build gera out/, servido como assets do
+  // Worker. Sem otimização de imagem em runtime, então as imagens entram
+  // no repositório já otimizadas.
+  output: 'export',
+  images: { unoptimized: true },
+}
 
-export default nextConfig;
+export default nextConfig
