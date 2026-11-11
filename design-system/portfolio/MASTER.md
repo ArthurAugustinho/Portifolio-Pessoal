@@ -77,7 +77,7 @@ Estes itens quebram a direção visual e devem ser recusados mesmo que pareçam 
 
 - `JanelaNavegador`: moldura de navegador para capturas e vídeo (`moldura: 'navegador' | 'nenhuma'`).
 - `PlaceholderCapa`: substitui qualquer mídia ausente; nunca imagem quebrada.
-- `FaixaStatus`: faixa fixa da home com a seção atual, em mono.
+- `Header`: barra sticky de 48px em todas as páginas, com o nome (link para a home), a navegação (Projects, About, Contact) e, só na home, o contador "SEC 01 · INTRO". Sem borda e sem acento: a página atual se marca por tom (`--ink`) e `aria-current`. Abaixo de 520px o nome aparece como "A. Augustinho".
 
 ## Comparação com a ui-ux-pro-max
 

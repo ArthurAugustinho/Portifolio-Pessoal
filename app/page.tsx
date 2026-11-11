@@ -1,14 +1,7 @@
 import Link from 'next/link'
-import { FaixaStatus } from '@/components/layout/FaixaStatus'
 import { ProjetoCard } from '@/components/projeto/ProjetoCard'
 import { getProjetos, ordenarProjetos } from '@/lib/projetos'
 import styles from './page.module.css'
-
-const SECOES = [
-  { id: 'hero', nome: 'Intro' },
-  { id: 'projetos', nome: 'Projects' },
-  { id: 'contato', nome: 'Contact' },
-]
 
 export default function Home() {
   const destaques = ordenarProjetos(getProjetos())
@@ -17,10 +10,8 @@ export default function Home() {
 
   return (
     <>
-      <FaixaStatus secoes={SECOES} />
-
       <div className={styles.wrapper}>
-        <section id="hero" aria-label="Intro" className={styles.hero}>
+        <section id="hero" data-secao="Intro" aria-label="Intro" className={styles.hero}>
           <h1 className="t-hero">Arthur Augustinho</h1>
           <p className="t-lead">
             Full stack developer. I build web applications and network infrastructure.
@@ -31,7 +22,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="projetos" aria-label="Projects">
+        <section id="projetos" data-secao="Projects" aria-label="Projects">
           {destaques.length > 0 && (
             <div className={styles.grid}>
               {destaques.map((projeto) => (
@@ -44,7 +35,7 @@ export default function Home() {
           </Link>
         </section>
 
-        <section id="contato" aria-label="Contact">
+        <section id="contato" data-secao="Contact" aria-label="Contact">
           <p>
             Let’s talk? <Link href="/contato">Contact</Link>
           </p>

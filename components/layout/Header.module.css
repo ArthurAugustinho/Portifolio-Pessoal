@@ -1,0 +1,107 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--space-1);
+  background: var(--bg);
+  padding-inline: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* Sem acento: cor só por tom (--ink-dim -> --ink). O foco usa o
+   :focus-visible global. */
+.nome,
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.header .nome {
+  color: var(--ink);
+  justify-self: start;
+  white-space: nowrap;
+}
+
+.nome:hover,
+.link:hover {
+  color: var(--ink);
+}
+
+.nomeCurto {
+  display: inline;
+}
+
+.nomeCompleto {
+  display: none;
+}
+
+@media (min-width: 520px) {
+  .nomeCurto {
+    display: none;
+  }
+
+  .nomeCompleto {
+    display: inline;
+  }
+}
+
+.contador {
+  display: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.link[aria-current='page'] {
+  color: var(--ink);
+}
+
+@media (min-width: 640px) {
+  .nav {
+    gap: var(--space-3);
+  }
+}
+
+@media (min-width: 900px) {
+  .header {
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .contador {
+    display: inline;
+  }
+
+  .nav {
+    justify-self: end;
+  }
+}
+
+/* Link de pular para o conteúdo: fora da tela até receber foco. */
+.pular {
+  position: absolute;
+  top: var(--space-1);
+  left: var(--space-1);
+  z-index: 20;
+  padding: var(--space-1) var(--space-2);
+  background: var(--surface-2);
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+}
+
+.pular:focus {
+  transform: none;
+}

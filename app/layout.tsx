@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Header } from '@/components/layout/Header'
 import { Rodape } from '@/components/layout/Rodape'
 import { SITE_URL } from '@/lib/site'
 import { sans, mono } from './fonts'
@@ -34,7 +35,8 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body>
-        <main>{children}</main>
+        <Header />
+        <main id="main">{children}</main>
         <Rodape />
       </body>
     </html>
