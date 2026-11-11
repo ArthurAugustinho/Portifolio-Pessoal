@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './Rodape.module.css'
 
 export function Rodape() {
@@ -24,6 +25,9 @@ export function Rodape() {
         >
           LinkedIn
         </a>
+        <Link href="/privacy" className="t-label">
+          Privacy
+        </Link>
         <span className="t-label">© {ano}</span>
       </div>
     </footer>
