@@ -5,3 +5,8 @@
 // aqui como string vazia, não como undefined — e "new URL('')" quebra
 // o build (foi exatamente o que aconteceu no primeiro deploy).
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+
+// Enquanto o conteúdo dos projetos tiver TODO, o site fica fora do índice
+// de busca (robots.ts). Com "true", o build também passa a falhar se
+// algum MDX ainda contiver "TODO:" (lib/projetos.ts).
+export const INDEXAVEL = process.env.NEXT_PUBLIC_INDEXAVEL === 'true'

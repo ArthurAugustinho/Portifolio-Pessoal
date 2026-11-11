@@ -1,8 +1,41 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
+import { z } from 'zod'
+import { INDEXAVEL } from '@/lib/site'
 
 const PROJETOS_DIR = path.join(process.cwd(), 'content/projetos')
+const FORMATO_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+// Validado no build: campo ausente ou com tipo errado derruba o build
+// com o nome do arquivo, em vez de virar `undefined` silencioso na página.
+const frontmatterSchema = z
+  .object({
+    slug: z.string().regex(FORMATO_SLUG, 'Use só letras minúsculas, números e hífens.'),
+    nome: z.string().min(1),
+    resumo: z.string().min(1),
+    ano: z.number().int(),
+    stack: z.array(z.string().min(1)).min(1),
+    destaque: z.boolean(),
+    papel: z.string().min(1),
+    periodo: z.string().min(1),
+    links: z.array(z.object({ label: z.string().min(1), url: z.url() }).strict()).default([]),
+    capa: z.string().min(1).optional(),
+    video: z.object({ src: z.string().min(1), poster: z.string().min(1) }).strict().optional(),
+    capturas: z
+      .array(
+        z
+          .object({
+            src: z.string().min(1),
+            // vira o alt da imagem na galeria, por isso é obrigatória
+            legenda: z.string().min(1),
+            moldura: z.enum(['navegador', 'nenhuma']).default('navegador'),
+          })
+          .strict(),
+      )
+      .default([]),
+  })
+  .strict()
 
 export type ProjetoLink = {
   label: string
@@ -45,6 +78,12 @@ export function getProjetos(): Projeto[] {
 }
 
 export function getProjeto(slug: string): Projeto | null {
+  // o slug pode vir da URL: nada fora do formato chega ao sistema de arquivos
+  if (!FORMATO_SLUG.test(slug)) {
+    return null
+  }
+
+  const arquivo = `content/projetos/${slug}.mdx`
   const caminho = path.join(PROJETOS_DIR, `${slug}.mdx`)
 
   if (!fs.existsSync(caminho)) {
@@ -52,20 +91,41 @@ export function getProjeto(slug: string): Projeto | null {
   }
 
   const { data, content } = matter(fs.readFileSync(caminho, 'utf8'))
+  const resultado = frontmatterSchema.safeParse(data)
+
+  if (!resultado.success) {
+    throw new Error(`Frontmatter inválido em ${arquivo}:\n${z.prettifyError(resultado.error)}`)
+  }
+
+  const frontmatter = resultado.data
+
+  if (frontmatter.slug !== slug) {
+    throw new Error(
+      `${arquivo}: o slug do frontmatter ("${frontmatter.slug}") precisa ser igual ao nome do arquivo.`,
+    )
+  }
+
+  // Com a indexação liberada, texto de preenchimento não pode ir ao ar:
+  // o build falha em vez de publicar um TODO.
+  if (INDEXAVEL && (content.includes('TODO:') || JSON.stringify(data).includes('TODO:'))) {
+    throw new Error(
+      `${arquivo} ainda contém "TODO:". Resolva antes de publicar com NEXT_PUBLIC_INDEXAVEL=true.`,
+    )
+  }
 
   return {
-    slug: data.slug ?? slug,
-    nome: data.nome,
-    resumo: data.resumo,
-    ano: data.ano,
-    stack: data.stack ?? [],
-    destaque: data.destaque ?? false,
-    papel: data.papel,
-    periodo: data.periodo,
-    links: data.links ?? [],
-    capa: resolverCaminhoPublico(data.capa),
-    video: resolverVideo(data.video),
-    capturas: resolverCapturas(data.capturas),
+    slug: frontmatter.slug,
+    nome: frontmatter.nome,
+    resumo: frontmatter.resumo,
+    ano: frontmatter.ano,
+    stack: frontmatter.stack,
+    destaque: frontmatter.destaque,
+    papel: frontmatter.papel,
+    periodo: frontmatter.periodo,
+    links: frontmatter.links,
+    capa: resolverCaminhoPublico(frontmatter.capa),
+    video: resolverVideo(frontmatter.video),
+    capturas: resolverCapturas(frontmatter.capturas),
     conteudo: content,
   }
 }
@@ -83,61 +143,27 @@ export function ordenarProjetos(projetos: Projeto[]): Projeto[] {
 }
 
 // Caminhos de mídia (capa, vídeo, capturas) são opcionais e, quando
-// ausentes ou apontando para um arquivo que não existe em public/,
-// o chamador recorre a um placeholder — nunca uma imagem quebrada.
-function resolverCaminhoPublico(caminho: unknown): string | undefined {
-  if (typeof caminho !== 'string' || caminho.length === 0) {
+// apontam para um arquivo que não existe em public/, o chamador recorre
+// a um placeholder — nunca uma imagem quebrada. O caminho sai sempre com
+// "/" inicial, que o next/image exige para imagem local.
+function resolverCaminhoPublico(caminho: string | undefined): string | undefined {
+  if (!caminho) {
     return undefined
   }
 
-  const caminhoAbsoluto = path.join(process.cwd(), 'public', caminho)
-  return fs.existsSync(caminhoAbsoluto) ? caminho : undefined
+  const normalizado = `/${caminho.replace(/^\/+/, '')}`
+  return fs.existsSync(path.join(process.cwd(), 'public', normalizado)) ? normalizado : undefined
 }
 
-function resolverVideo(video: unknown): ProjetoVideo | undefined {
-  if (typeof video !== 'object' || video === null) {
-    return undefined
-  }
-
-  const { src, poster } = video as { src?: unknown; poster?: unknown }
-  const srcResolvido = resolverCaminhoPublico(src)
-  const posterResolvido = resolverCaminhoPublico(poster)
-
-  if (!srcResolvido || !posterResolvido) {
-    return undefined
-  }
-
-  return { src: srcResolvido, poster: posterResolvido }
+function resolverVideo(video: ProjetoVideo | undefined): ProjetoVideo | undefined {
+  const src = resolverCaminhoPublico(video?.src)
+  const poster = resolverCaminhoPublico(video?.poster)
+  return src && poster ? { src, poster } : undefined
 }
 
-function resolverCapturas(capturas: unknown): ProjetoCaptura[] {
-  if (!Array.isArray(capturas)) {
-    return []
-  }
-
-  return capturas
-    .map((captura): ProjetoCaptura | null => {
-      if (typeof captura !== 'object' || captura === null) {
-        return null
-      }
-
-      const { src, legenda, moldura } = captura as {
-        src?: unknown
-        legenda?: unknown
-        moldura?: unknown
-      }
-
-      const srcResolvido = resolverCaminhoPublico(src)
-
-      if (!srcResolvido) {
-        return null
-      }
-
-      return {
-        src: srcResolvido,
-        legenda: typeof legenda === 'string' ? legenda : '',
-        moldura: moldura === 'nenhuma' ? 'nenhuma' : 'navegador',
-      }
-    })
-    .filter((captura): captura is ProjetoCaptura => captura !== null)
+function resolverCapturas(capturas: ProjetoCaptura[]): ProjetoCaptura[] {
+  return capturas.flatMap((captura) => {
+    const src = resolverCaminhoPublico(captura.src)
+    return src ? [{ ...captura, src }] : []
+  })
 }
