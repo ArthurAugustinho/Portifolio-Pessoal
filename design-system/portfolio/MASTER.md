@@ -2,7 +2,7 @@
 
 Fonte de verdade visual do portfólio. Os valores vivem em `app/tokens.css`; este arquivo explica o que cada um significa e o que é proibido. Mudou um token? Atualize os dois juntos.
 
-Origem: identidade definida para o portfólio antes do Devkit. Pela regra do Playbook, a identidade existente tem prioridade sobre recomendações de skill. Comparação com a ui-ux-pro-max: pendente (ver "Pendências").
+Origem: identidade definida para o portfólio antes do Devkit. Pela regra do Playbook, a identidade existente tem prioridade sobre recomendações de skill. Comparação com a ui-ux-pro-max: ver "Comparação com a ui-ux-pro-max".
 
 ## Princípios
 
@@ -79,6 +79,17 @@ Estes itens quebram a direção visual e devem ser recusados mesmo que pareçam 
 - `PlaceholderCapa`: substitui qualquer mídia ausente; nunca imagem quebrada.
 - `FaixaStatus`: faixa fixa da home com a seção atual, em mono.
 
-## Pendências
+## Comparação com a ui-ux-pro-max
 
-- Rodar a ui-ux-pro-max para comparação (decisão da reformulação). O resultado entra aqui como contraste; o Graphite continua sendo a referência até decisão em contrário.
+Feita em 2026-11-11 por leitura das tabelas da skill (v2.15.0 @ d14efff: `products.csv`, `colors.csv`, `landing.csv`, `typography.csv`, `styles.csv`), sem rodar o script nem gerar MASTER.md. Serve de contraste; o Graphite continua sendo a referência e nenhum token mudou.
+
+| Aspecto | Skill (Portfolio/Personal) | Graphite | Decisão |
+| --- | --- | --- | --- |
+| Estilo | Motion-Driven + Minimalism & Swiss Style | Escuro, sóbrio, movimento mínimo | Mantém; movimento fica para a fase posterior |
+| Cor | Monocromático + acento azul `#2563EB`, fundo claro `#FAFAFA` | Fundo `#0B0B0D`, acento `#0A84FF` | Mantém; mesma lógica de um acento azul |
+| Bordas | Token `Border #E4E4E7` | Proibido em card | Não adota |
+| Estrutura | Hero, grade de projetos, sobre, contato | Hero, destaques, contato; Sobre em página própria | Mantém |
+| Tipografia | Sem par específico; cita Space Mono e Outfit + Work Sans | Inter (narrativa) + IBM Plex Mono (dado) | Mantém |
+| Movimento | Scroll animado, parallax, hover de 300 a 400 ms | 150 e 250 ms; `prefers-reduced-motion` zera | Mantém |
+
+Ideia para o backlog: informação no hover do card e lightbox nas capturas.
