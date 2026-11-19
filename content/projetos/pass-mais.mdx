@@ -26,7 +26,7 @@ capturas: []
 
 ## The problem
 
-Clinics and doctors' offices that schedule appointments by phone, paper or
+Clinics and doctors’ offices that schedule appointments by phone, paper or
 spreadsheet live with a predictable set of failures: overlapping time slots,
 cancellations nobody records, a patient showing up on a day the doctor does not
 see patients. Each of these errors turns into rework for the secretary and
@@ -37,14 +37,14 @@ secretary and administrator — work with different information that is out of
 sync between them. The schedule the doctor sees is not the same one the
 secretary consults.
 
-Before writing code, I conducted the project's field research: conversations
+Before writing code, I conducted the project’s field research: conversations
 with clinics to understand how scheduling happened in practice and where it
 broke down. That stage defined the scope — the problem was not a lack of
 systems, it was the lack of a system where the four profiles saw the same data.
 
 ## What I built
 
-I was responsible for the application's **backend**, in Java 17 with Spring
+I was responsible for the application’s **backend**, in Java 17 with Spring
 Boot 3.
 
 The API exposes the operations of the four profiles, each with distinct
@@ -71,7 +71,7 @@ documentation in Swagger. Unit tests with JUnit 5 and Mockito.
 **Clean Architecture on the backend.** The code is split into four layers:
 `domain` with pure entities and rules, `application` with use cases,
 `infrastructure` with JPA repositories and configuration, and `interfaces` with
-controllers and DTOs. It costs more files than Spring's standard package
+controllers and DTOs. It costs more files than Spring’s standard package
 structure, but it keeps the business rules independent of the framework and the
 database — swapping Hibernate for something else would not touch the domain.
 
@@ -84,7 +84,7 @@ evolved identically on every machine of the team and in production.
 **Cutting hospital criticality detection.** The original scope included a
 severity triage module, for use in a hospital setting. After assessing the
 complexity — risk classification has clinical implications, it is not just
-business logic — we decided to remove it and deliver clinic and doctor's-office
+business logic — we decided to remove it and deliver clinic and doctor’s-office
 management well. It was the kind of feature that would have consumed the entire
 deadline and been left half-finished.
 
