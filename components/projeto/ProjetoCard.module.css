@@ -9,6 +9,13 @@
   background: var(--surface-2);
 }
 
+/* --ink-dim sobre --surface-2 dá só 3,85:1 (abaixo do AA). No hover o texto
+   secundário sobe para --ink, que também reforça o estado interativo. */
+.card:hover .resumo,
+.card:hover .meta {
+  color: var(--ink);
+}
+
 .capa {
   display: block;
   width: 100%;
