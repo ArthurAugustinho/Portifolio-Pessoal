@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Header } from '@/components/layout/Header'
 import { Rodape } from '@/components/layout/Rodape'
@@ -13,6 +13,12 @@ const CARREGAR_ANALYTICS = process.env.NODE_ENV === 'production' && Boolean(TOKE
 
 const DESCRICAO =
   'Portfolio of Arthur Augustinho, full stack developer in Brazil and Europe. Web applications, backend and infrastructure.'
+
+// O atributo content do <meta theme-color> não lê variáveis CSS: o valor
+// espelha --bg de tokens.css (mesma exceção do opengraph-image.tsx).
+export const viewport: Viewport = {
+  themeColor: '#0b0b0d',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

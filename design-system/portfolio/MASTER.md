@@ -24,7 +24,7 @@ Origem: identidade definida para o portfólio antes do Devkit. Pela regra do Pla
 | `--accent-hover` | `#3D9DFF` | Hover de link |
 | `--error` | `#FF6961` | Mensagens de erro de formulário |
 
-Componente nunca usa hex direto: só `var(--token)`. Exceção documentada: `app/opengraph-image.tsx`, porque o gerador de imagem (Satori) não lê variáveis CSS; lá os valores espelham os tokens.
+Componente nunca usa hex direto: só `var(--token)`. Exceções documentadas, onde o valor não pode ler variável CSS e por isso espelha o token: `app/opengraph-image.tsx` (o gerador de imagem, Satori) e o `themeColor` em `app/layout.tsx` (atributo do `<meta>`, espelha `--bg`).
 
 ## Tipografia
 

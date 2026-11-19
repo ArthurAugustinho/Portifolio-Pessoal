@@ -61,6 +61,10 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Tema escuro: barras de rolagem e controles nativos também escurecem. */
+  color-scheme: dark;
+  /* O header sticky (48px) não pode cobrir o elemento que recebe foco. */
+  scroll-padding-top: 4rem;
 }
 
 body {
@@ -75,6 +79,13 @@ body {
 /* ---- Tipografia --------------------------------------------- */
 
 /* Home apenas. Título de página interna é .t-titulo. */
+.t-hero,
+.t-titulo,
+.t-h2,
+.t-h3 {
+  text-wrap: balance;
+}
+
 .t-hero {
   font-size: var(--text-hero);
   font-weight: 700;
