@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import { ProjetoCard } from '@/components/projeto/ProjetoCard'
 import { getProjetos, ordenarProjetos } from '@/lib/projetos'
+import { metadataDaPagina } from '@/lib/site'
 import styles from './page.module.css'
 
-export const metadata: Metadata = {
-  title: 'Projects',
-  description:
+export const metadata: Metadata = metadataDaPagina({
+  titulo: 'Projects',
+  descricao:
     'Projects by Arthur Augustinho: web applications, backend and infrastructure, with the stack, role and outcome of each.',
-}
+  caminho: '/projetos',
+})
 
 export default function ProjetosPage() {
   const projetos = ordenarProjetos(getProjetos())

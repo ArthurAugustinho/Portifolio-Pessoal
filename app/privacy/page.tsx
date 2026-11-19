@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { metadataDaPagina } from '@/lib/site'
 import styles from './page.module.css'
 
-export const metadata: Metadata = {
-  title: 'Privacy',
-  description:
+export const metadata: Metadata = metadataDaPagina({
+  titulo: 'Privacy',
+  descricao:
     'How this site handles the data you send through the contact form, and which third-party services it uses.',
-}
+  caminho: '/privacy',
+})
 
 export default function PrivacyPage() {
   return (

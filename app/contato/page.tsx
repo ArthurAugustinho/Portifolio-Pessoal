@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
 import { FormularioContato } from './FormularioContato'
+import { metadataDaPagina } from '@/lib/site'
 import styles from './page.module.css'
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Get in touch with Arthur Augustinho for freelance work or remote positions.',
-}
+export const metadata: Metadata = metadataDaPagina({
+  titulo: 'Contact',
+  descricao:
+    'Get in touch with Arthur Augustinho for freelance work or remote positions.',
+  caminho: '/contato',
+})
 
 export default function ContatoPage() {
   return (

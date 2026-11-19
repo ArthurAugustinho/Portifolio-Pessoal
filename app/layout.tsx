@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     default: 'Arthur Augustinho',
   },
   description: DESCRICAO,
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'Arthur Augustinho',
     description: DESCRICAO,

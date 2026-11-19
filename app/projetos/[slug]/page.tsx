@@ -9,6 +9,7 @@ import { mdxComponents } from '@/components/projeto/mdxComponents'
 import { MidiaPrincipal } from '@/components/projeto/MidiaPrincipal'
 import { NavegacaoProjetos } from '@/components/projeto/NavegacaoProjetos'
 import { getProjeto, getProjetos, ordenarProjetos } from '@/lib/projetos'
+import { metadataDaPagina } from '@/lib/site'
 import styles from './page.module.css'
 
 export function generateStaticParams() {
@@ -25,15 +26,13 @@ export async function generateMetadata({
     return {}
   }
 
-  return {
-    title: projeto.nome,
-    description: projeto.resumo,
-    openGraph: {
-      title: projeto.nome,
-      description: projeto.resumo,
-      images: projeto.capa ? [{ url: projeto.capa }] : undefined,
-    },
-  }
+  // Sem capa, cai na imagem Open Graph padrão do site.
+  return metadataDaPagina({
+    titulo: projeto.nome,
+    descricao: projeto.resumo,
+    caminho: `/projetos/${slug}`,
+    imagem: projeto.capa,
+  })
 }
 
 export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug]'>) {
