@@ -34,7 +34,7 @@ export function Retrato({ alt }: RetratoProps) {
       width={800}
       height={1000}
       sizes="(min-width: 900px) 40vw, 100vw"
-      priority={false}
+      priority
       className={styles.retrato}
     />
   )

@@ -84,13 +84,17 @@ export function FormularioContato() {
     const resultado = contatoSchema.safeParse(dados)
 
     if (!resultado.success) {
+      // O foco vai para o primeiro campo com erro, como faria a
+      // validação nativa do navegador.
+      let focado = false
       for (const issue of resultado.error.issues) {
         const campo = issue.path[0] as keyof ContatoInput
         if (campo === 'cf-turnstile-response') {
           setMensagemErro(issue.message)
           setEstado('erro')
         } else {
-          setError(campo, { type: 'zod', message: issue.message })
+          setError(campo, { type: 'zod', message: issue.message }, { shouldFocus: !focado })
+          focado = true
         }
       }
       return
@@ -143,9 +147,21 @@ export function FormularioContato() {
         />
       )}
 
-      <Campo label="Name" erro={errors.nome?.message} {...register('nome')} />
+      <Campo
+        label="Name"
+        autoComplete="name"
+        erro={errors.nome?.message}
+        {...register('nome')}
+      />
 
-      <Campo label="Email" type="email" erro={errors.email?.message} {...register('email')} />
+      <Campo
+        label="Email"
+        type="email"
+        autoComplete="email"
+        spellCheck={false}
+        erro={errors.email?.message}
+        {...register('email')}
+      />
 
       <Campo
         label="Message"
@@ -167,7 +183,7 @@ export function FormularioContato() {
       )}
 
       <button type="submit" disabled={estado === 'enviando'} className={styles.botao}>
-        {estado === 'enviando' ? 'Sending' : 'Send'}
+        {estado === 'enviando' ? 'Sending…' : 'Send'}
       </button>
 
       <p className={`t-dim ${styles.aviso}`}>

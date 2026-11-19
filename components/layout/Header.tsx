@@ -57,7 +57,7 @@ export function Header() {
       </a>
 
       <header className={styles.header}>
-        <Link href="/" className={`t-label ${styles.nome}`} aria-label="Arthur Augustinho, home">
+        <Link href="/" className={`t-label ${styles.nome}`}>
           <span className={styles.nomeCompleto}>Arthur Augustinho</span>
           <span className={styles.nomeCurto}>A. Augustinho</span>
         </Link>
