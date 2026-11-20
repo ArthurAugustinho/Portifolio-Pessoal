@@ -113,3 +113,11 @@ export function tecnologiaPorId(id: string): Tecnologia | undefined {
 export function tecnologiasDaCamada(camada: CamadaId): Tecnologia[] {
   return TECNOLOGIAS.filter((tecnologia) => tecnologia.camada === camada)
 }
+
+// Nomes na ordem dos ids. Os ids de um projeto já foram validados em lib/projetos.ts.
+export function nomesDasTecnologias(ids: string[]): string[] {
+  return ids.flatMap((id) => {
+    const tecnologia = tecnologiaPorId(id)
+    return tecnologia ? [tecnologia.nome] : []
+  })
+}

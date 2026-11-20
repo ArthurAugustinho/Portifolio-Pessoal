@@ -9,6 +9,7 @@ import { mdxComponents } from '@/components/projeto/mdxComponents'
 import { MidiaPrincipal } from '@/components/projeto/MidiaPrincipal'
 import { NavegacaoProjetos } from '@/components/projeto/NavegacaoProjetos'
 import { getProjeto, getProjetos, ordenarProjetos } from '@/lib/projetos'
+import { nomesDasTecnologias } from '@/lib/tecnologias'
 import { metadataDaPagina } from '@/lib/site'
 import styles from './page.module.css'
 
@@ -65,7 +66,7 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
         <FichaTecnica
           papel={projeto.papel}
           periodo={projeto.periodo}
-          stack={projeto.stack}
+          stack={nomesDasTecnologias(projeto.stack)}
           links={projeto.links}
         />
       </div>
