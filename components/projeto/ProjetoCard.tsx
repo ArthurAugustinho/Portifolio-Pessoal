@@ -42,18 +42,39 @@ export function ProjetoCard({ projeto, nivelTitulo = 'h3', previa = false }: Pro
 
   return (
     <article className={styles.card}>
-      {projeto.capa ? (
-        <Image
-          src={projeto.capa}
-          alt={`Screenshot of the ${projeto.nome} project`}
-          width={640}
-          height={400}
-          sizes="(min-width: 640px) 440px, 86vw"
-          className={styles.capa}
-        />
-      ) : (
-        <PlaceholderCapa nome={projeto.nome} arredondamento="topo" proporcao="16/10" />
-      )}
+      <div className={styles.midia}>
+        {projeto.capa ? (
+          <Image
+            src={projeto.capa}
+            alt={`Screenshot of the ${projeto.nome} project`}
+            width={640}
+            height={400}
+            sizes="(min-width: 640px) 440px, 86vw"
+            className={styles.capa}
+          />
+        ) : (
+          <PlaceholderCapa nome={projeto.nome} arredondamento="topo" proporcao="16/10" />
+        )}
+
+        {/* Vídeo curto no hover e no foco (Carrossel.tsx): substitui a capa
+            enquanto o ponteiro ou o foco estiver no card. Sem src: só recebe o
+            arquivo no primeiro hover, então nada baixa antes (preload none).
+            Decorativo: a capa já descreve o projeto. */}
+        {previa && projeto.video && (
+          <video
+            className={styles.video}
+            data-video
+            data-src={projeto.video.src}
+            poster={projeto.video.poster}
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden="true"
+            tabIndex={-1}
+          />
+        )}
+      </div>
 
       <div className={styles.corpo}>
         <Titulo className={`t-h3 ${styles.nome}`}>

@@ -92,9 +92,7 @@ export const perfil = {
 
   projetos: {
     titulo: 'Projects I have shipped.',
-    // Etapa 5 (arrasto com mouse): voltar ao texto aprovado, "Drag or use the
-    // arrows to browse. Open a card for a short preview."
-    subtitulo: 'Use the arrows to browse. Open a card for a short preview.',
+    subtitulo: 'Drag or use the arrows to browse. Open a card for a short preview.',
   },
 
   blog: {

@@ -17,6 +17,26 @@
   border-color: var(--line-3);
 }
 
+.midia {
+  position: relative;
+}
+
+/* Vídeo por cima da capa: aparece com data-ativo (Carrossel.tsx). */
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.video[data-ativo] {
+  opacity: 1;
+}
+
 .capa {
   display: block;
   width: 100%;
