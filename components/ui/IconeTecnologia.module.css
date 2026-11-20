@@ -1,0 +1,18 @@
+.logo {
+  flex: none;
+  color: var(--ink);
+}
+
+/* Mesmo quadrado do logo, com borda --line-3 e raio --radius-xs (MASTER). */
+.monograma {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--line-3);
+  border-radius: var(--radius-xs);
+  color: var(--ink);
+  font-weight: 650;
+  font-variation-settings: 'wdth' 100;
+  line-height: 1;
+}
