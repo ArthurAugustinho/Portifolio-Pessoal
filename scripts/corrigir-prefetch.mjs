@@ -5,7 +5,11 @@
 // /sobre/__next.sobre.__PAGE__.txt. Sem este passo cada prefetch dá 404 e
 // o console de toda página fica com erros vermelhos. Copiamos cada arquivo
 // para o nome com pontos, ao lado da pasta; os originais ficam intactos.
-import { cpSync, existsSync, readdirSync, statSync } from 'node:fs'
+//
+// Também remove /blog do export quando não há posts em content/posts (ADR
+// 0017): com output: 'export', a página que chama notFound() ainda sairia como
+// blog.html.
+import { cpSync, existsSync, readdirSync, rmSync, statSync } from 'node:fs'
 import path from 'node:path'
 
 const OUT = path.resolve('out')
@@ -22,6 +26,16 @@ function arquivosDentro(dir, prefixo = []) {
       ? arquivosDentro(caminho, [...prefixo, nome])
       : [{ caminho, partes: [...prefixo, nome] }]
   })
+}
+
+const POSTS = path.resolve('content/posts')
+const temPosts = existsSync(POSTS) && readdirSync(POSTS).some((nome) => nome.endsWith('.mdx'))
+
+if (!temPosts) {
+  for (const alvo of ['blog.html', 'blog.txt', 'blog']) {
+    rmSync(path.join(OUT, alvo), { recursive: true, force: true })
+  }
+  console.log('corrigir-prefetch: sem posts, /blog removido do export.')
 }
 
 let copiados = 0

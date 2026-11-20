@@ -8,17 +8,18 @@ import { ControlePausa } from './ControlePausa'
 import styles from './Header.module.css'
 
 // Itens do menu: ids das seções da home (home.md §2). Na home são âncoras
-// (#about); nas páginas internas, /#about. Blog entra quando houver posts
-// (ADR 0017, Etapa 3).
+// (#about); nas páginas internas, /#about. Blog só aparece quando há posts
+// (ADR 0017).
 const MENU = [
   { id: 'about', texto: 'About' },
   { id: 'stack', texto: 'Stack' },
   { id: 'experience', texto: 'Experience' },
   { id: 'projects', texto: 'Projects' },
+  { id: 'blog', texto: 'Blog' },
   { id: 'contact', texto: 'Contact' },
 ]
 
-export function Header() {
+export function Header({ temBlog }: { temBlog: boolean }) {
   const pathname = usePathname()
   const naHome = pathname === '/'
   // Id da seção visível na home ('' no topo).
@@ -107,7 +108,7 @@ export function Header() {
               className={`${styles.nav} ${aberto ? styles.navAberto : ''}`}
             >
               <ul className={styles.lista}>
-                {MENU.map((item) => {
+                {MENU.filter((item) => item.id !== 'blog' || temBlog).map((item) => {
                   const atual = naHome && secaoAtiva === item.id
                   return (
                     <li key={item.id}>

@@ -3,6 +3,7 @@ import Script from 'next/script'
 import { Header } from '@/components/layout/Header'
 import { Rodape } from '@/components/layout/Rodape'
 import { SCRIPT_MOVIMENTO } from '@/lib/movimento'
+import { temPosts } from '@/lib/posts'
 import { SITE_URL } from '@/lib/site'
 import { sans } from './fonts'
 import './globals.css'
@@ -53,7 +54,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_MOVIMENTO }} />
       </head>
       <body>
-        <Header />
+        <Header temBlog={temPosts()} />
         <main id="main">{children}</main>
         <Rodape />
         {CARREGAR_ANALYTICS && (

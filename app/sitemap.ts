@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { temPosts } from '@/lib/posts'
 import { getProjetos } from '@/lib/projetos'
 import { SITE_URL } from '@/lib/site'
 
@@ -6,7 +7,9 @@ import { SITE_URL } from '@/lib/site'
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const rotasEstaticas = ['', '/sobre', '/projetos', '/contato', '/privacy'].map((rota) => ({
+  // /blog só existe quando há posts (ADR 0017).
+  const rotas = ['', '/sobre', '/projetos', '/contato', '/privacy', ...(temPosts() ? ['/blog'] : [])]
+  const rotasEstaticas = rotas.map((rota) => ({
     url: `${SITE_URL}${rota}`,
   }))
 
