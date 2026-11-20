@@ -1,5 +1,6 @@
 import { compile, run } from '@mdx-js/mdx'
 import type { Metadata } from 'next'
+import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import * as runtime from 'react/jsx-runtime'
@@ -9,7 +10,6 @@ import { mdxComponents } from '@/components/projeto/mdxComponents'
 import { MidiaPrincipal } from '@/components/projeto/MidiaPrincipal'
 import { NavegacaoProjetos } from '@/components/projeto/NavegacaoProjetos'
 import { getProjeto, getProjetos, ordenarProjetos } from '@/lib/projetos'
-import { nomesDasTecnologias } from '@/lib/tecnologias'
 import { metadataDaPagina } from '@/lib/site'
 import styles from './page.module.css'
 
@@ -55,21 +55,29 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
   return (
     <article className={styles.pagina}>
       <header className={`${styles.coluna} ${styles.cabecalho}`}>
-        <Link href="/projetos" className="t-meta">
-          ← Projects
+        <Link href="/projetos" className={`t-meta ${styles.voltar}`}>
+          <ArrowLeft size={16} aria-hidden="true" />
+          Projects
         </Link>
         <h1 className="t-titulo">{projeto.nome}</h1>
-        <p className="t-dim">{projeto.resumo}</p>
+        <p className="t-lead">{projeto.resumo}</p>
       </header>
 
       <div className={styles.coluna}>
         <FichaTecnica
           papel={projeto.papel}
           periodo={projeto.periodo}
-          stack={nomesDasTecnologias(projeto.stack)}
+          stack={projeto.stack}
           links={projeto.links}
         />
       </div>
+
+      <aside className={`${styles.coluna} ${styles.problema}`} aria-labelledby="problema-titulo">
+        <h2 id="problema-titulo" className="t-meta">
+          The problem
+        </h2>
+        <p>{projeto.problema}</p>
+      </aside>
 
       <div className={styles.larga}>
         <MidiaPrincipal projeto={projeto} />

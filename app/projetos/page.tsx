@@ -16,7 +16,7 @@ export default function ProjetosPage() {
 
   return (
     <div className={styles.pagina}>
-      <h1 className="t-h2">Projects</h1>
+      <h1 className="t-titulo">Projects</h1>
 
       {projetos.length === 0 ? (
         <p className="t-dim">No projects published yet.</p>

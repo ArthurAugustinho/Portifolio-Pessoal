@@ -34,7 +34,7 @@ Contraste medido contra o fundo indicado (WCAG 2.x). Texto pede 4,5:1; component
 | `--on-accent` | `#0E1621` | Texto sobre `--accent` | 9,10 |
 | `--error` | `#FF6961` | Mensagem de erro de formulário | 6,44 bg |
 
-`--rule` continua existindo como apelido de `--line-1`, para compatibilidade durante a migração; remover quando nenhum CSS Module o usar.
+O apelido `--rule` (antigo nome de `--line-1`) foi removido: nenhum CSS Module o usa mais.
 
 Os tons de linha do esboço (`#1F3045`, `#22344A`) foram consolidados em `--line-1` e `--line-2`. Componente nunca usa hex direto: só `var(--token)`. Exceções documentadas, onde o valor não pode ler variável CSS e por isso espelha o token: `app/opengraph-image.tsx` (Satori) e o `themeColor` em `app/layout.tsx` (espelha `--bg`). Bibliotecas que pedem cor em JavaScript (partículas) leem o token com `getComputedStyle`.
 

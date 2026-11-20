@@ -1,5 +1,4 @@
 import { MapPin } from 'lucide-react'
-import { Fragment } from 'react'
 import { Retrato } from '@/components/ui/Retrato'
 import { perfil } from '@/content/perfil'
 import styles from './Trajetoria.module.css'
@@ -51,7 +50,7 @@ export function Trajetoria() {
           {perfil.sobre.ficha
             .filter((item) => ['local', 'formacao', 'busca'].includes(item.id))
             .map((item) => (
-              <Fragment key={item.id}>
+              <div key={item.id} className={styles.linha}>
                 <dt className="t-meta">{item.rotulo}</dt>
                 <dd className={item.id === 'local' ? styles.valor : undefined}>
                   {item.id === 'local' && (
@@ -59,7 +58,7 @@ export function Trajetoria() {
                   )}
                   {item.valor}
                 </dd>
-              </Fragment>
+              </div>
             ))}
         </dl>
       </div>

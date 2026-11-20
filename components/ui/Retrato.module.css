@@ -4,7 +4,8 @@
   height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  border-radius: var(--radius);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
 }
 
 /* Retrato do hero: círculo que preenche o contêiner da órbita. */

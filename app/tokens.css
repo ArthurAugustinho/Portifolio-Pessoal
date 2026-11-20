@@ -23,9 +23,6 @@
   --on-accent: #0e1621;
   --error: #ff6961;
 
-  /* Apelido de --line-1, só até nenhum CSS Module usá-lo (MASTER). */
-  --rule: var(--line-1);
-
   /* ---- Tipografia ------------------------------------------- */
   /* --font-sans vem de next/font (ver fonts.ts). O monoespaçado é só
      para código nos projetos: pilha do sistema, nada é baixado. */

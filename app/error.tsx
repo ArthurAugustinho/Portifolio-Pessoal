@@ -18,8 +18,8 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
   return (
     <div className={styles.pagina}>
       <p className="t-meta">Error</p>
-      <h1 className="t-h2">Something went wrong</h1>
-      <p className="t-dim">Try again or go back to the home page.</p>
+      <h1 className="t-titulo">Something went wrong</h1>
+      <p className="t-lead">Try again or go back to the home page.</p>
       <div className={styles.acoes}>
         <button type="button" onClick={reset} className={styles.botao}>
           Try again
