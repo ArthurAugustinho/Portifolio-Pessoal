@@ -1,0 +1,68 @@
+.rota {
+  --trilho: 28px;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@media (min-width: 640px) {
+  .rota {
+    --trilho: 64px;
+  }
+}
+
+.trilho {
+  position: relative;
+  padding-left: var(--trilho);
+}
+
+/* O primeiro nó fica a --secao do topo (padding da seção) mais 3px do
+   rótulo; o centro do nó (9px) é o centro da linha. */
+.linha {
+  position: absolute;
+  left: 8px;
+  top: calc(var(--secao) + 12px);
+  bottom: 0;
+  width: 2px;
+  background: var(--line-2);
+}
+
+.esfera {
+  position: absolute;
+  left: 9px;
+  top: calc(var(--secao) + 12px);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+  /* Acima do nó, que vem depois no DOM. */
+  z-index: 1;
+}
+
+.secao {
+  padding-top: var(--secao);
+  /* Ao ir para a âncora, o rótulo (e não o espaço da seção) para sob o header. */
+  scroll-margin-top: calc(var(--secao) * -1);
+}
+
+.ultima {
+  padding-bottom: var(--secao);
+}
+
+.rotulo {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* Nó da rota: quadrado de 18px, borda de 2px, raio de 3px (MASTER). */
+.no {
+  position: absolute;
+  left: calc(var(--trilho) * -1);
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-xs);
+  background: var(--bg);
+}

@@ -18,9 +18,11 @@ function resolverRetrato(): string | undefined {
 
 type RetratoProps = {
   alt: string
+  // 'circulo' é o retrato do hero (órbita); o padrão é o retângulo de /sobre.
+  forma?: 'retangulo' | 'circulo'
 }
 
-export function Retrato({ alt }: RetratoProps) {
+export function Retrato({ alt, forma = 'retangulo' }: RetratoProps) {
   const caminho = resolverRetrato()
 
   if (!caminho) {
@@ -33,9 +35,9 @@ export function Retrato({ alt }: RetratoProps) {
       alt={alt}
       width={800}
       height={1000}
-      sizes="(min-width: 900px) 40vw, 100vw"
+      sizes={forma === 'circulo' ? '276px' : '(min-width: 900px) 40vw, 100vw'}
       priority
-      className={styles.retrato}
+      className={forma === 'circulo' ? styles.circulo : styles.retrato}
     />
   )
 }

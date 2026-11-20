@@ -1,5 +1,7 @@
 import { MapPin } from 'lucide-react'
+import { Fragment } from 'react'
 import { Retrato } from '@/components/ui/Retrato'
+import { perfil } from '@/content/perfil'
 import styles from './Trajetoria.module.css'
 
 export function Trajetoria() {
@@ -43,18 +45,22 @@ export function Trajetoria() {
           observability, thereby improving my ability to understand and solve problems.
         </p>
 
+        {/* Mesmos dados da ficha da home (content/perfil.ts), sem repetir os que o
+            texto acima já conta (início e anos em redes). */}
         <dl className={styles.dados}>
-          <dt className="t-meta">Location</dt>
-          <dd className={styles.valor}>
-            <MapPin size={16} className={styles.icone} aria-hidden="true" />
-            Brazil and Europe
-          </dd>
-
-          <dt className="t-meta">Education</dt>
-          <dd>Bachelor’s degree in Software Engineering, UniEVANGÉLICA</dd>
-
-          <dt className="t-meta">Availability</dt>
-          <dd>Freelance work and remote positions</dd>
+          {perfil.sobre.ficha
+            .filter((item) => ['local', 'formacao', 'busca'].includes(item.id))
+            .map((item) => (
+              <Fragment key={item.id}>
+                <dt className="t-meta">{item.rotulo}</dt>
+                <dd className={item.id === 'local' ? styles.valor : undefined}>
+                  {item.id === 'local' && (
+                    <MapPin size={16} className={styles.icone} aria-hidden="true" />
+                  )}
+                  {item.valor}
+                </dd>
+              </Fragment>
+            ))}
         </dl>
       </div>
     </section>

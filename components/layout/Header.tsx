@@ -7,25 +7,28 @@ import { useEffect, useRef, useState } from 'react'
 import { ControlePausa } from './ControlePausa'
 import styles from './Header.module.css'
 
-// Provisório (Etapa 1): enquanto a home não tem as seções About, Stack e
-// Experience, o menu leva às páginas que já existem. A Etapa 2 troca por
-// âncoras (#about, #stack, #experience, #projects, #contact; nas páginas
-// internas, /#about) e acrescenta Blog quando houver posts (ADR 0017).
+// Itens do menu: ids das seções da home (home.md §2). Na home são âncoras
+// (#about); nas páginas internas, /#about. Blog entra quando houver posts
+// (ADR 0017, Etapa 3).
 const MENU = [
-  { href: '/sobre', texto: 'About' },
-  { href: '/projetos', texto: 'Projects' },
-  { href: '/contato', texto: 'Contact' },
+  { id: 'about', texto: 'About' },
+  { id: 'stack', texto: 'Stack' },
+  { id: 'experience', texto: 'Experience' },
+  { id: 'projects', texto: 'Projects' },
+  { id: 'contact', texto: 'Contact' },
 ]
 
 export function Header() {
   const pathname = usePathname()
   const naHome = pathname === '/'
-  const [caminho, setCaminho] = useState('')
+  // Id da seção visível na home ('' no topo).
+  const [secaoAtiva, setSecaoAtiva] = useState('')
   const [aberto, setAberto] = useState(false)
   const botaoMenu = useRef<HTMLButtonElement>(null)
 
-  // Caminho da seção visível (/projects, /contact...), só na home e só texto:
-  // não altera a URL. A seção ativa é a que cruzou 45% da altura da janela.
+  // Seção visível na home: alimenta o caminho em texto (/projects, /contact...),
+  // que não altera a URL, e o item ativo do menu. A seção ativa é a que cruzou
+  // 45% da altura da janela.
   // O estado só muda dentro do callback do observer, e o servidor nunca
   // renderiza o caminho, então não há divergência de hidratação.
   useEffect(() => {
@@ -37,8 +40,7 @@ export function Header() {
     const atualizar = () => {
       // De cima para baixo: vale a última seção que já passou da linha.
       const atual = secoes.filter((secao) => visiveis.has(secao)).at(-1)
-      const nome = atual?.dataset.secao ?? ''
-      setCaminho(nome ? `/${nome.toLowerCase()}` : '')
+      setSecaoAtiva(atual?.dataset.secao ?? '')
     }
 
     const observer = new IntersectionObserver(
@@ -83,7 +85,7 @@ export function Header() {
           </Link>
 
           <span className={`t-meta ${styles.caminho}`} aria-hidden="true">
-            {naHome ? caminho : ''}
+            {naHome && secaoAtiva ? `/${secaoAtiva}` : ''}
           </span>
 
           <div className={styles.direita}>
@@ -106,13 +108,13 @@ export function Header() {
             >
               <ul className={styles.lista}>
                 {MENU.map((item) => {
-                  const atual = pathname === item.href || pathname.startsWith(`${item.href}/`)
+                  const atual = naHome && secaoAtiva === item.id
                   return (
-                    <li key={item.href}>
+                    <li key={item.id}>
                       <Link
-                        href={item.href}
+                        href={naHome ? `#${item.id}` : `/#${item.id}`}
                         className={`t-pequeno ${styles.link}`}
-                        aria-current={atual ? 'page' : undefined}
+                        aria-current={atual ? 'location' : undefined}
                         onClick={fechar}
                       >
                         {item.texto}

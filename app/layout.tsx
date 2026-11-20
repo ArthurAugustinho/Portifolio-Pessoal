@@ -13,7 +13,7 @@ const TOKEN_ANALYTICS = process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN
 const CARREGAR_ANALYTICS = process.env.NODE_ENV === 'production' && Boolean(TOKEN_ANALYTICS)
 
 const DESCRICAO =
-  'Portfolio of Arthur Augustinho, full stack developer in Brazil and Europe. Web applications, backend and infrastructure.'
+  'Portfolio of Arthur Augustinho, full stack developer based in Europe. Web applications, backend and infrastructure.'
 
 // O atributo content do <meta theme-color> não lê variáveis CSS: o valor
 // espelha --bg de tokens.css (mesma exceção do opengraph-image.tsx).
