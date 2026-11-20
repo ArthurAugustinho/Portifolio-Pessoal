@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Home, desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap">
+<style>
+body{margin:0;background:#0E1621}
+a{color:#E9EEF3}a:hover{color:#F2A93B}
+:focus-visible{outline:2px solid #F2A93B;outline-offset:3px;border-radius:2px}
+button{font:inherit;cursor:pointer}
+button:disabled{opacity:0.35;cursor:default}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.orbit{animation:orbit 14s linear infinite}
+@keyframes blink{50%{opacity:0}}
+.caret{animation:blink 1s steps(1) infinite}
+@media (prefers-reduced-motion: reduce){.orbit,.caret{animation:none}}
+</style>
+</helmet>
+<div style="background: #0E1621; color: #E9EEF3; font-family: 'Archivo', system-ui, sans-serif; font-size: 18px; line-height: 1.6; min-height: 100vh; position: relative">
+<canvas ref="{{setCanvas}}" aria-hidden="true" style="position: fixed; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none"></canvas>
+
+<header style="position: sticky; top: 0; z-index: 3; background: #0E1621; border-bottom: 1px solid #1C2C3F">
+<div style="max-width: 80rem; margin: 0 auto; padding: 12px 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+<a href="#top" style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none">
+<span aria-hidden="true" style="width: 14px; height: 14px; box-sizing: border-box; border: 2px solid #E9EEF3; border-radius: 3px"></span>
+<span style="font-weight: 650; font-variation-settings: 'wdth' 112">Arthur Augustinho</span>
+<span style="min-width: 8ch; color: #93A3B5; font-size: 15px; font-variation-settings: 'wdth' 82">{{path}}</span>
+</a>
+<nav aria-label="Main" style="display: flex; gap: 26px; font-size: 16px; flex-wrap: wrap">
+<sc-for list="{{navItems}}" as="n" hint-placeholder-count="6">
+<a href="{{n.href}}" aria-current="{{n.current}}" onMouseMove="{{n.move}}" onMouseLeave="{{n.leave}}" style="display: inline-block; text-decoration: none; padding: 10px 0 8px; border-bottom: 2px solid {{n.line}}; transform: {{n.t}}; transition: border-color 300ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1)">{{n.label}}</a>
+</sc-for>
+</nav>
+</div>
+</header>
+
+<main style="position: relative; z-index: 1">
+<section id="top" aria-labelledby="hero-title">
+<div style="max-width: 80rem; margin: 0 auto; padding: 5rem 2.5rem 4rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 56px">
+<div style="flex: 1 1 34rem; min-width: 0">
+<p style="margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px; border: 1px solid #263A52; border-radius: 6px; background: #0E1621; font-size: 15px; color: #C3CDD8">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{accent}}"></span>
+Open to full-time roles in Europe
+</p>
+<h1 id="hero-title" aria-label="Arthur Augustinho" style="margin: 28px 0 0; font-size: clamp(3.5rem, 8vw, 7.25rem); line-height: 0.95; font-weight: 760; letter-spacing: -0.025em; font-variation-settings: 'wdth' {{wdth}}">
+<span aria-hidden="true" style="display: block; min-height: 0.95em">{{name1}}<sc-if value="{{caretName1}}" hint-placeholder-val="{{ false }}"><span class="caret" style="display: inline-block; width: 0.07em; height: 0.8em; margin-left: 0.05em; vertical-align: -0.04em; background: {{accent}}"></span></sc-if></span>
+<span aria-hidden="true" style="display: block; min-height: 0.95em; color: #7F91A6">{{name2}}<sc-if value="{{caretName2}}" hint-placeholder-val="{{ false }}"><span class="caret" style="display: inline-block; width: 0.07em; height: 0.8em; margin-left: 0.05em; vertical-align: -0.04em; background: {{accent}}"></span></sc-if></span>
+</h1>
+<p style="margin: 24px 0 0; min-height: 1.3em; font-size: 26px; line-height: 1.3; font-weight: 600; font-variation-settings: 'wdth' 86; color: #E9EEF3">
+<span aria-hidden="true">{{stackText}}</span><sc-if value="{{caretStack}}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" class="caret" style="display: inline-block; width: 2px; height: 1em; margin-left: 4px; vertical-align: -0.15em; background: {{accent}}"></span></sc-if>
+<span class="sr-only">Java, Spring Boot, PostgreSQL, Next.js, React, TypeScript, Node.js, Express, Docker, Python, Django, Flask, Angular, AWS, Terraform</span>
+</p>
+<p style="margin: 18px 0 0; max-width: 34rem; color: #C3CDD8">Full-stack engineer who started in network operations. I build web applications end to end and design for latency and failure from the start.</p>
+<div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 40px">
+<a href="#projects" onMouseMove="{{m.cta.move}}" onMouseLeave="{{m.cta.leave}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 8px; background: {{accent}}; color: #0E1621; font-weight: 650; text-decoration: none; transform: {{m.cta.t}}; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1)">See the projects</a>
+<a href="https://github.com/ArthurAugustinho" onMouseMove="{{m.gh.move}}" onMouseLeave="{{m.gh.leave}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 8px; border: 1px solid #2E4763; background: #0E1621; font-weight: 600; text-decoration: none; transform: {{m.gh.t}}; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1)">GitHub</a>
+<a href="https://www.linkedin.com/in/arthur-augustinho-46076522b/" onMouseMove="{{m.li.move}}" onMouseLeave="{{m.li.leave}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 8px; border: 1px solid #2E4763; background: #0E1621; font-weight: 600; text-decoration: none; transform: {{m.li.t}}; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1)">LinkedIn</a>
+</div>
+</div>
+
+<figure aria-labelledby="orbit-caption" style="margin: 0; flex: 0 0 auto">
+<div style="position: relative; width: 460px; height: 460px">
+<svg aria-hidden="true" viewBox="0 0 460 460" style="position: absolute; left: 0; top: 0; width: 460px; height: 460px">
+<circle cx="230" cy="230" r="200" fill="none" stroke="#2E4763" stroke-width="1.5"></circle>
+<circle cx="230" cy="230" r="156" fill="none" stroke="#1F3045" stroke-width="1" stroke-dasharray="2 8"></circle>
+</svg>
+<div class="orbit" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 460px; height: 460px">
+<span style="position: absolute; left: 225px; top: 25px; width: 10px; height: 10px; border-radius: 2px; background: {{accent}}"></span>
+</div>
+<img src="/_blob/8d0b7a544b39ff635188e4cb3e6c07c8" alt="Arthur Augustinho" style="position: absolute; left: 92px; top: 92px; width: 276px; height: 276px; box-sizing: border-box; border-radius: 50%; object-fit: cover; object-position: 50% 30%; border: 2px solid #263A52; background: #142030">
+<span aria-hidden="true" style="position: absolute; left: 221px; top: 21px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid #E9EEF3; background: #0E1621; border-radius: 3px"></span>
+<span aria-hidden="true" style="position: absolute; left: 421px; top: 221px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid #E9EEF3; background: #0E1621; border-radius: 3px"></span>
+<span aria-hidden="true" style="position: absolute; left: 221px; top: 421px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid #E9EEF3; background: #0E1621; border-radius: 3px"></span>
+<span aria-hidden="true" style="position: absolute; left: 21px; top: 221px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid #E9EEF3; background: #0E1621; border-radius: 3px"></span>
+<span aria-hidden="true" style="position: absolute; left: 250px; top: 12px; font-size: 14px; color: #93A3B5; font-variation-settings: 'wdth' 82">Browser</span>
+<span aria-hidden="true" style="position: absolute; left: 344px; top: 186px; font-size: 14px; color: #93A3B5; font-variation-settings: 'wdth' 82">Network edge</span>
+<span aria-hidden="true" style="position: absolute; left: 250px; top: 424px; font-size: 14px; color: #93A3B5; font-variation-settings: 'wdth' 82">API</span>
+<span aria-hidden="true" style="position: absolute; left: 0; top: 186px; font-size: 14px; color: #93A3B5; font-variation-settings: 'wdth' 82">Database</span>
+</div>
+<figcaption id="orbit-caption" style="margin-top: 16px; text-align: center; font-size: 14px; color: #93A3B5">3D scene: a request orbits through the layers I work in.</figcaption>
+</figure>
+</div>
+</section>
+
+<div style="position: relative; max-width: 80rem; margin: 0 auto; padding: 0 2.5rem">
+<div ref="{{setRoute}}" style="position: relative; padding-left: 64px">
+<div aria-hidden="true" style="position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #1F3045">
+<span style="position: absolute; left: 0; top: 0; width: 2px; height: {{progressPct}}; background: #4A6280"></span>
+<span style="position: absolute; left: -7px; top: {{progressPct}}; width: 16px; height: 16px; margin-top: -8px; border-radius: 50%; background: {{accent}}; box-shadow: 0 0 0 4px #0E1621"></span>
+</div>
+<p style="margin: 0; padding-top: 6px; font-size: 14px; color: #93A3B5; font-variation-settings: 'wdth' 82">Scroll</p>
+
+<section id="about" aria-labelledby="about-title" style="padding-top: 7rem">
+<p style="position: relative; margin: 0 0 16px; font-size: 15px; color: #93A3B5; font-variation-settings: 'wdth' 82"><span aria-hidden="true" style="position: absolute; left: -64px; top: 3px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid {{nodes.about}}; background: #0E1621; border-radius: 3px; transition: border-color 300ms ease"></span>About</p>
+<h2 id="about-title" style="margin: 0; max-width: 20ch; font-size: 3rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; font-variation-settings: 'wdth' 118">From network operations to software.</h2>
+<div style="margin-top: 48px; display: flex; flex-wrap: wrap; gap: 48px 64px; align-items: flex-start">
+<div style="flex: 1 1 28rem; min-width: 0; max-width: 40rem; display: flex; flex-direction: column; gap: 18px; color: #C3CDD8">
+<p style="margin: 0">I build web applications end to end: APIs in Java with Spring Boot or in Node.js, interfaces in Next.js and React, data in PostgreSQL.</p>
+<p style="margin: 0">Before writing software full-time I spent sixteen months as a network analyst at Telgo Telecom, monitoring infrastructure with Zabbix and Grafana and handling critical incidents for business clients. That is where I learned to ask where a system fails before asking how it looks.</p>
+<p style="margin: 0">I studied Software Engineering at UniEVANGÉLICA and I am now based in Europe.</p>
+</div>
+<dl style="flex: 1 1 22rem; margin: 0; background: #142030; border: 1px solid #263A52; border-radius: 10px; padding: 6px 28px">
+<div style="display: flex; justify-content: space-between; gap: 24px; padding: 16px 0; border-bottom: 1px solid #22344A"><dt style="color: #93A3B5; font-size: 15px; font-variation-settings: 'wdth' 82">Building software since</dt><dd style="margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums">2022</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 24px; padding: 16px 0; border-bottom: 1px solid #22344A"><dt style="color: #93A3B5; font-size: 15px; font-variation-settings: 'wdth' 82">Network operations</dt><dd style="margin: 0; text-align: right; font-weight: 600">16 months, Telgo Telecom</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 24px; padding: 16px 0; border-bottom: 1px solid #22344A"><dt style="color: #93A3B5; font-size: 15px; font-variation-settings: 'wdth' 82">Degree</dt><dd style="margin: 0; text-align: right; font-weight: 600">Software Engineering, UniEVANGÉLICA</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 24px; padding: 16px 0; border-bottom: 1px solid #22344A"><dt style="color: #93A3B5; font-size: 15px; font-variation-settings: 'wdth' 82">Based in</dt><dd style="margin: 0; text-align: right; font-weight: 600">Europe, open to relocation</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 24px; padding: 16px 0"><dt style="color: #93A3B5; font-size: 15px; font-variation-settings: 'wdth' 82">Looking for</dt><dd style="margin: 0; text-align: right; font-weight: 600">Full-time roles, remote or on-site</dd></div>
+</dl>
+</div>
+</section>
+
+<section id="stack" aria-labelledby="stack-title" style="padding-top: 7rem">
+<p style="position: relative; margin: 0 0 16px; font-size: 15px; color: #93A3B5; font-variation-settings: 'wdth' 82"><span aria-hidden="true" style="position: absolute; left: -64px; top: 3px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid {{nodes.stack}}; background: #0E1621; border-radius: 3px; transition: border-color 300ms ease"></span>Stack</p>
+<h2 id="stack-title" style="margin: 0; max-width: 20ch; font-size: 3rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; font-variation-settings: 'wdth' 118">What I work with, layer by layer.</h2>
+<p style="margin: 14px 0 0; max-width: 40rem; color: #93A3B5; font-size: 16px">Tools and methods from my projects, my GitHub and my work at Telgo and at the university software factory.</p>
+<div style="margin-top: 36px; border-top: 1px solid #22344A">
+<sc-for list="{{layers}}" as="layer" hint-placeholder-count="7">
+<div style="display: flex; flex-wrap: wrap; gap: 16px 32px; padding: 24px 0; border-bottom: 1px solid #22344A; align-items: flex-start">
+<h3 style="margin: 8px 0 0; flex: 0 0 10rem; font-size: 18px; font-weight: 650; font-variation-settings: 'wdth' 112">{{layer.name}}</h3>
+<ul style="flex: 1 1 30rem; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px">
+<sc-for list="{{layer.items}}" as="t" hint-placeholder-count="6">
+<li style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 6px 10px; background: #142030; border: 1px solid #263A52; border-radius: 8px; text-align: center">
+<span aria-hidden="true" style="width: 40px; height: 40px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1.5px solid #2E4763; border-radius: 6px; font-size: 16px; font-weight: 700; font-variation-settings: 'wdth' 100">{{t.m}}</span>
+<span style="font-size: 13px; line-height: 1.25; color: #C3CDD8; font-variation-settings: 'wdth' 82">{{t.n}}</span>
+</li>
+</sc-for>
+</ul>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="experience" aria-labelledby="experience-title" style="padding-top: 7rem">
+<p style="position: relative; margin: 0 0 16px; font-size: 15px; color: #93A3B5; font-variation-settings: 'wdth' 82"><span aria-hidden="true" style="position: absolute; left: -64px; top: 3px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid {{nodes.experience}}; background: #0E1621; border-radius: 3px; transition: border-color 300ms ease"></span>Experience</p>
+<h2 id="experience-title" style="margin: 0; font-size: 3rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; font-variation-settings: 'wdth' 118">Where I have worked.</h2>
+<ol style="list-style: none; margin: 40px 0 0; padding: 0; display: flex; flex-direction: column; gap: 20px">
+<sc-for list="{{jobs}}" as="job" hint-placeholder-count="3">
+<li style="background: #142030; border: 1px solid #263A52; border-radius: 10px; padding: 28px 32px">
+<div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline">
+<h3 style="margin: 0; font-size: 24px; line-height: 1.2; font-weight: 650; font-variation-settings: 'wdth' 112">{{job.role}}</h3>
+<p style="margin: 0; font-size: 15px; color: #93A3B5; font-variation-settings: 'wdth' 82; font-variant-numeric: tabular-nums">{{job.period}}</p>
+</div>
+<p style="margin: 4px 0 0; color: #93A3B5; font-size: 16px">{{job.org}}</p>
+<ul style="margin: 16px 0 0; padding-left: 20px; color: #C3CDD8; font-size: 16px; display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{job.points}}" as="point" hint-placeholder-count="3">
+<li>{{point}}</li>
+</sc-for>
+</ul>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<section id="projects" aria-labelledby="projects-title" style="padding-top: 7rem">
+<p style="position: relative; margin: 0 0 16px; font-size: 15px; color: #93A3B5; font-variation-settings: 'wdth' 82"><span aria-hidden="true" style="position: absolute; left: -64px; top: 3px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid {{nodes.projects}}; background: #0E1621; border-radius: 3px; transition: border-color 300ms ease"></span>Projects</p>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap">
+<div>
+<h2 id="projects-title" style="margin: 0; font-size: 3rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; font-variation-settings: 'wdth' 118">Projects I have shipped.</h2>
+<p style="margin: 12px 0 0; color: #93A3B5; font-size: 16px">Drag to browse. Open a card to see a short preview.</p>
+</div>
+<div style="display: flex; gap: 12px">
+<button type="button" aria-label="Previous project" onClick="{{prev}}" disabled="{{atStart}}" style="width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #2E4763; background: transparent; color: #E9EEF3">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+</button>
+<button type="button" aria-label="Next project" onClick="{{next}}" disabled="{{atEnd}}" style="width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #2E4763; background: transparent; color: #E9EEF3">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+</button>
+</div>
+</div>
+<div style="margin-top: 40px; overflow: hidden; position: relative">
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; gap: 24px; transform: {{trackTransform}}; transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1)">
+<sc-for list="{{projects}}" as="p" hint-placeholder-count="4">
+<li style="flex: 0 0 440px">
+<a href="CardAberto.dc.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: #E9EEF3; background: #142030; border: 1px solid #263A52; border-radius: 10px; overflow: hidden">
+<span style="aspect-ratio: 16 / 10; background: #1B2A3D; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; color: #93A3B5; font-size: 14px">Cover image. A short video plays on hover.</span>
+<span style="display: flex; flex-direction: column; gap: 8px; padding: 22px 24px 22px; flex-grow: 1">
+<span style="font-size: 28px; line-height: 1.1; font-weight: 650; font-variation-settings: 'wdth' 112">{{p.name}}</span>
+<span style="color: #C3CDD8; font-size: 16px; line-height: 1.5; flex-grow: 1">{{p.summary}}</span>
+<span role="img" aria-label="{{p.stackLabel}}" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; min-height: 30px">
+<sc-for list="{{p.icons}}" as="ic" hint-placeholder-count="4">
+<span aria-hidden="true" style="width: 30px; height: 30px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #2E4763; border-radius: 5px; font-size: 12px; font-weight: 700; font-variation-settings: 'wdth' 100">{{ic.m}}</span>
+</sc-for>
+<sc-if value="{{p.noIcons}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-size: 14px; color: #93A3B5; line-height: 30px">[STACK]</span></sc-if>
+</span>
+<span style="display: flex; justify-content: space-between; gap: 16px; margin-top: 8px; font-size: 14px; color: #93A3B5; font-variation-settings: 'wdth' 82; font-variant-numeric: tabular-nums"><span>{{p.role}}</span><span>{{p.years}}</span></span>
+</span>
+</a>
+</li>
+</sc-for>
+</ul>
+<span aria-hidden="true" style="position: absolute; left: 610px; top: 150px; width: 76px; height: 76px; border-radius: 50%; border: 1px solid #E9EEF3; background: #0E1621; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; pointer-events: none">Drag</span>
+</div>
+</section>
+
+<section id="blog" aria-labelledby="blog-title" style="padding-top: 7rem">
+<p style="position: relative; margin: 0 0 16px; font-size: 15px; color: #93A3B5; font-variation-settings: 'wdth' 82"><span aria-hidden="true" style="position: absolute; left: -64px; top: 3px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid {{nodes.blog}}; background: #0E1621; border-radius: 3px; transition: border-color 300ms ease"></span>Blog</p>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap">
+<div>
+<h2 id="blog-title" style="margin: 0; font-size: 3rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.01em; font-variation-settings: 'wdth' 118">Posts from LinkedIn.</h2>
+<p style="margin: 12px 0 0; color: #93A3B5; font-size: 16px">What I am building, learning and reading.</p>
+</div>
+<a href="https://www.linkedin.com/in/arthur-augustinho-46076522b/" onMouseMove="{{m.allPosts.move}}" onMouseLeave="{{m.allPosts.leave}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border-radius: 8px; border: 1px solid #2E4763; text-decoration: none; font-weight: 600; transform: {{m.allPosts.t}}; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1)">See all posts</a>
+</div>
+<ul style="list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 24px">
+<sc-for list="{{posts}}" as="post" hint-placeholder-count="3">
+<li>
+<a href="https://www.linkedin.com/in/arthur-augustinho-46076522b/" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: #E9EEF3; background: #142030; border: 1px solid #263A52; border-radius: 10px; overflow: hidden">
+<span style="aspect-ratio: 16 / 9; background: #1B2A3D; display: flex; align-items: center; justify-content: center; color: #93A3B5; font-size: 14px">Post image</span>
+<span style="display: flex; flex-direction: column; gap: 8px; padding: 20px 22px 22px; flex-grow: 1">
+<span style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: #93A3B5; font-variation-settings: 'wdth' 82"><span>{{post.date}}</span><span>{{post.read}}</span></span>
+<span style="font-size: 21px; line-height: 1.25; font-weight: 650; font-variation-settings: 'wdth' 108">{{post.title}}</span>
+<span style="color: #C3CDD8; font-size: 16px; line-height: 1.5; flex-grow: 1">{{post.excerpt}}</span>
+<span style="margin-top: 6px; font-size: 15px; font-weight: 600; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: #4A6280">Read on LinkedIn</span>
+</span>
+</a>
+</li>
+</sc-for>
+</ul>
+</section>
+
+<section id="contact" aria-labelledby="contact-title" style="padding: 7rem 0 7rem">
+<p style="position: relative; margin: 0 0 16px; font-size: 15px; color: #93A3B5; font-variation-settings: 'wdth' 82"><span aria-hidden="true" style="position: absolute; left: -64px; top: 3px; width: 18px; height: 18px; box-sizing: border-box; border: 2px solid {{accent}}; background: #0E1621; border-radius: 3px"></span>Contact</p>
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 24px">
+<h2 id="contact-title" style="margin: 0; max-width: 16ch; font-size: clamp(2.75rem, 5.5vw, 4.75rem); line-height: 1.02; font-weight: 700; letter-spacing: -0.015em; font-variation-settings: 'wdth' 118">Open to full-time roles in Europe.</h2>
+<p style="margin: 20px 0 0; max-width: 34rem; color: #C3CDD8">Based in Europe and open to relocation. Write to me about a role or a project.</p>
+<button type="button" onClick="{{copyEmail}}" onMouseMove="{{m.email.move}}" onMouseLeave="{{m.email.leave}}" style="margin-top: 36px; display: inline-flex; align-items: center; gap: 16px; min-height: 52px; padding: 0 22px; border-radius: 8px; border: 1px solid {{accent}}; background: transparent; color: #E9EEF3; font-size: 18px; transform: {{m.email.t}}; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1)">
+<span>arthuraugustinho35@gmail.com</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: #93A3B5"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h8"></path></svg>Copy</span>
+</button>
+<p aria-live="polite" style="margin: 10px 0 0; min-height: 24px; font-size: 14px; color: #93A3B5">{{copyStatus}}</p>
+<nav aria-label="Profiles" style="margin-top: 24px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center">
+<sc-for list="{{socials}}" as="s" hint-placeholder-count="5">
+<a href="{{s.href}}" onMouseMove="{{s.move}}" onMouseLeave="{{s.leave}}" style="width: 112px; height: 88px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid #263A52; border-radius: 10px; background: #142030; text-decoration: none; font-size: 14px; transform: {{s.t}}; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1)">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="{{s.icon}}"></path></svg>
+<span>{{s.label}}</span>
+</a>
+</sc-for>
+</nav>
+</div>
+</section>
+</div>
+</div>
+</main>
+
+<footer style="position: relative; z-index: 1; border-top: 1px solid #1C2C3F; background: #0E1621">
+<div style="max-width: 80rem; margin: 0 auto; padding: 28px 2.5rem; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 15px; color: #93A3B5">
+<span style="display: inline-flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 12px; height: 12px; box-sizing: border-box; border: 2px solid #93A3B5; border-radius: 3px"></span>© 2026 Arthur Augustinho</span>
+<a href="#privacy" style="text-decoration: none">Privacy</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#F2A93B","options":["#F2A93B","#4FC1E8","#E3DDCF"],"section":"Color"},"wdth":{"editor":"range","default":118,"min":100,"max":125,"step":1,"section":"Type"},"$preview":{"width":1440,"height":6400}}'>
+const NAME_1 = 'Arthur';
+const NAME_2 = 'Augustinho.';
+const NAME_TOTAL = NAME_1.length + NAME_2.length;
+const STACK_GROUPS = [
+  ['Java', 'Spring Boot', 'PostgreSQL'],
+  ['Next.js', 'React', 'TypeScript'],
+  ['Node.js', 'Express', 'Docker'],
+  ['Python', 'Django', 'Flask'],
+  ['Angular', 'AWS', 'Terraform']
+];
+const SECTIONS = ['about', 'stack', 'experience', 'projects', 'blog', 'contact'];
+const LABELS = ['About', 'Stack', 'Experience', 'Projects', 'Blog', 'Contact'];
+
+const T = (m, n) => ({ m: m, n: n });
+
+const LAYERS = [
+  { name: 'Interface', items: [T('Nx', 'Next.js'), T('Re', 'React'), T('Ts', 'TypeScript'), T('Ng', 'Angular'), T('Js', 'JavaScript'), T('H5', 'HTML5'), T('C3', 'CSS3'), T('Bs', 'Bootstrap')] },
+  { name: 'API', items: [T('Jv', 'Java'), T('Sb', 'Spring Boot'), T('Ss', 'Spring Security'), T('Nd', 'Node.js'), T('Ex', 'Express'), T('Dj', 'Django'), T('Fl', 'Flask'), T('Py', 'Python'), T('Cp', 'C++')] },
+  { name: 'Data', items: [T('Pg', 'PostgreSQL'), T('Fw', 'Flyway'), T('Sq', 'SQL Server'), T('Dz', 'Drizzle ORM'), T('My', 'MySQL')] },
+  { name: 'Infrastructure', items: [T('Dk', 'Docker'), T('Aw', 'AWS ECS Fargate'), T('Cf', 'Cloudflare'), T('Zb', 'Zabbix'), T('Gr', 'Grafana'), T('Tf', 'Terraform'), T('Lx', 'Linux'), T('Jk', 'Jenkins'), T('Ga', 'GitHub Actions')] },
+  { name: 'Testing', items: [T('Ju', 'JUnit and Mockito'), T('Se', 'Selenium'), T('Cy', 'Cypress'), T('Pt', 'Pytest'), T('Pm', 'Postman'), T('In', 'Insomnia')] },
+  { name: 'Tools', items: [T('Gt', 'Git'), T('Gh', 'GitHub'), T('Vs', 'VS Code'), T('Fg', 'Figma'), T('Tr', 'Trello'), T('Mv', 'Maven'), T('Np', 'npm')] },
+  { name: 'Methods', items: [T('Ca', 'Clean Architecture'), T('Gf', 'Gitflow'), T('Sc', 'Scrum'), T('Kb', 'Kanban'), T('Mp', 'MVP'), T('Pr', 'Prototyping'), T('Cc', 'Conventional Commits'), T('Ad', 'ADRs'), T('Ci', 'CI/CD')] }
+];
+
+const PROJECTS = [
+  { name: 'Pass+', summary: 'Appointment scheduling for clinics, with patients, doctors, receptionists and admins working from the same data.', role: 'Backend and field research, team of four', years: '2022–2025', icons: [T('Jv', 'Java'), T('Sb', 'Spring Boot'), T('Ss', 'Spring Security'), T('Pg', 'PostgreSQL'), T('Fw', 'Flyway'), T('Dk', 'Docker'), T('Aw', 'AWS'), T('Nx', 'Next.js')] },
+  { name: 'Alexo', summary: 'Online store for sportswear and football shirts, with payments, shipping and order management.', role: 'Built solo', years: '[YEAR]', icons: [T('Nx', 'Next.js'), T('Ts', 'TypeScript'), T('Dz', 'Drizzle ORM'), T('Pg', 'PostgreSQL')] },
+  { name: 'Segue-Me', summary: 'Web app for the animation team of the Segue-Me encounter.', role: '[ROLE]', years: '[YEAR]', icons: [] },
+  { name: 'JADE', summary: 'Personal AI assistant built on Claude.', role: '[ROLE]', years: '[YEAR]', icons: [] }
+];
+
+const JOBS = [
+  { role: 'Freelance developer', period: '2025–now', org: 'Independent', points: ['Web applications for clients, from landing pages to a full e-commerce platform.', 'Alexo: online store with Mercado Pago payments, Melhor Envio shipping and an order management panel, built solo.'] },
+  { role: 'Network analyst', period: '2024–2025', org: 'Telgo Telecom', points: ['Monitored corporate network infrastructure with Zabbix and Grafana.', 'Configured switches and routers.', 'Handled critical incidents for business clients.'] },
+  { role: 'Full-stack developer', period: '2022–2024', org: 'Fábrica de Tecnologias Turing, UniEVANGÉLICA', points: ['Worked on three systems: Psychology, Dentistry and Campus Security.', 'Built APIs in Node.js, Django and Spring Boot, with PostgreSQL and SQL Server.', 'Implemented authentication and access control.'] }
+];
+
+const POSTS = [
+  { date: '[DATE]', read: '[READ TIME]', title: '[POST TITLE]', excerpt: '[First two lines of the LinkedIn post.]' },
+  { date: '[DATE]', read: '[READ TIME]', title: '[POST TITLE]', excerpt: '[First two lines of the LinkedIn post.]' },
+  { date: '[DATE]', read: '[READ TIME]', title: '[POST TITLE]', excerpt: '[First two lines of the LinkedIn post.]' }
+];
+
+const SOCIALS = [
+  { id: 'github', label: 'GitHub', href: 'https://github.com/ArthurAugustinho', icon: 'M8 6l-6 6 6 6M16 6l6 6-6 6' },
+  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/arthur-augustinho-46076522b/', icon: 'M5 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zM9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2' },
+  { id: 'instagram', label: 'Instagram', href: '#contact', icon: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM17.5 6.5h0' },
+  { id: 'gmail', label: 'Gmail', href: 'mailto:arthuraugustinho35@gmail.com', icon: 'M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM3 6l9 7 9-7' },
+  { id: 'discord', label: 'Discord', href: '#contact', icon: 'M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5l-4 3v-3H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM9 12h0M15 12h0' }
+];
+
+class Component extends DCLogic {
+  state = {};
+
+  componentDidMount() {
+    this.alive = true;
+    const mq = (q) => (window.matchMedia ? window.matchMedia(q).matches : false);
+    this.reduce = mq('(prefers-reduced-motion: reduce)');
+    this.finePointer = mq('(pointer: fine)') && !this.reduce;
+    this.onScroll = () => {
+      if (this.ticking) return;
+      this.ticking = true;
+      requestAnimationFrame(() => { this.ticking = false; this.measure(); });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.measure();
+    this.startParticles();
+    if (!this.reduce) {
+      this.setState({ nameCount: 0, stackText: '' });
+      this.timer = setTimeout(() => this.typeName(1), 400);
+    }
+  }
+
+  componentWillUnmount() {
+    this.alive = false;
+    clearTimeout(this.timer);
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+    if (this.onResizeCanvas) window.removeEventListener('resize', this.onResizeCanvas);
+    if (this.onMouse) window.removeEventListener('mousemove', this.onMouse);
+  }
+
+  typeName(n) {
+    if (!this.alive) return;
+    this.setState({ nameCount: n });
+    if (n < NAME_TOTAL) {
+      this.timer = setTimeout(() => this.typeName(n + 1), 95);
+      return;
+    }
+    this.timer = setTimeout(() => this.typeStack(0, 1, false), 600);
+  }
+
+  typeStack(group, n, deleting) {
+    if (!this.alive) return;
+    const full = STACK_GROUPS[group].join(' / ');
+    this.setState({ stackText: full.slice(0, n) });
+    if (!deleting) {
+      if (n < full.length) {
+        this.timer = setTimeout(() => this.typeStack(group, n + 1, false), 60);
+      } else {
+        this.timer = setTimeout(() => this.typeStack(group, n - 1, true), 1800);
+      }
+      return;
+    }
+    if (n > 0) {
+      this.timer = setTimeout(() => this.typeStack(group, n - 1, true), 28);
+      return;
+    }
+    this.timer = setTimeout(() => this.typeStack((group + 1) % STACK_GROUPS.length, 1, false), 380);
+  }
+
+  measure() {
+    const route = this.routeEl;
+    if (!route) return;
+    const vh = window.innerHeight || 900;
+    // Na visão de canvas o quadro inteiro aparece de uma vez: mostra o estado inicial.
+    if (vh > 1400) {
+      this.setState({ progress: 0, current: 'home' });
+      return;
+    }
+    const r = route.getBoundingClientRect();
+    const progress = Math.max(0, Math.min(1, (vh * 0.45 - r.top) / Math.max(1, r.height)));
+    let current = 'home';
+    SECTIONS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < vh * 0.45) current = id;
+    });
+    this.setState({ progress: progress, current: current });
+  }
+
+  startParticles() {
+    const c = this.canvasEl;
+    if (!c || !c.getContext) return;
+    const ctx = c.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const size = () => {
+      this.w = window.innerWidth;
+      this.h = window.innerHeight;
+      c.width = Math.round(this.w * dpr);
+      c.height = Math.round(this.h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    size();
+    this.onResizeCanvas = size;
+    window.addEventListener('resize', size);
+    const count = Math.max(24, Math.min(80, Math.round((this.w * Math.min(this.h, 1000)) / 15000)));
+    const pts = [];
+    for (let i = 0; i < count; i++) {
+      pts.push({ x: Math.random() * this.w, y: Math.random() * this.h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25 });
+    }
+    const mouse = { x: -9999, y: -9999 };
+    this.onMouse = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    window.addEventListener('mousemove', this.onMouse);
+    const LINK = 140;
+    const GRAB = 170;
+    const frame = () => {
+      if (!this.alive) return;
+      ctx.clearRect(0, 0, this.w, this.h);
+      ctx.lineWidth = 1;
+      for (let i = 0; i < pts.length; i++) {
+        const a = pts[i];
+        if (!this.reduce) {
+          a.x += a.vx;
+          a.y += a.vy;
+          if (a.x < 0 || a.x > this.w) a.vx *= -1;
+          if (a.y < 0 || a.y > this.h) a.vy *= -1;
+        }
+        for (let j = i + 1; j < pts.length; j++) {
+          const b = pts[j];
+          const d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d < LINK) {
+            ctx.strokeStyle = 'rgba(46, 71, 99, ' + ((1 - d / LINK) * 0.6).toFixed(3) + ')';
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+        const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+        if (md < GRAB) {
+          ctx.strokeStyle = 'rgba(127, 145, 166, ' + ((1 - md / GRAB) * 0.5).toFixed(3) + ')';
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        }
+        ctx.fillStyle = '#2E4763';
+        ctx.beginPath(); ctx.arc(a.x, a.y, 1.6, 0, Math.PI * 2); ctx.fill();
+      }
+      if (!this.reduce) this.raf = requestAnimationFrame(frame);
+    };
+    frame();
+  }
+
+  magnet(id, strength) {
+    const mags = (this.state && this.state.mags) || {};
+    const v = mags[id] || { x: 0, y: 0 };
+    const set = (x, y) => {
+      const current = (this.state && this.state.mags) || {};
+      this.setState({ mags: Object.assign({}, current, { [id]: { x: x, y: y } }) });
+    };
+    return {
+      t: 'translate(' + v.x + 'px, ' + v.y + 'px)',
+      move: (e) => {
+        if (!this.finePointer) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        const x = Math.max(-8, Math.min(8, (e.clientX - (r.left + r.width / 2)) * strength));
+        const y = Math.max(-8, Math.min(8, (e.clientY - (r.top + r.height / 2)) * strength));
+        set(Math.round(x), Math.round(y));
+      },
+      leave: () => set(0, 0)
+    };
+  }
+
+  renderVals() {
+    const s = this.state || {};
+    const accent = this.props.accent ?? '#F2A93B';
+    const count = s.nameCount ?? NAME_TOTAL;
+    const typingName = count < NAME_TOTAL;
+    const current = s.current || 'home';
+    const currentIndex = SECTIONS.indexOf(current);
+    const index = s.index || 0;
+    const last = Math.max(0, PROJECTS.length - 2);
+    const nodeColor = (id) => (currentIndex >= 0 && SECTIONS.indexOf(id) <= currentIndex ? accent : '#E9EEF3');
+    const nodes = {};
+    SECTIONS.forEach((id) => { nodes[id] = nodeColor(id); });
+
+    return {
+      accent: accent,
+      wdth: this.props.wdth ?? 118,
+      setCanvas: (el) => { this.canvasEl = el; },
+      setRoute: (el) => { this.routeEl = el; },
+      path: '/' + current,
+      navItems: SECTIONS.map((id, i) => {
+        const mg = this.magnet('nav-' + id, 0.25);
+        const active = id === current;
+        return { label: LABELS[i], href: '#' + id, line: active ? accent : 'transparent', current: active ? 'location' : undefined, move: mg.move, leave: mg.leave, t: mg.t };
+      }),
+      name1: NAME_1.slice(0, Math.min(count, NAME_1.length)),
+      name2: NAME_2.slice(0, Math.max(0, count - NAME_1.length)),
+      caretName1: typingName && count <= NAME_1.length,
+      caretName2: typingName && count > NAME_1.length,
+      stackText: s.stackText ?? STACK_GROUPS[0].join(' / '),
+      caretStack: !typingName,
+      m: {
+        cta: this.magnet('cta', 0.3),
+        gh: this.magnet('gh', 0.3),
+        li: this.magnet('li', 0.3),
+        email: this.magnet('email', 0.2),
+        allPosts: this.magnet('allPosts', 0.3)
+      },
+      progressPct: Math.round((s.progress || 0) * 1000) / 10 + '%',
+      nodes: nodes,
+      layers: LAYERS,
+      jobs: JOBS,
+      projects: PROJECTS.map((p) => Object.assign({}, p, { noIcons: p.icons.length === 0, stackLabel: p.icons.length ? 'Built with ' + p.icons.map((ic) => ic.n).join(', ') : 'Stack to be added' })),
+      atStart: index === 0,
+      atEnd: index >= last,
+      trackTransform: 'translateX(' + (-index * 464) + 'px)',
+      prev: () => this.setState({ index: Math.max(0, index - 1) }),
+      next: () => this.setState({ index: Math.min(last, index + 1) }),
+      posts: POSTS,
+      socials: SOCIALS.map((so) => Object.assign({}, so, this.magnet('social-' + so.id, 0.3))),
+      copyStatus: s.copied ? 'Email copied.' : '',
+      copyEmail: () => {
+        try {
+          if (navigator.clipboard) navigator.clipboard.writeText('arthuraugustinho35@gmail.com');
+        } catch (e) {}
+        this.setState({ copied: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
