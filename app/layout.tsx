@@ -27,12 +27,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     template: '%s · Arthur Augustinho',
-    default: 'Arthur Augustinho',
+    default: 'Arthur Augustinho · Full stack developer in Europe',
   },
   description: DESCRICAO,
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Arthur Augustinho',
+    title: 'Arthur Augustinho · Full stack developer in Europe',
     description: DESCRICAO,
     url: SITE_URL,
     siteName: 'Arthur Augustinho',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Arthur Augustinho',
+    title: 'Arthur Augustinho · Full stack developer in Europe',
     description: DESCRICAO,
   },
 }

@@ -37,6 +37,8 @@ export function Retrato({ alt, forma = 'retangulo' }: RetratoProps) {
       height={1000}
       sizes={forma === 'circulo' ? '276px' : '(min-width: 900px) 40vw, 100vw'}
       priority
+      // O retrato é o LCP: sem isto a preload sai sem prioridade alta.
+      fetchPriority="high"
       className={forma === 'circulo' ? styles.circulo : styles.retrato}
     />
   )
