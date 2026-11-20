@@ -17,7 +17,7 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
 
   return (
     <div className={styles.pagina}>
-      <p className="t-label">Error</p>
+      <p className="t-meta">Error</p>
       <h1 className="t-h2">Something went wrong</h1>
       <p className="t-dim">Try again or go back to the home page.</p>
       <div className={styles.acoes}>

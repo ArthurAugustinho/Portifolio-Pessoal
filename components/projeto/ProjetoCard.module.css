@@ -2,7 +2,7 @@
   position: relative;
   background: var(--surface);
   border-radius: var(--radius);
-  transition: background var(--dur-base) var(--ease);
+  transition: background var(--dur-base) var(--ease-out);
 }
 
 .card:hover {

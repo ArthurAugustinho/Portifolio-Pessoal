@@ -44,16 +44,16 @@ export function Trajetoria() {
         </p>
 
         <dl className={styles.dados}>
-          <dt className="t-label">Location</dt>
+          <dt className="t-meta">Location</dt>
           <dd className={styles.valor}>
             <MapPin size={16} className={styles.icone} aria-hidden="true" />
             Brazil and Europe
           </dd>
 
-          <dt className="t-label">Education</dt>
+          <dt className="t-meta">Education</dt>
           <dd>Bachelor’s degree in Software Engineering, UniEVANGÉLICA</dd>
 
-          <dt className="t-label">Availability</dt>
+          <dt className="t-meta">Availability</dt>
           <dd>Freelance work and remote positions</dd>
         </dl>
       </div>

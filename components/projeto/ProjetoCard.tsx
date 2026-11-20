@@ -38,7 +38,7 @@ export function ProjetoCard({ projeto, nivelTitulo = 'h3' }: ProjetoCardProps) {
 
         <p className={`t-dim ${styles.resumo}`}>{projeto.resumo}</p>
 
-        <p className={`t-label ${styles.meta}`}>
+        <p className={`t-meta ${styles.meta}`}>
           {projeto.ano} · {projeto.stack.join(' · ')}
         </p>
       </div>

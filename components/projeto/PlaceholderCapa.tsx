@@ -19,7 +19,7 @@ export function PlaceholderCapa({
       className={`${styles.placeholder} ${classeProporcao} ${classeArredondamento}`}
       aria-hidden="true"
     >
-      <span className={`t-label ${styles.texto}`}>{nome}</span>
+      <span className={`t-meta ${styles.texto}`}>{nome}</span>
     </div>
   )
 }

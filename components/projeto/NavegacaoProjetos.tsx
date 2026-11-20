@@ -16,14 +16,14 @@ export function NavegacaoProjetos({ anterior, proximo }: NavegacaoProjetosProps)
     <nav className={styles.nav} aria-label="Project navigation">
       {anterior && (
         <Link href={`/projetos/${anterior.slug}`} className={styles.link}>
-          <span className="t-label">← Previous</span>
+          <span className="t-meta">← Previous</span>
           <span>{anterior.nome}</span>
         </Link>
       )}
 
       {proximo && (
         <Link href={`/projetos/${proximo.slug}`} className={`${styles.link} ${styles.proximo}`}>
-          <span className="t-label">Next →</span>
+          <span className="t-meta">Next →</span>
           <span>{proximo.nome}</span>
         </Link>
       )}

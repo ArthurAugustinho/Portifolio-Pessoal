@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <div className={styles.wrapper}>
-        <section id="hero" data-secao="Intro" aria-label="Intro" className={styles.hero}>
+        <section id="hero" data-secao="" aria-label="Intro" className={styles.hero}>
           <h1 className="t-hero">Arthur Augustinho</h1>
           <p className="t-lead">
             Full stack developer. I build web applications and network infrastructure.
@@ -30,7 +30,7 @@ export default function Home() {
               ))}
             </div>
           )}
-          <Link href="/projetos" className={`t-label ${styles.verTodos}`}>
+          <Link href="/projetos" className={`t-meta ${styles.verTodos}`}>
             View all projects
           </Link>
         </section>

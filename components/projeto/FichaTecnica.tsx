@@ -11,18 +11,18 @@ type FichaTecnicaProps = {
 export function FichaTecnica({ papel, periodo, stack, links }: FichaTecnicaProps) {
   return (
     <dl className={styles.grid}>
-      <dt className="t-label">Role</dt>
+      <dt className="t-meta">Role</dt>
       <dd>{papel}</dd>
 
-      <dt className="t-label">Period</dt>
+      <dt className="t-meta">Period</dt>
       <dd>{periodo}</dd>
 
-      <dt className="t-label">Stack</dt>
+      <dt className="t-meta">Stack</dt>
       <dd>{stack.join(' · ')}</dd>
 
       {links.length > 0 && (
         <>
-          <dt className="t-label">Links</dt>
+          <dt className="t-meta">Links</dt>
           <dd className={styles.links}>
             {links.map((link) => (
               <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">

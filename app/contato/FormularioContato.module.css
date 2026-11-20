@@ -15,7 +15,7 @@
   font-family: inherit;
   font-size: var(--text-body);
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease);
+  transition: background var(--dur-fast) var(--ease-out);
 }
 
 .botao:hover:not(:disabled) {

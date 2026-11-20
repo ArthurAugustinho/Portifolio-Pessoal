@@ -56,7 +56,7 @@ Nunca em parágrafo, título ou como preenchimento grande além do botão primá
 
 | Classe | Tamanho | Peso | Largura | Entrelinha · tracking | Uso |
 | --- | --- | --- | --- | --- | --- |
-| `.t-hero` | `clamp(3.5rem, 8vw, 7.25rem)` | 760 | 118 | 0,95 · −0,025em | h1 da home, exclusivo |
+| `.t-hero` | `clamp(min(3.5rem, (100vw − 3rem) / 6.4), 8vw, 7.25rem)` | 760 | 118 | 0,95 · −0,025em | h1 da home, exclusivo |
 | `.t-titulo` | `clamp(2.5rem, 6vw, 4rem)` | 700 | 118 | 1,02 · −0,015em | h1 de página interna |
 | `.t-h2` | `clamp(2.125rem, 4vw, 3rem)` | 700 | 118 | 1,05 · −0,01em | Título de seção |
 | `.t-h2-grande` | `clamp(2.75rem, 5.5vw, 4.75rem)` | 700 | 118 | 1,02 · −0,015em | Título da seção Contact, exclusivo |
@@ -65,6 +65,8 @@ Nunca em parágrafo, título ou como preenchimento grande além do botão primá
 | corpo | `clamp(1.0625rem, 0.9rem + 0.4vw, 1.125rem)` | 400 | 100 | 1,6 · 0 | Texto corrido (17 → 18px) |
 | `.t-pequeno` | 1rem / 0,9375rem | 400–600 | 100 | 1,5 · 0 | Menu (16px), botões, texto de card (15px) |
 | `.t-meta` | 0,875rem | 400–500 | 82 | 1,4 · 0 | Datas, período, legenda, caminho no header; mínimo 13px no celular |
+
+O mínimo do `.t-hero` encolhe em tela estreita: "Augustinho" mede 6,3em a `wdth` 118 e, a 56px, passa de 335px (celular de 375px). Código em MDX usa a pilha monoespaçada do sistema (`--font-mono`); nada é baixado e a fonte não aparece em rótulos. `.t-lead` (1,25rem, `--ink-2`) continua para a descrição de página interna.
 
 A classe visual não decide a tag: o nível do heading segue a hierarquia da página. Comprimento de linha de texto corrido: até 34rem (cerca de 70 caracteres).
 
