@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Header } from '@/components/layout/Header'
+import { Particulas } from '@/components/layout/Particulas'
 import { Rodape } from '@/components/layout/Rodape'
 import { SCRIPT_MOVIMENTO } from '@/lib/movimento'
 import { temPosts } from '@/lib/posts'
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_MOVIMENTO }} />
       </head>
       <body>
+        <Particulas />
         <Header temBlog={temPosts()} />
         <main id="main">{children}</main>
         <Rodape />
