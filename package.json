@@ -10,7 +10,7 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "worker:dev": "wrangler dev",
-    "worker:deploy": "next build && wrangler deploy"
+    "worker:deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
