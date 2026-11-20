@@ -1,54 +1,64 @@
 'use client'
 
+import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { ControlePausa } from './ControlePausa'
 import styles from './Header.module.css'
 
-const LINKS = [
-  { href: '/projetos', texto: 'Projects' },
+// Provisório (Etapa 1): enquanto a home não tem as seções About, Stack e
+// Experience, o menu leva às páginas que já existem. A Etapa 2 troca por
+// âncoras (#about, #stack, #experience, #projects, #contact; nas páginas
+// internas, /#about) e acrescenta Blog quando houver posts (ADR 0017).
+const MENU = [
   { href: '/sobre', texto: 'About' },
+  { href: '/projetos', texto: 'Projects' },
   { href: '/contato', texto: 'Contact' },
 ]
-
-type SecaoAtual = { numero: string; nome: string }
 
 export function Header() {
   const pathname = usePathname()
   const naHome = pathname === '/'
-  const [secao, setSecao] = useState<SecaoAtual | null>(null)
+  const [caminho, setCaminho] = useState('')
+  const [aberto, setAberto] = useState(false)
+  const botaoMenu = useRef<HTMLButtonElement>(null)
 
-  // Contador "SEC 01 · INTRO": só na home, lendo as seções marcadas com
-  // data-secao. O estado só muda dentro do callback do observer (fora da
-  // renderização), e o servidor nunca renderiza o contador, então não há
-  // divergência de hidratação.
+  // Caminho da seção visível (/projects, /contact...), só na home e só texto:
+  // não altera a URL. A seção ativa é a que cruzou 45% da altura da janela.
+  // O estado só muda dentro do callback do observer, e o servidor nunca
+  // renderiza o caminho, então não há divergência de hidratação.
   useEffect(() => {
     if (!naHome) return
 
-    const elementos = Array.from(document.querySelectorAll<HTMLElement>('[data-secao]'))
+    const secoes = Array.from(document.querySelectorAll<HTMLElement>('[data-secao]'))
+    const visiveis = new Set<HTMLElement>()
+
+    const atualizar = () => {
+      // De cima para baixo: vale a última seção que já passou da linha.
+      const atual = secoes.filter((secao) => visiveis.has(secao)).at(-1)
+      const nome = atual?.dataset.secao ?? ''
+      setCaminho(nome ? `/${nome.toLowerCase()}` : '')
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue
-          const indice = elementos.indexOf(entry.target as HTMLElement)
-          if (indice === -1) continue
-          setSecao({
-            numero: String(indice + 1).padStart(2, '0'),
-            nome: (entry.target as HTMLElement).dataset.secao ?? '',
-          })
+          const secao = entry.target as HTMLElement
+          if (entry.isIntersecting) visiveis.add(secao)
+          else visiveis.delete(secao)
         }
+        atualizar()
       },
-      // 48px = altura do header sticky.
-      { rootMargin: '-48px 0px -70% 0px', threshold: 0 },
+      // Faixa entre o header e 45% da janela: a seção cujo topo passou dela.
+      { rootMargin: '-64px 0px -55% 0px', threshold: 0 },
     )
 
-    for (const elemento of elementos) {
-      observer.observe(elemento)
-    }
-
+    for (const secao of secoes) observer.observe(secao)
     return () => observer.disconnect()
   }, [naHome])
+
+  const fechar = () => setAberto(false)
 
   return (
     <>
@@ -56,33 +66,66 @@ export function Header() {
         Skip to content
       </a>
 
-      <header className={styles.header}>
-        <Link href="/" className={`t-label ${styles.nome}`}>
-          <span className={styles.nomeCompleto}>Arthur Augustinho</span>
-          <span className={styles.nomeCurto}>A. Augustinho</span>
-        </Link>
+      <header
+        className={styles.header}
+        onKeyDown={(evento) => {
+          if (evento.key === 'Escape' && aberto) {
+            fechar()
+            botaoMenu.current?.focus()
+          }
+        }}
+      >
+        <div className={styles.barra}>
+          <Link href="/" className={styles.marca} onClick={fechar}>
+            <span className={styles.quadrado} aria-hidden="true" />
+            <span className={styles.nomeCompleto}>Arthur Augustinho</span>
+            <span className={styles.nomeCurto}>A. Augustinho</span>
+          </Link>
 
-        {/* Sempre presente a partir de 900px (mesmo vazio) para o nav
-            não migrar para a coluna do meio fora da home. */}
-        <span className={`t-label ${styles.contador}`} aria-live="polite">
-          {naHome && secao ? `SEC ${secao.numero} · ${secao.nome}` : null}
-        </span>
+          <span className={`t-meta ${styles.caminho}`} aria-hidden="true">
+            {naHome ? caminho : ''}
+          </span>
 
-        <nav aria-label="Main" className={styles.nav}>
-          {LINKS.map((link) => {
-            const atual = pathname === link.href || pathname.startsWith(`${link.href}/`)
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`t-label ${styles.link}`}
-                aria-current={atual ? 'page' : undefined}
-              >
-                {link.texto}
-              </Link>
-            )
-          })}
-        </nav>
+          <div className={styles.direita}>
+            <button
+              ref={botaoMenu}
+              type="button"
+              className={styles.botaoMenu}
+              aria-expanded={aberto}
+              aria-controls="menu-principal"
+              onClick={() => setAberto(!aberto)}
+            >
+              {aberto ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
+              Menu
+            </button>
+
+            <nav
+              id="menu-principal"
+              aria-label="Main"
+              className={`${styles.nav} ${aberto ? styles.navAberto : ''}`}
+            >
+              <ul className={styles.lista}>
+                {MENU.map((item) => {
+                  const atual = pathname === item.href || pathname.startsWith(`${item.href}/`)
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className={`t-pequeno ${styles.link}`}
+                        aria-current={atual ? 'page' : undefined}
+                        onClick={fechar}
+                      >
+                        {item.texto}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+
+            <ControlePausa />
+          </div>
+        </div>
       </header>
     </>
   )

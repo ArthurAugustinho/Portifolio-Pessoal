@@ -2,33 +2,16 @@ import Link from 'next/link'
 import styles from './Rodape.module.css'
 
 export function Rodape() {
+  // Server Component: o ano é o do build, não fixo no código.
   const ano = new Date().getFullYear()
 
   return (
     <footer className={styles.rodape}>
-      <a href="mailto:arthuraugustinho35@gmail.com">arthuraugustinho35@gmail.com</a>
-
-      <div className={styles.links}>
-        <a
-          href="https://github.com/ArthurAugustinho"
-          className="t-label"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://www.linkedin.com/in/arthur-augustinho-46076522b/"
-          className="t-label"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          LinkedIn
-        </a>
-        <Link href="/privacy" className="t-label">
+      <div className={styles.conteudo}>
+        <p className="t-meta">© {ano} Arthur Augustinho</p>
+        <Link href="/privacy" className={`t-meta ${styles.link}`}>
           Privacy
         </Link>
-        <span className="t-label">© {ano}</span>
       </div>
     </footer>
   )
