@@ -14,7 +14,7 @@ export default function PrivacyPage() {
   return (
     <div className={styles.pagina}>
       <h1 className="t-titulo">Privacy</h1>
-      <p className="t-dim">Last updated: 11 November 2026.</p>
+      <p className="t-dim">Last updated: 20 November 2026.</p>
 
       <div className={styles.corpo}>
         <section>
@@ -45,6 +45,17 @@ export default function PrivacyPage() {
             This site does not set cookies. It uses Cloudflare Web Analytics to count visits,
             which according to Cloudflare collects aggregated data without cookies or other
             client-side storage.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="t-h3">Your animation preference</h2>
+          <p>
+            The site has a button in the header that pauses its animations. If you use it, the
+            choice is saved in your browser (in local storage, under the name “movimento”) so it
+            is remembered on your next visit. It is not a cookie, it is never sent to a server
+            and it stays on your device. If your system asks for reduced motion, the animations
+            start paused.
           </p>
         </section>
 
