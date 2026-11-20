@@ -57,7 +57,7 @@ app/
 components/
   ui/  layout/  projeto/  home/
 content/projetos/*.mdx   content/posts/*.mdx   content/perfil.ts
-lib/            projetos.ts  posts.ts  tecnologias.ts  movimento.ts  schemas.ts  site.ts
+lib/            projetos.ts  posts.ts  tecnologias.ts  movimento.ts  gsap.ts  schemas.ts  site.ts
 public/imagens/  public/video/
 worker/index.ts   wrangler.jsonc   (Worker do formulário, ADR 0007)
 scripts/corrigir-prefetch.mjs   (pós-build do export estático)
