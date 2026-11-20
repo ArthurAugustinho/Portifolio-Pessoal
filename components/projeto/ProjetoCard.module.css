@@ -1,43 +1,44 @@
 .card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
   background: var(--surface);
-  border-radius: var(--radius);
-  transition: background var(--dur-base) var(--ease-out);
+  transition:
+    background var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
 }
 
 .card:hover {
   background: var(--surface-2);
-}
-
-/* --ink-dim sobre --surface-2 dá só 3,85:1 (abaixo do AA). No hover o texto
-   secundário sobe para --ink, que também reforça o estado interativo. */
-.card:hover .resumo,
-.card:hover .meta {
-  color: var(--ink);
+  border-color: var(--line-3);
 }
 
 .capa {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
-  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .corpo {
-  padding: var(--space-3);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.375rem 1.5rem;
 }
 
 .nome {
   margin: 0;
 }
 
+/* O link cobre o card inteiro; o foco desenha o anel em volta do card. */
 .link {
-  color: inherit;
-}
-
-.link:hover {
   color: inherit;
 }
 
@@ -45,7 +46,6 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: var(--radius);
 }
 
 .link:focus-visible {
@@ -55,17 +55,39 @@
 .link:focus-visible::after {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: var(--radius-lg);
 }
 
 .resumo {
-  margin: var(--space-1) 0 0;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-clamp: 2;
+  flex: 1;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
-.meta {
-  margin: var(--space-2) 0 0;
+/* Ícones da stack: chip de 30px com o logo ou o monograma. */
+.fileira {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.375rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-3);
+  border-radius: var(--radius-sm);
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-top: 0.5rem;
+  font-variant-numeric: tabular-nums;
 }

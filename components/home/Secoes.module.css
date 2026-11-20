@@ -178,21 +178,29 @@
   list-style: disc;
 }
 
-/* ---- Projects (provisório até a Etapa 3) ---- */
+/* ---- Projects e Blog ---- */
 
-.projetos {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-4);
-  margin-top: 2.5rem;
-}
-
-@media (min-width: 640px) {
-  .projetos {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.subtituloSecao {
+  margin-top: 0.75rem;
+  color: var(--ink-dim);
+  font-size: 1rem;
 }
 
 .verTodos {
   margin-top: 1.5rem;
+}
+
+.cabecalhoBlog {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 }

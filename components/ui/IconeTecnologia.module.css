@@ -16,3 +16,7 @@
   font-variation-settings: 'wdth' 100;
   line-height: 1;
 }
+
+.semBorda {
+  border: 0;
+}

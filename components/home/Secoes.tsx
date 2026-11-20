@@ -1,11 +1,16 @@
 import Link from 'next/link'
 import { IconeTecnologia } from '@/components/ui/IconeTecnologia'
+import { Carrossel } from '@/components/projeto/Carrossel'
+import { PreviaProjeto } from '@/components/projeto/PreviaProjeto'
 import { ProjetoCard } from '@/components/projeto/ProjetoCard'
+import { Botao } from '@/components/ui/Botao'
 import { blocosDeContato, EMAIL, perfil } from '@/content/perfil'
+import { getPosts } from '@/lib/posts'
 import { getProjetos, ordenarProjetos } from '@/lib/projetos'
 import { CAMADAS, tecnologiasDaCamada } from '@/lib/tecnologias'
 import { CopiarBloco, CopiarEmail } from './Copiar'
 import contato from './Contato.module.css'
+import { PostCard } from './PostCard'
 import { Secao } from './Rota'
 import styles from './Secoes.module.css'
 
@@ -103,30 +108,68 @@ export function Experiencia() {
   )
 }
 
-// Provisório até a Etapa 3 (carrossel, prévia em <dialog> e ícones da stack):
-// mantém os cards que já existiam para que o menu e o botão do hero tenham
-// para onde ir.
+// Carrossel nativo com prévia em <dialog> (ADR 0018). Os cards e as prévias
+// são renderizados aqui, no servidor; o Carrossel (cliente) só cuida de setas,
+// teclado e de quando mostrar cada prévia.
 export function Projetos() {
-  const destaques = ordenarProjetos(getProjetos())
-    .filter((projeto) => projeto.destaque)
-    .slice(0, 3)
+  const projetos = ordenarProjetos(getProjetos())
+
+  if (projetos.length === 0) return null
 
   return (
     <Secao id="projects" rotulo="Projects">
-      <h2 id="projects-titulo" className={`t-h2 ${styles.titulo}`}>
-        {perfil.projetos.titulo}
-      </h2>
-
-      {destaques.length > 0 && (
-        <div className={styles.projetos}>
-          {destaques.map((projeto) => (
-            <ProjetoCard key={projeto.slug} projeto={projeto} nivelTitulo="h3" />
-          ))}
-        </div>
-      )}
+      <Carrossel
+        cabecalho={
+          <>
+            <h2 id="projects-titulo" className={`t-h2 ${styles.titulo}`}>
+              {perfil.projetos.titulo}
+            </h2>
+            <p className={styles.subtituloSecao}>{perfil.projetos.subtitulo}</p>
+          </>
+        }
+        cards={projetos.map((projeto) => (
+          <li key={projeto.slug}>
+            <ProjetoCard projeto={projeto} previa />
+          </li>
+        ))}
+        previas={Object.fromEntries(
+          projetos.map((projeto) => [projeto.slug, <PreviaProjeto key={projeto.slug} projeto={projeto} />]),
+        )}
+      />
       <p className={styles.verTodos}>
         <Link href="/projetos">View all projects</Link>
       </p>
+    </Secao>
+  )
+}
+
+// Sem posts, a seção não existe: nada de placeholder (ADR 0017).
+export function Blog() {
+  const posts = getPosts().slice(0, 3)
+
+  if (posts.length === 0) return null
+
+  const { blog } = perfil
+
+  return (
+    <Secao id="blog" rotulo="Blog">
+      <div className={styles.cabecalhoBlog}>
+        <div>
+          <h2 id="blog-titulo" className={`t-h2 ${styles.titulo}`}>
+            {blog.titulo}
+          </h2>
+          <p className={styles.subtituloSecao}>{blog.subtitulo}</p>
+        </div>
+        <Botao href="/blog">{blog.linkTodos}</Botao>
+      </div>
+
+      <ul className={styles.posts}>
+        {posts.map((post) => (
+          <li key={post.slug}>
+            <PostCard post={post} />
+          </li>
+        ))}
+      </ul>
     </Secao>
   )
 }

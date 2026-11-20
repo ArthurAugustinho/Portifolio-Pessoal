@@ -99,15 +99,17 @@ type Props = {
   // Lado em px. O logo e o monograma ocupam o mesmo quadrado, para a mistura
   // dos dois no mesmo tile não parecer quebrada.
   tamanho?: number
+  // Monograma sem a borda própria, para quando o ícone já está dentro de um chip.
+  semBorda?: boolean
 }
 
 // Decorativo: o nome da tecnologia vem sempre como texto ao lado.
-export function IconeTecnologia({ icone, tamanho = 32 }: Props) {
+export function IconeTecnologia({ icone, tamanho = 32, semBorda = false }: Props) {
   if (icone.tipo === 'monograma') {
     return (
       <span
         aria-hidden="true"
-        className={styles.monograma}
+        className={`${styles.monograma} ${semBorda ? styles.semBorda : ''}`}
         style={{ width: tamanho, height: tamanho, fontSize: Math.round(tamanho * 0.44) }}
       >
         {icone.texto}
