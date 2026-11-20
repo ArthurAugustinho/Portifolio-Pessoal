@@ -157,6 +157,9 @@
   width: var(--lado);
   margin-inline: auto;
   perspective: 1200px;
+  /* O .giro é um quadrado que gira: nos cantos ele passa do círculo e alargava a
+     página em telas estreitas. Recortar aqui não esconde nada visível. */
+  overflow: clip;
 }
 
 @media (min-width: 640px) {
