@@ -1,6 +1,7 @@
 # 0010. Registrar domínio próprio para o site e o envio de e-mail
 
 - Status: Aceita (nome, registrador e host canônico ainda não definidos)
+- Situação em 2026-11-19: o site está publicado em `https://portfolio.arthur-web.workers.dev` como preview provisório, com a indexação bloqueada. O domínio próprio, a Resend (SPF, DKIM e DMARC) e o Web Analytics ficam para a entrega final.
 - Data: 2026-11-10
 
 ## Contexto

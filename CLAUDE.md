@@ -17,6 +17,7 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 - Instalar: `npm ci`
 - Desenvolvimento: `npm run dev`
 - Antes de todo commit: `npm run lint && npm run typecheck && npm run build`
+- Preview publicado: `https://portfolio.arthur-web.workers.dev` (Worker `portfolio`). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://portfolio.arthur-web.workers.dev NEXT_PUBLIC_INDEXAVEL=false npm run worker:deploy`. Só publique com confirmação do autor.
 
 ## Convenções
 - Design: seguir `design-system/portfolio/MASTER.md`. Nunca hex direto em componente; use as variáveis de `app/tokens.css`.
