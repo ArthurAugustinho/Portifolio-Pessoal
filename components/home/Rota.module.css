@@ -27,7 +27,18 @@
   background: var(--line-2);
 }
 
+/* Trecho já percorrido: acompanha a esfera. Parado, não aparece (escala 0
+   só depois que o movimento monta; o padrão é a linha inteira em --line-2). */
+.progresso {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: 50% 0%;
+}
+
 .esfera {
+  will-change: transform;
   position: absolute;
   left: 9px;
   top: calc(var(--secao) + 12px);
@@ -65,4 +76,10 @@
   border: 2px solid var(--ink);
   border-radius: var(--radius-xs);
   background: var(--bg);
+  transition: border-color var(--dur-line) var(--ease-out);
+}
+
+/* Nó alcançado pela esfera (posição: um dos papéis do âmbar). */
+.no[data-alcancado] {
+  border-color: var(--accent);
 }

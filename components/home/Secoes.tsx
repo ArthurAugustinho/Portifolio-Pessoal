@@ -10,6 +10,7 @@ import { getProjetos, ordenarProjetos } from '@/lib/projetos'
 import { CAMADAS, tecnologiasDaCamada } from '@/lib/tecnologias'
 import { CopiarBloco, CopiarEmail } from './Copiar'
 import contato from './Contato.module.css'
+import { MovimentoIma } from './Movimento'
 import { PostCard } from './PostCard'
 import { Secao } from './Rota'
 import styles from './Secoes.module.css'
@@ -217,6 +218,7 @@ export function Contato() {
             ))}
           </ul>
         </nav>
+        <MovimentoIma />
       </div>
     </Secao>
   )

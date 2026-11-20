@@ -39,6 +39,7 @@ export function CopiarEmail({ email }: { email: string }) {
       <a
         href={`mailto:${email}`}
         className={styles.botaoEmail}
+        data-ima={0.2}
         onClick={async (evento) => {
           // O padrão é cancelado já, porque a cópia é assíncrona; se ela não
           // for possível, abre o mailto manualmente.

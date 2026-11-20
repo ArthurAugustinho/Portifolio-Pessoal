@@ -163,6 +163,7 @@
   }
 
   .lista {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--space-3);
@@ -175,12 +176,49 @@
     min-height: 44px;
   }
 
+  /* No desktop o sublinhado é o .indicador, que desliza; o ::after do painel de
+     celular não se aplica. */
   .link[aria-current]::after {
-    bottom: 4px;
-    left: 0;
-    right: 0;
-    width: auto;
+    display: none;
   }
+}
+
+/* Sublinhado deslizante do menu: 1px de largura esticada por scaleX(--w), então
+   só transform e opacity mudam. */
+.indicador {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 1px;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  transform: translateX(var(--x, 0px)) scaleX(var(--w, 0));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dur-line) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+@media (min-width: 640px) {
+  .indicador {
+    display: block;
+  }
+}
+
+.indicador[data-visivel='true'] {
+  opacity: 1;
+}
+
+.indicador[data-salto] {
+  transition: none;
+}
+
+/* Pausa: a troca de item é imediata (MASTER, "Movimento"). */
+:global(html[data-movimento='pausado']) .indicador {
+  transition: none;
 }
 
 /* Link de pular para o conteúdo: fora da tela até receber foco. */

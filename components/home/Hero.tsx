@@ -1,6 +1,7 @@
 import { Botao } from '@/components/ui/Botao'
 import { Retrato } from '@/components/ui/Retrato'
 import { perfil } from '@/content/perfil'
+import { MovimentoHero } from './Movimento'
 import styles from './Hero.module.css'
 
 // Nós da órbita: uma requisição atravessando as camadas (ADR 0014). A posição
@@ -34,35 +35,54 @@ export function Hero() {
           <h1 id="hero-titulo" className={`t-hero ${styles.titulo}`}>
             <span className="sr-only">{nomeCompleto}</span>
             <span aria-hidden="true" className={styles.linha}>
-              {nome.primeiro}
+              <span className={styles.digita} data-digita="nome-1" data-texto={nome.primeiro}>
+                {nome.primeiro}
+              </span>
+              <span className={styles.cursorNome} data-cursor="nome-1" />
+              <span className={styles.cobertura} />
             </span>
             <span aria-hidden="true" className={`${styles.linha} ${styles.sobrenome}`}>
-              {nome.sobrenome}.
+              <span className={styles.digita} data-digita="nome-2" data-texto={`${nome.sobrenome}.`}>
+                {nome.sobrenome}.
+              </span>
+              <span className={styles.cursorNome} data-cursor="nome-2" />
+              <span className={styles.cobertura} />
             </span>
           </h1>
 
           <p className={`t-stack ${styles.stacks}`}>
-            <span aria-hidden="true">{hero.trios[0].join(' / ')}</span>
+            <span aria-hidden="true" className={styles.pilha}>
+              <span
+                className={styles.digita}
+                data-digita="stacks"
+                data-texto={hero.trios[0].join(' / ')}
+                data-trios={JSON.stringify(hero.trios)}
+              >
+                {hero.trios[0].join(' / ')}
+              </span>
+              <span className={styles.cursorStack} data-cursor="stacks" />
+              <span className={styles.cobertura} />
+            </span>
             <span className="sr-only">{todasAsStacks}</span>
           </p>
 
           <p className={styles.descricao}>{hero.descricao}</p>
 
           <div className={styles.botoes}>
-            <Botao href="#projects" variante="primario">
+            <Botao href="#projects" variante="primario" ima={0.3}>
               See the projects
             </Botao>
-            <Botao href={perfil.contato.github} externo>
+            <Botao href={perfil.contato.github} externo ima={0.3}>
               GitHub
             </Botao>
-            <Botao href={perfil.contato.linkedin} externo>
+            <Botao href={perfil.contato.linkedin} externo ima={0.3}>
               LinkedIn
             </Botao>
           </div>
         </div>
 
         <figure className={styles.orbita} aria-labelledby="orbita-legenda">
-          <div className={styles.cena}>
+          <div className={styles.cena} data-cena>
             <svg aria-hidden="true" viewBox="0 0 460 460" className={`${styles.anel} ${styles.anelInterno}`}>
               <circle cx="230" cy="230" r="156" />
             </svg>
@@ -70,8 +90,11 @@ export function Hero() {
               <circle cx="230" cy="230" r="200" />
             </svg>
 
-            {/* Pacote parado na posição inicial, sobre o nó do topo. */}
-            <span aria-hidden="true" className={styles.pacote} />
+            {/* Pacote parado na posição inicial, sobre o nó do topo. O .giro gira
+                em torno do centro e leva o pacote junto (Movimento.tsx). */}
+            <span aria-hidden="true" className={styles.giro} data-giro>
+              <span className={styles.pacote} />
+            </span>
 
             <div className={styles.foto}>
               <Retrato forma="circulo" alt={`Portrait of ${nomeCompleto}`} />
@@ -96,6 +119,7 @@ export function Hero() {
           </figcaption>
         </figure>
       </div>
+      <MovimentoHero />
     </section>
   )
 }

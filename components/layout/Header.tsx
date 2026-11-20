@@ -3,7 +3,7 @@
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ControlePausa } from './ControlePausa'
 import styles from './Header.module.css'
 
@@ -26,6 +26,10 @@ export function Header({ temBlog }: { temBlog: boolean }) {
   const [secaoAtiva, setSecaoAtiva] = useState('')
   const [aberto, setAberto] = useState(false)
   const botaoMenu = useRef<HTMLButtonElement>(null)
+  const cabecalho = useRef<HTMLElement>(null)
+  const lista = useRef<HTMLUListElement>(null)
+  const indicador = useRef<HTMLSpanElement>(null)
+  const haviaAtivo = useRef(false)
 
   // Seção visível na home: alimenta o caminho em texto (/projects, /contact...),
   // que não altera a URL, e o item ativo do menu. A seção ativa é a que cruzou
@@ -61,6 +65,60 @@ export function Header({ temBlog }: { temBlog: boolean }) {
     return () => observer.disconnect()
   }, [naHome])
 
+  // Sublinhado âmbar que desliza entre os itens (desktop). É um elemento só,
+  // posicionado por variáveis CSS (--x, --w) e movido pela transição do CSS: o
+  // GSAP não entra, e a pausa o deixa sem transição (Header.module.css). A
+  // primeira aparição não desliza do canto: salta direto.
+  useLayoutEffect(() => {
+    const itens = lista.current
+    const marca = indicador.current
+    if (!itens || !marca) return
+
+    const posicionar = () => {
+      const ativo = itens.querySelector<HTMLElement>('a[aria-current]')
+      if (!ativo) {
+        marca.dataset.visivel = 'false'
+        haviaAtivo.current = false
+        return
+      }
+      if (!haviaAtivo.current) {
+        marca.dataset.salto = ''
+        // Força o navegador a aplicar o salto antes de religar a transição.
+        void marca.offsetWidth
+      }
+      marca.style.setProperty('--x', `${ativo.offsetLeft}px`)
+      marca.style.setProperty('--w', String(ativo.offsetWidth))
+      marca.dataset.visivel = 'true'
+      if (!haviaAtivo.current) {
+        void marca.offsetWidth
+        delete marca.dataset.salto
+      }
+      haviaAtivo.current = true
+    }
+
+    posicionar()
+    window.addEventListener('resize', posicionar)
+    return () => window.removeEventListener('resize', posicionar)
+  }, [secaoAtiva, naHome, temBlog])
+
+  // Ímã do menu (fator 0,25, ponteiro fino). O GSAP sai do JavaScript inicial:
+  // este módulo só é baixado depois do carregamento, e só com mouse.
+  useEffect(() => {
+    const el = cabecalho.current
+    if (!el || !window.matchMedia('(pointer: fine)').matches) return
+
+    let ativo = true
+    let desfazer: (() => void) | undefined
+    import('@/lib/gsap').then(({ animar, ligarIma }) => {
+      if (ativo) desfazer = animar(el, (contexto) => ligarIma(el, contexto))
+    })
+
+    return () => {
+      ativo = false
+      desfazer?.()
+    }
+  }, [])
+
   const fechar = () => setAberto(false)
 
   return (
@@ -70,6 +128,7 @@ export function Header({ temBlog }: { temBlog: boolean }) {
       </a>
 
       <header
+        ref={cabecalho}
         className={styles.header}
         onKeyDown={(evento) => {
           if (evento.key === 'Escape' && aberto) {
@@ -107,7 +166,7 @@ export function Header({ temBlog }: { temBlog: boolean }) {
               aria-label="Main"
               className={`${styles.nav} ${aberto ? styles.navAberto : ''}`}
             >
-              <ul className={styles.lista}>
+              <ul ref={lista} className={styles.lista}>
                 {MENU.filter((item) => item.id !== 'blog' || temBlog).map((item) => {
                   const atual = naHome && secaoAtiva === item.id
                   return (
@@ -116,6 +175,7 @@ export function Header({ temBlog }: { temBlog: boolean }) {
                         href={naHome ? `#${item.id}` : `/#${item.id}`}
                         className={`t-pequeno ${styles.link}`}
                         aria-current={atual ? 'location' : undefined}
+                        data-ima={0.25}
                         onClick={fechar}
                       >
                         {item.texto}
@@ -123,6 +183,7 @@ export function Header({ temBlog }: { temBlog: boolean }) {
                     </li>
                   )
                 })}
+                <span ref={indicador} className={styles.indicador} aria-hidden="true" data-visivel="false" />
               </ul>
             </nav>
 
