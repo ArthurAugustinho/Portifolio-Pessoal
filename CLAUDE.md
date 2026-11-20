@@ -49,6 +49,7 @@ content/projetos/*.mdx
 lib/            projetos.ts  schemas.ts  site.ts
 public/imagens/  public/video/
 worker/index.ts   wrangler.jsonc   (Worker do formulário, ADR 0007)
+scripts/corrigir-prefetch.mjs   (pós-build do export estático)
 design-system/portfolio/MASTER.md
 docs/decisions/NNNN-titulo.md
 .github/workflows/
