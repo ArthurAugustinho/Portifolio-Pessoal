@@ -19,8 +19,10 @@ type ProjetoCardProps = {
 
 // Acima deste número o card mostra os primeiros e um chip "+N": uma stack de 15
 // ícones viraria duas fileiras e deixaria o card mais cheio que os outros. A
-// lista completa fica no rótulo, na prévia e na página do projeto.
-const MAXIMO_NO_CARD = 10
+// lista completa fica no rótulo, na prévia e na página do projeto. 9 é o que
+// cabe numa fileira nos 384px dos cards de /projetos (grade de 3 colunas); com
+// 10, o último ícone ou o "+N" caía sozinho numa segunda fileira.
+const MAXIMO_NO_CARD = 9
 
 // Fileira de ícones: um único elemento de imagem para o leitor de tela, com a
 // lista completa no rótulo; os ícones em si são decorativos.

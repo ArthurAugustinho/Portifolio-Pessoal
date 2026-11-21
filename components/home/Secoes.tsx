@@ -7,6 +7,7 @@ import { Botao } from '@/components/ui/Botao'
 import { blocosDeContato, EMAIL, perfil } from '@/content/perfil'
 import { getPosts } from '@/lib/posts'
 import { getProjetos, ordenarProjetos } from '@/lib/projetos'
+import { FORMULARIO_ATIVO } from '@/lib/site'
 import { CAMADAS, tecnologiasDaCamada } from '@/lib/tecnologias'
 import { CopiarBloco, CopiarEmail } from './Copiar'
 import contato from './Contato.module.css'
@@ -188,9 +189,13 @@ export function Contato() {
 
         <CopiarEmail email={EMAIL} />
 
-        <p className={contato.formulario}>
-          <Link href="/contato">{dados.linkFormulario}</Link>
-        </p>
+        {/* /contato só tem formulário com a chave do Turnstile na build; sem ela,
+            o link prometeria um formulário que não existe. */}
+        {FORMULARIO_ATIVO && (
+          <p className={contato.formulario}>
+            <Link href="/contato">{dados.linkFormulario}</Link>
+          </p>
+        )}
 
         <nav aria-label="Profiles">
           <ul className={contato.blocos}>

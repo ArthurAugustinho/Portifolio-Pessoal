@@ -83,6 +83,15 @@ body {
   font-weight: 400;
   font-variation-settings: 'wdth' 100;
   line-height: 1.6;
+  /* Coluna da altura da janela: em página curta (contato, 404) o rodapé fica no
+     fim da tela, em vez de subir para o meio. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 /* ---- Tipografia --------------------------------------------- */
