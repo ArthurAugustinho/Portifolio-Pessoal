@@ -1,6 +1,8 @@
 import {
   siAngular,
   siApachemaven,
+  siAstro,
+  siBetterauth,
   siBootstrap,
   siCloudflare,
   siCplusplus,
@@ -26,6 +28,7 @@ import {
   siJenkins,
   siJunit5,
   siLinux,
+  siMercadopago,
   siMysql,
   siNextdotjs,
   siNodedotjs,
@@ -38,9 +41,13 @@ import {
   siSelenium,
   siSpringboot,
   siSpringsecurity,
+  siTailscale,
+  siTailwindcss,
+  siTanstack,
   siTerraform,
   siTrello,
   siTypescript,
+  siVite,
   type SimpleIcon,
 } from 'simple-icons'
 import type { Icone } from '@/lib/tecnologias'
@@ -52,6 +59,8 @@ import styles from './IconeTecnologia.module.css'
 const LOGOS: Record<string, SimpleIcon> = {
   angular: siAngular,
   apachemaven: siApachemaven,
+  astro: siAstro,
+  betterauth: siBetterauth,
   bootstrap: siBootstrap,
   cloudflare: siCloudflare,
   cplusplus: siCplusplus,
@@ -77,6 +86,7 @@ const LOGOS: Record<string, SimpleIcon> = {
   jenkins: siJenkins,
   junit5: siJunit5,
   linux: siLinux,
+  mercadopago: siMercadopago,
   mysql: siMysql,
   nextdotjs: siNextdotjs,
   nodedotjs: siNodedotjs,
@@ -89,9 +99,13 @@ const LOGOS: Record<string, SimpleIcon> = {
   selenium: siSelenium,
   springboot: siSpringboot,
   springsecurity: siSpringsecurity,
+  tailscale: siTailscale,
+  tailwindcss: siTailwindcss,
+  tanstack: siTanstack,
   terraform: siTerraform,
   trello: siTrello,
   typescript: siTypescript,
+  vite: siVite,
 }
 
 type Props = {

@@ -45,6 +45,9 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   { id: 'html5', nome: 'HTML5', camada: 'interface', icone: logo('html5') },
   { id: 'css3', nome: 'CSS3', camada: 'interface', icone: logo('css') },
   { id: 'bootstrap', nome: 'Bootstrap', camada: 'interface', icone: logo('bootstrap') },
+  { id: 'astro', nome: 'Astro', camada: 'interface', icone: logo('astro') },
+  { id: 'tailwindcss', nome: 'Tailwind CSS', camada: 'interface', icone: logo('tailwindcss') },
+  { id: 'tanstack-query', nome: 'TanStack Query', camada: 'interface', icone: logo('tanstack') },
 
   // API
   { id: 'java', nome: 'Java', camada: 'api', icone: mono('Jv') },
@@ -56,6 +59,8 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   { id: 'flask', nome: 'Flask', camada: 'api', icone: logo('flask') },
   { id: 'python', nome: 'Python', camada: 'api', icone: logo('python') },
   { id: 'cpp', nome: 'C++', camada: 'api', icone: logo('cplusplus') },
+  { id: 'better-auth', nome: 'Better Auth', camada: 'api', icone: logo('betterauth') },
+  { id: 'mercado-pago', nome: 'Mercado Pago', camada: 'api', icone: logo('mercadopago') },
 
   // Data
   { id: 'postgresql', nome: 'PostgreSQL', camada: 'data', icone: logo('postgresql') },
@@ -72,6 +77,7 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   { id: 'grafana', nome: 'Grafana', camada: 'infrastructure', icone: logo('grafana') },
   { id: 'terraform', nome: 'Terraform', camada: 'infrastructure', icone: logo('terraform') },
   { id: 'linux', nome: 'Linux', camada: 'infrastructure', icone: logo('linux') },
+  { id: 'tailscale', nome: 'Tailscale', camada: 'infrastructure', icone: logo('tailscale') },
   { id: 'jenkins', nome: 'Jenkins', camada: 'infrastructure', icone: logo('jenkins') },
   { id: 'github-actions', nome: 'GitHub Actions', camada: 'infrastructure', icone: logo('githubactions') },
 
@@ -91,6 +97,7 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   { id: 'trello', nome: 'Trello', camada: 'tools', icone: logo('trello') },
   { id: 'maven', nome: 'Maven', camada: 'tools', icone: logo('apachemaven') },
   { id: 'npm', nome: 'npm', camada: 'tools', icone: logo('npm') },
+  { id: 'vite', nome: 'Vite', camada: 'tools', icone: logo('vite') },
 
   // Methods
   { id: 'clean-architecture', nome: 'Clean Architecture', camada: 'methods', icone: mono('Ca') },
