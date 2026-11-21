@@ -2,9 +2,9 @@
 
 Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já construídos, melhor do que o GitHub mostra. Público: recrutadores e tech leads (principalmente Irlanda e Reino Unido) e clientes de freelance; o visitante típico passa menos de dois minutos no site. Não é objetivo demonstrar variedade de tecnologias: menos stack é melhor.
 
-Estado: reformulação em andamento, seguindo o Playbook do Devkit. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
+Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); faltam domínio, Resend/Turnstile/Analytics e conteúdo (ver `docs/redesign/plano.md`, Etapa 8). As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
 
-Redesign v2 (identidade "Rota") em andamento na branch `redesign/v2`: siga `docs/redesign/plano.md`, uma etapa por vez. Especificação em `docs/redesign/home.md`; decisões nas ADRs 0012 a 0018.
+Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign/v2`; o design anterior fica na tag `v1-graphite`). Especificação em `docs/redesign/home.md` e plano em `docs/redesign/plano.md`; decisões nas ADRs 0012 a 0018.
 
 ## Stack
 - Next.js (App Router) · TypeScript estrito · CSS Modules com os tokens de `app/tokens.css`
@@ -15,7 +15,7 @@ Redesign v2 (identidade "Rota") em andamento na branch `redesign/v2`: siga `docs
 - Hospedagem: Cloudflare (preview em workers.dev; domínio próprio pendente, ADR 0010)
 - Decisões e motivos: `docs/decisions/` (use a skill "Registrar decisão técnica (ADR)" do Devkit para novas)
 
-As bibliotecas do redesign só entram quando as ADRs 0012 a 0018 estiverem com status `Aceita`, e cada instalação ainda pede confirmação.
+As ADRs 0012 a 0018 estão `Aceita`; ainda assim, cada instalação de pacote pede confirmação.
 
 Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de componentes (shadcn, MUI, Chakra), gerenciador de estado, ORM, cliente HTTP, outra biblioteca de animação além do GSAP (Motion, anime.js, Lottie, AOS, Lenis ou qualquer smooth scroll), three.js ou React Three Fiber (0014).
 
