@@ -15,6 +15,19 @@ const dadoObrigatorio = z
   .min(1)
   .refine((valor) => !valor.includes('TODO:'), 'Dado obrigatório: não pode ser TODO.')
 
+// Texto que o autor ainda não escreveu. Com a indexação liberada o build falha
+// (getProjeto); antes disso, as páginas omitem o trecho em vez de exibir "TODO:".
+export function ehPendente(texto: string): boolean {
+  return texto.trimStart().startsWith('TODO:')
+}
+
+// O corpo do MDX tem algum texto além dos parágrafos pendentes?
+export function corpoTemTexto(conteudo: string): boolean {
+  return conteudo
+    .split(/\n\s*\n/)
+    .some((bloco) => bloco.trim() !== '' && !ehPendente(bloco))
+}
+
 // Validado no build: campo ausente ou com tipo errado derruba o build
 // com o nome do arquivo, em vez de virar `undefined` silencioso na página.
 const frontmatterSchema = z

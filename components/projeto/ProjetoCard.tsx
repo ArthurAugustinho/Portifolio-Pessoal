@@ -17,14 +17,21 @@ type ProjetoCardProps = {
   previa?: boolean
 }
 
+// Acima deste número o card mostra os primeiros e um chip "+N": uma stack de 15
+// ícones viraria duas fileiras e deixaria o card mais cheio que os outros. A
+// lista completa fica no rótulo, na prévia e na página do projeto.
+const MAXIMO_NO_CARD = 10
+
 // Fileira de ícones: um único elemento de imagem para o leitor de tela, com a
 // lista completa no rótulo; os ícones em si são decorativos.
 export function FileiraDeIcones({ ids }: { ids: string[] }) {
   const nomes = nomesDasTecnologias(ids).join(', ')
+  const cortar = ids.length > MAXIMO_NO_CARD
+  const visiveis = cortar ? ids.slice(0, MAXIMO_NO_CARD - 1) : ids
 
   return (
     <span role="img" aria-label={`Built with ${nomes}`} className={styles.fileira}>
-      {ids.map((id) => {
+      {visiveis.map((id) => {
         const tecnologia = tecnologiaPorId(id)
         if (!tecnologia) return null
         return (
@@ -33,6 +40,11 @@ export function FileiraDeIcones({ ids }: { ids: string[] }) {
           </span>
         )
       })}
+      {cortar && (
+        <span aria-hidden="true" className={`${styles.chip} ${styles.mais}`}>
+          +{ids.length - visiveis.length}
+        </span>
+      )}
     </span>
   )
 }

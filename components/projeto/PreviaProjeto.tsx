@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Botao } from '@/components/ui/Botao'
 import { IconeTecnologia } from '@/components/ui/IconeTecnologia'
-import type { Projeto } from '@/lib/projetos'
+import { ehPendente, type Projeto } from '@/lib/projetos'
 import { tecnologiaPorId } from '@/lib/tecnologias'
 import { PlaceholderCapa } from './PlaceholderCapa'
 import styles from './PreviaProjeto.module.css'
@@ -45,10 +45,12 @@ export function PreviaProjeto({ projeto }: { projeto: Projeto }) {
           })}
         </ul>
 
-        <div>
-          <h3 className={`t-meta ${styles.rotulo}`}>The problem</h3>
-          <p className={styles.problema}>{projeto.problema}</p>
-        </div>
+        {!ehPendente(projeto.problema) && (
+          <div>
+            <h3 className={`t-meta ${styles.rotulo}`}>The problem</h3>
+            <p className={styles.problema}>{projeto.problema}</p>
+          </div>
+        )}
 
         <p className={`t-meta ${styles.meta}`}>
           <span>{projeto.papel}</span>

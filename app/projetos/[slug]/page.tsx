@@ -9,7 +9,13 @@ import { Galeria } from '@/components/projeto/Galeria'
 import { mdxComponents } from '@/components/projeto/mdxComponents'
 import { MidiaPrincipal } from '@/components/projeto/MidiaPrincipal'
 import { NavegacaoProjetos } from '@/components/projeto/NavegacaoProjetos'
-import { getProjeto, getProjetos, ordenarProjetos } from '@/lib/projetos'
+import {
+  corpoTemTexto,
+  ehPendente,
+  getProjeto,
+  getProjetos,
+  ordenarProjetos,
+} from '@/lib/projetos'
 import { metadataDaPagina } from '@/lib/site'
 import styles from './page.module.css'
 
@@ -72,12 +78,14 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
         />
       </div>
 
-      <aside className={`${styles.coluna} ${styles.problema}`} aria-labelledby="problema-titulo">
-        <h2 id="problema-titulo" className="t-meta">
-          The problem
-        </h2>
-        <p>{projeto.problema}</p>
-      </aside>
+      {!ehPendente(projeto.problema) && (
+        <aside className={`${styles.coluna} ${styles.problema}`} aria-labelledby="problema-titulo">
+          <h2 id="problema-titulo" className="t-meta">
+            The problem
+          </h2>
+          <p>{projeto.problema}</p>
+        </aside>
+      )}
 
       <div className={styles.larga}>
         <MidiaPrincipal projeto={projeto} />
@@ -85,6 +93,9 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
 
       <div className={styles.coluna}>
         <Corpo components={mdxComponents} />
+        {!corpoTemTexto(projeto.conteudo) && (
+          <p className={`t-meta ${styles.emBreve}`}>The full write-up is coming soon.</p>
+        )}
       </div>
 
       {projeto.capturas.length > 0 && (

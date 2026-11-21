@@ -103,6 +103,13 @@
   border-radius: var(--radius-sm);
 }
 
+/* Chip "+N" das tecnologias que o card não mostra. */
+.mais {
+  color: var(--ink-dim);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
 .rodape {
   display: flex;
   flex-wrap: wrap;
