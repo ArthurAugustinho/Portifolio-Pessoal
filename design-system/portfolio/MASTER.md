@@ -66,7 +66,7 @@ Nunca em parágrafo, título ou como preenchimento grande além do botão primá
 | `.t-pequeno` | 1rem / 0,9375rem | 400–600 | 100 | 1,5 · 0 | Menu (16px), botões, texto de card (15px) |
 | `.t-meta` | 0,875rem | 400–500 | 82 | 1,4 · 0 | Datas, período, legenda, caminho no header; mínimo 13px no celular |
 
-O mínimo do `.t-hero` encolhe em tela estreita: "Augustinho" mede 6,3em a `wdth` 118 e, a 56px, passa de 335px (celular de 375px). Código em MDX usa a pilha monoespaçada do sistema (`--font-mono`); nada é baixado e a fonte não aparece em rótulos. `.t-lead` (1,25rem, `--ink-2`) continua para a descrição de página interna.
+O mínimo do `.t-hero` encolhe em tela estreita: "Augustinho" mede 6,3em a `wdth` 118 e, a 56px, passa de 335px (celular de 375px). No hero da home o tamanho também tem teto pela coluna do texto (`Hero.module.css`, `.texto .titulo`): `min(clamp acima, 100cqw / 6,8)`, porque "Augustinho." mede cerca de 6,55em (6,67em com o cursor) e a linha não quebra. Em desktop isso dá cerca de 99px em vez de 116px e mantém 4rem (mais ou menos 80px de folga) entre o nome e a órbita. Código em MDX usa a pilha monoespaçada do sistema (`--font-mono`); nada é baixado e a fonte não aparece em rótulos. `.t-lead` (1,25rem, `--ink-2`) continua para a descrição de página interna.
 
 A classe visual não decide a tag: o nível do heading segue a hierarquia da página. Comprimento de linha de texto corrido: até 34rem (cerca de 70 caracteres).
 
