@@ -1,0 +1,294 @@
+.hero {
+  padding-block: 3rem 3rem;
+}
+
+@media (min-width: 640px) {
+  .hero {
+    padding-block: 5rem 4rem;
+  }
+}
+
+.conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.5rem;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.texto {
+  flex: 1 1 34rem;
+  min-width: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 6px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* Ponto do chip: sinal, um dos papéis do âmbar. */
+.ponto {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.titulo {
+  position: relative;
+  margin-top: 1.75rem;
+}
+
+/* Sem quebra: o cursor de digitação (inline-block) não pode cair para uma linha
+   nova quando o nome enche a coluna, o que empurraria o resto do hero. */
+.linha {
+  display: block;
+  min-height: 0.95em;
+  white-space: nowrap;
+}
+
+/* Trecho que a digitação reescreve. */
+.linha,
+.pilha {
+  position: relative;
+}
+
+.pilha {
+  display: block;
+}
+
+/* Cobertura: com movimento ativo, esconde o texto estático até o JavaScript
+   assumir (data-pronto no trecho), para a página não piscar o nome inteiro
+   antes de ele ser digitado. O texto continua no HTML e pintado por baixo, então
+   o LCP é o mesmo da página estática; a cobertura só decide o que se vê. Sem
+   JavaScript, ou pausado, ela nem aparece. A animação é a rede de segurança: se
+   o JavaScript nunca chegar, a cobertura sai em 3 s. */
+.cobertura {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  pointer-events: none;
+}
+
+:global(html[data-movimento='ativo']) .digita:not([data-pronto]) ~ .cobertura {
+  display: block;
+  animation: descobrir 0.01s 3s forwards;
+}
+
+@keyframes descobrir {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Cursor de digitação: sinal em movimento, um dos papéis do âmbar. O JavaScript
+   o mostra só enquanto digita. */
+.cursorNome,
+.cursorStack {
+  display: none;
+  background: var(--accent);
+  animation: pisca 1s steps(1) infinite;
+}
+
+.cursorNome {
+  width: 0.07em;
+  height: 0.8em;
+  margin-left: 0.05em;
+  vertical-align: -0.04em;
+}
+
+.cursorStack {
+  width: 2px;
+  height: 1em;
+  margin-left: 4px;
+  vertical-align: -0.15em;
+}
+
+@keyframes pisca {
+  50% {
+    opacity: 0;
+  }
+}
+
+.sobrenome {
+  color: var(--ink-mute);
+}
+
+.stacks {
+  margin-top: 1.5rem;
+  min-height: 1.3em;
+  color: var(--ink);
+}
+
+.descricao {
+  max-width: 34rem;
+  margin-top: 1.125rem;
+  color: var(--ink-2);
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: 2.5rem;
+}
+
+/* ---- Órbita (ADR 0014) ----
+   Camadas de profundidade já montadas, paradas: anel tracejado recuado,
+   anel externo no plano zero, nós e rótulos à frente. As medidas saem do
+   desenho de 460px em porcentagem, então a cena escala inteira. */
+
+.orbita {
+  --lado: min(100%, 300px);
+  flex: 0 0 auto;
+  width: var(--lado);
+  margin-inline: auto;
+  perspective: 1200px;
+  /* O .giro é um quadrado que gira: nos cantos ele passa do círculo e alargava a
+     página em telas estreitas. Recortar aqui não esconde nada visível. */
+  overflow: clip;
+}
+
+@media (min-width: 640px) {
+  .orbita {
+    --lado: 460px;
+  }
+}
+
+.cena {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+}
+
+.anel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+}
+
+.anelExterno circle {
+  stroke: var(--line-3);
+  stroke-width: 1.5;
+}
+
+.anelInterno {
+  transform: translateZ(-40px);
+}
+
+.anelInterno circle {
+  stroke: var(--line-1);
+  stroke-width: 1;
+  stroke-dasharray: 2 8;
+}
+
+.foto {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 60%;
+}
+
+.no {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-xs);
+  background: var(--bg);
+  transform: translate(-50%, -50%) translateZ(24px);
+}
+
+.topo {
+  left: 50%;
+  top: 6.52%;
+}
+
+.direita {
+  left: 93.48%;
+  top: 50%;
+}
+
+.base {
+  left: 50%;
+  top: 93.48%;
+}
+
+.esquerda {
+  left: 6.52%;
+  top: 50%;
+}
+
+/* O giro leva o pacote em volta do centro; parado, é só o ponto de partida. */
+.giro {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* Pacote âmbar (sinal em movimento): à frente do nó do topo. */
+.pacote {
+  position: absolute;
+  left: 50%;
+  top: 6.52%;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: translate(-50%, -50%) translateZ(32px);
+}
+
+.rotulo {
+  position: absolute;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  transform: translateZ(24px);
+}
+
+@media (min-width: 640px) {
+  .rotulo {
+    font-size: 0.875rem;
+  }
+}
+
+.rotulo-topo {
+  left: 54.35%;
+  top: 2.6%;
+}
+
+.rotulo-direita {
+  right: 9.78%;
+  top: 40.4%;
+}
+
+.rotulo-base {
+  left: 54.35%;
+  top: 92.2%;
+}
+
+.rotulo-esquerda {
+  left: 0;
+  top: 40.4%;
+}
+
+.legenda {
+  margin-top: 1rem;
+  text-align: center;
+}

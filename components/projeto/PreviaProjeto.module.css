@@ -1,0 +1,91 @@
+.previa {
+  display: flex;
+  flex-direction: column;
+}
+
+.capa {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .corpo {
+    padding: 1.75rem 2rem 2rem;
+  }
+}
+
+.resumo {
+  color: var(--ink-2);
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tecnologia {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.625rem 0.25rem 0.375rem;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+}
+
+.rotulo {
+  margin-bottom: 0.25rem;
+}
+
+.problema {
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Mesmas medidas do botão secundário (Botao.module.css). */
+.fechar {
+  min-height: 48px;
+  padding-inline: 24px;
+  border: 1px solid var(--line-3);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.fechar:hover {
+  background: var(--surface);
+  border-color: var(--line-ui);
+}

@@ -3,7 +3,7 @@
   justify-content: space-between;
   gap: var(--space-3);
   padding-top: var(--space-4);
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--line-1);
 }
 
 .link {
@@ -16,4 +16,17 @@
   text-align: right;
   align-items: flex-end;
   margin-left: auto;
+}
+
+.link:hover .nome {
+  text-decoration: underline;
+  text-decoration-color: var(--line-ui);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
 }

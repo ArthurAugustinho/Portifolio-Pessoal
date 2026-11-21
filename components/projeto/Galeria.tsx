@@ -26,7 +26,7 @@ export function Galeria({ capturas }: GaleriaProps) {
               className={styles.imagem}
             />
           </JanelaNavegador>
-          <figcaption className="t-label">{captura.legenda}</figcaption>
+          <figcaption className="t-meta">{captura.legenda}</figcaption>
         </figure>
       ))}
     </div>

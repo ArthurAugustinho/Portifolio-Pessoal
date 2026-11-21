@@ -1,43 +1,17 @@
 // app/fonts.ts
 //
-// next/font baixa os arquivos no build e os serve do seu próprio domínio.
+// next/font baixa o arquivo no build e o serve do próprio domínio.
 // Sem requisição ao Google em runtime, sem layout shift, sem custo.
+//
+// Uma família só (ADR 0012): Archivo variável com os eixos wght (padrão)
+// e wdth. A largura é aplicada por classe com font-variation-settings
+// (ver tokens.css); não há segunda fonte.
 
-import { Inter, IBM_Plex_Mono } from 'next/font/google'
+import { Archivo } from 'next/font/google'
 
-export const sans = Inter({
+export const sans = Archivo({
   subsets: ['latin'],
+  axes: ['wdth'],
   variable: '--font-sans',
   display: 'swap',
-  // Só os dois pesos usados no site. Cada peso extra é payload.
-  weight: ['400', '700'],
 })
-
-export const mono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-  weight: ['400'],
-})
-
-// ---------------------------------------------------------------
-// app/layout.tsx
-// ---------------------------------------------------------------
-//
-// import { sans, mono } from './fonts'
-// import './tokens.css'
-//
-// export default function RootLayout({
-//   children,
-// }: {
-//   children: React.ReactNode
-// }) {
-//   return (
-//     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
-//       <body>{children}</body>
-//     </html>
-//   )
-// }
-//
-// O lang="en" não é detalhe: define hifenização, corretor
-// ortográfico e o idioma anunciado por leitor de tela.

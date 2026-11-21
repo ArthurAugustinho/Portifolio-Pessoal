@@ -1,3 +1,4 @@
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import type { Projeto } from '@/lib/projetos'
 import styles from './NavegacaoProjetos.module.css'
@@ -16,15 +17,21 @@ export function NavegacaoProjetos({ anterior, proximo }: NavegacaoProjetosProps)
     <nav className={styles.nav} aria-label="Project navigation">
       {anterior && (
         <Link href={`/projetos/${anterior.slug}`} className={styles.link}>
-          <span className="t-label">← Previous</span>
-          <span>{anterior.nome}</span>
+          <span className={`t-meta ${styles.rotulo}`}>
+            <ArrowLeft size={14} aria-hidden="true" />
+            Previous
+          </span>
+          <span className={`t-h3 ${styles.nome}`}>{anterior.nome}</span>
         </Link>
       )}
 
       {proximo && (
         <Link href={`/projetos/${proximo.slug}`} className={`${styles.link} ${styles.proximo}`}>
-          <span className="t-label">Next →</span>
-          <span>{proximo.nome}</span>
+          <span className={`t-meta ${styles.rotulo}`}>
+            Next
+            <ArrowRight size={14} aria-hidden="true" />
+          </span>
+          <span className={`t-h3 ${styles.nome}`}>{proximo.nome}</span>
         </Link>
       )}
     </nav>

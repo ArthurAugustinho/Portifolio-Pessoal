@@ -1,0 +1,163 @@
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.setas {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.seta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line-3);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.seta:hover:not(:disabled) {
+  background: var(--surface);
+  border-color: var(--line-ui);
+}
+
+.seta:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ---- Faixa: rolagem horizontal nativa ---- */
+
+.faixa {
+  margin-top: 2.5rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-3) transparent;
+  /* Folga para o anel de foco dos cards não ser cortado. */
+  padding: 4px;
+  margin-inline: -4px;
+}
+
+.lista {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+}
+
+.lista > li {
+  flex: 0 0 min(86vw, 27.5rem);
+}
+
+/* Arrasto com o mouse (CarrosselMovimento.ts liga o atributo): mão aberta, e
+   fechada enquanto arrasta, sem selecionar texto nem arrastar a imagem do card. */
+.faixa[data-arrasto] {
+  cursor: grab;
+}
+
+.faixa[data-arrastando] {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.faixa[data-arrasto] img,
+.faixa[data-arrasto] a {
+  -webkit-user-drag: none;
+}
+
+/* Com toque, cada gesto para num card. Com mouse, a rolagem é livre. */
+@media (pointer: coarse) {
+  .faixa {
+    scroll-snap-type: x mandatory;
+  }
+
+  .lista > li {
+    scroll-snap-align: start;
+  }
+}
+
+/* ---- Prévia (ADR 0018) ---- */
+
+.dialogo {
+  width: min(40rem, calc(100% - 2.5rem));
+  max-height: calc(100dvh - 2.5rem);
+  padding: 0;
+  margin: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.dialogo::backdrop {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+}
+
+/* Sem rolar a página por trás do diálogo. A barra de rolagem some, então o
+   Carrossel põe em --largura-scroll a largura dela e o conteúdo não dá salto. */
+:global(html:has(dialog[open])) {
+  overflow: hidden;
+  padding-right: var(--largura-scroll, 0);
+}
+
+/* Fundo do diálogo aparece junto com o Flip; sem animação quando pausado. */
+.dialogo[open]::backdrop {
+  animation: aparecer var(--dur-slow) var(--ease-out);
+}
+
+:global(html[data-movimento='pausado']) .dialogo[open]::backdrop {
+  animation: none;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---- Cursor contextual ("Drag" sobre a faixa, "Open" sobre um card) ----
+   Círculo de 76px com borda --ink, decorativo e fora da interação. Oculto até o
+   movimento carregar; o cursor nativo continua visível por cima. */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  background: var(--bg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cursor > span {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Só com mouse. */
+@media not (pointer: fine) {
+  .cursor {
+    display: none;
+  }
+}

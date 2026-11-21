@@ -1,5 +1,6 @@
 import { compile, run } from '@mdx-js/mdx'
 import type { Metadata } from 'next'
+import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import * as runtime from 'react/jsx-runtime'
@@ -54,11 +55,12 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
   return (
     <article className={styles.pagina}>
       <header className={`${styles.coluna} ${styles.cabecalho}`}>
-        <Link href="/projetos" className="t-label">
-          ← Projects
+        <Link href="/projetos" className={`t-meta ${styles.voltar}`}>
+          <ArrowLeft size={16} aria-hidden="true" />
+          Projects
         </Link>
         <h1 className="t-titulo">{projeto.nome}</h1>
-        <p className="t-dim">{projeto.resumo}</p>
+        <p className="t-lead">{projeto.resumo}</p>
       </header>
 
       <div className={styles.coluna}>
@@ -69,6 +71,13 @@ export default async function ProjetoPage({ params }: PageProps<'/projetos/[slug
           links={projeto.links}
         />
       </div>
+
+      <aside className={`${styles.coluna} ${styles.problema}`} aria-labelledby="problema-titulo">
+        <h2 id="problema-titulo" className="t-meta">
+          The problem
+        </h2>
+        <p>{projeto.problema}</p>
+      </aside>
 
       <div className={styles.larga}>
         <MidiaPrincipal projeto={projeto} />

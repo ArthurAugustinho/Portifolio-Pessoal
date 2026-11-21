@@ -46,7 +46,7 @@ export const Campo = forwardRef<HTMLInputElement | HTMLTextAreaElement, CampoPro
       const campoProps = resto as TextareaHTMLAttributes<HTMLTextAreaElement>
       return (
         <div className={styles.campo}>
-          <label htmlFor={resto.name} className="t-label">
+          <label htmlFor={resto.name} className="t-meta">
             {label}
           </label>
           <textarea
@@ -69,7 +69,7 @@ export const Campo = forwardRef<HTMLInputElement | HTMLTextAreaElement, CampoPro
     const campoProps = resto as InputHTMLAttributes<HTMLInputElement>
     return (
       <div className={styles.campo}>
-        <label htmlFor={resto.name} className="t-label">
+        <label htmlFor={resto.name} className="t-meta">
           {label}
         </label>
         <input

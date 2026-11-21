@@ -3,9 +3,17 @@ import path from 'node:path'
 import matter from 'gray-matter'
 import { z } from 'zod'
 import { INDEXAVEL } from '@/lib/site'
+import { tecnologiaPorId } from '@/lib/tecnologias'
 
 const PROJETOS_DIR = path.join(process.cwd(), 'content/projetos')
 const FORMATO_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+// Campos que o card, a prévia e a ordenação leem como dado, não como texto de
+// página: não aceitam TODO (o projeto fica fora até o autor fornecer o dado).
+const dadoObrigatorio = z
+  .string()
+  .min(1)
+  .refine((valor) => !valor.includes('TODO:'), 'Dado obrigatório: não pode ser TODO.')
 
 // Validado no build: campo ausente ou com tipo errado derruba o build
 // com o nome do arquivo, em vez de virar `undefined` silencioso na página.
@@ -15,10 +23,25 @@ const frontmatterSchema = z
     nome: z.string().min(1),
     resumo: z.string().min(1),
     ano: z.number().int(),
-    stack: z.array(z.string().min(1)).min(1),
+    // ids de lib/tecnologias.ts: um erro de digitação derruba o build com o
+    // nome do arquivo, em vez de virar um ícone ausente.
+    stack: z
+      .array(z.string().min(1))
+      .min(1)
+      .superRefine((ids, ctx) => {
+        const desconhecidos = ids.filter((id) => !tecnologiaPorId(id))
+        if (desconhecidos.length > 0) {
+          ctx.addIssue({
+            code: 'custom',
+            message: `Tecnologia fora de lib/tecnologias.ts: ${desconhecidos.join(', ')}.`,
+          })
+        }
+      }),
     destaque: z.boolean(),
-    papel: z.string().min(1),
-    periodo: z.string().min(1),
+    papel: dadoObrigatorio,
+    periodo: dadoObrigatorio,
+    // texto curto da prévia ("The problem"); pode ter TODO enquanto o autor não escreve
+    problema: z.string().min(1),
     links: z.array(z.object({ label: z.string().min(1), url: z.url() }).strict()).default([]),
     capa: z.string().min(1).optional(),
     video: z.object({ src: z.string().min(1), poster: z.string().min(1) }).strict().optional(),
@@ -58,10 +81,12 @@ export type Projeto = {
   nome: string
   resumo: string
   ano: number
+  // ids de lib/tecnologias.ts
   stack: string[]
   destaque: boolean
   papel: string
   periodo: string
+  problema: string
   links: ProjetoLink[]
   capa?: string
   video?: ProjetoVideo
@@ -122,6 +147,7 @@ export function getProjeto(slug: string): Projeto | null {
     destaque: frontmatter.destaque,
     papel: frontmatter.papel,
     periodo: frontmatter.periodo,
+    problema: frontmatter.problema,
     links: frontmatter.links,
     capa: resolverCaminhoPublico(frontmatter.capa),
     video: resolverVideo(frontmatter.video),

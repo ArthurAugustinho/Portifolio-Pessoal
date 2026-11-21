@@ -1,5 +1,6 @@
 .janela {
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
@@ -16,7 +17,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--rule);
+  background: var(--line-3);
 }
 
 .conteudo {

@@ -1,0 +1,11 @@
+/* Atrás de todo o conteúdo: z-index negativo fica acima só do fundo da página,
+   então cards, header e textos (que têm fundo próprio ou vêm depois) cobrem as
+   partículas. Decorativo: não recebe ponteiro nem foco. */
+.fundo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}

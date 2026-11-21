@@ -4,14 +4,20 @@ Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já constru
 
 Estado: reformulação em andamento, seguindo o Playbook do Devkit. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
 
+Redesign v2 (identidade "Rota") em andamento na branch `redesign/v2`: siga `docs/redesign/plano.md`, uma etapa por vez. Especificação em `docs/redesign/home.md`; decisões nas ADRs 0012 a 0018.
+
 ## Stack
 - Next.js (App Router) · TypeScript estrito · CSS Modules com os tokens de `app/tokens.css`
 - Conteúdo em MDX em `content/projetos/`, compilado com `@mdx-js/mdx` (0003) e validado com Zod em `lib/projetos.ts`
-- `next/font` para tipografia · Lucide para ícones · React Hook Form + Zod no formulário · Resend para o e-mail
-- Hospedagem: Cloudflare (migração da Vercel em andamento)
+- `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, com monograma de reserva (0016) · React Hook Form + Zod no formulário · Resend para o e-mail
+- Posts do LinkedIn em MDX em `content/posts/`, validados em `lib/posts.ts` (0017)
+- Movimento: GSAP com `@gsap/react` (0013); fundo de partículas conforme a 0015; órbita 3D do hero em CSS 3D, sem three.js (0014)
+- Hospedagem: Cloudflare (preview em workers.dev; domínio próprio pendente, ADR 0010)
 - Decisões e motivos: `docs/decisions/` (use a skill "Registrar decisão técnica (ADR)" do Devkit para novas)
 
-Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de componentes (shadcn, MUI, Chakra), gerenciador de estado, ORM, cliente HTTP, biblioteca de animação. Fase posterior, ainda não instalar: Motion, GSAP ScrollTrigger, React Three Fiber.
+As bibliotecas do redesign só entram quando as ADRs 0012 a 0018 estiverem com status `Aceita`, e cada instalação ainda pede confirmação.
+
+Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de componentes (shadcn, MUI, Chakra), gerenciador de estado, ORM, cliente HTTP, outra biblioteca de animação além do GSAP (Motion, anime.js, Lottie, AOS, Lenis ou qualquer smooth scroll), three.js ou React Three Fiber (0014).
 
 ## Comandos
 - Instalar: `npm ci`
@@ -22,6 +28,8 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 ## Convenções
 - Design: seguir `design-system/portfolio/MASTER.md`. Nunca hex direto em componente; use as variáveis de `app/tokens.css`.
 - Mobile-first: testar em 375px antes de considerar uma seção pronta; responsivo até 1920px.
+- Movimento: siga o catálogo do MASTER. Toda animação é criada dentro de `gsap.matchMedia()` e obedece ao controle de pausa global; CSS para hover e foco, GSAP só para sequência, scroll e física.
+- Perfil (About, ficha, experiência, contatos, camadas da Stack) só em `content/perfil.ts`; tecnologias e ícones só em `lib/tecnologias.ts`.
 - Conteúdo de projeto só em `content/projetos/*.mdx`, nunca espalhado em componentes. O schema do frontmatter está em `lib/projetos.ts`; o nome do arquivo é o `slug`.
 - Mídia ausente em `public/` cai no placeholder, nunca numa imagem quebrada. Imagens via `next/image`, com `width`/`height` explícitos, já otimizadas (WebP/AVIF) no repositório.
 - Uma tarefa por vez. Não avance para a próxima sem confirmação.
@@ -34,6 +42,9 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 Não é opcional e não precisa ser pedido:
 - `:focus-visible` visível em tudo que recebe foco
 - `prefers-reduced-motion` respeitado
+- Todo conteúdo presente no HTML exportado, na forma final, sem depender de JavaScript; animação é camada por cima
+- Movimento que começa sozinho e dura mais de 5 s pode ser pausado pelo controle global (WCAG 2.2.2)
+- Texto animado tem cópia completa para leitor de tela (`sr-only`) e a cópia animada fica `aria-hidden`
 - `alt` descritivo em toda imagem, nunca "imagem do projeto"
 - Um `h1` por página e hierarquia de headings correta
 - `lang` correto no `<html>`
@@ -42,16 +53,17 @@ Não é opcional e não precisa ser pedido:
 ```
 app/
   layout.tsx  page.tsx  tokens.css  globals.css  fonts.ts
-  sobre/  projetos/  projetos/[slug]/  contato/
+  sobre/  projetos/  projetos/[slug]/  contato/  privacy/  blog/
 components/
-  ui/  layout/  projeto/
-content/projetos/*.mdx
-lib/            projetos.ts  schemas.ts  site.ts
+  ui/  layout/  projeto/  home/
+content/projetos/*.mdx   content/posts/*.mdx   content/perfil.ts
+lib/            projetos.ts  posts.ts  tecnologias.ts  movimento.ts  gsap.ts  schemas.ts  site.ts
 public/imagens/  public/video/
 worker/index.ts   wrangler.jsonc   (Worker do formulário, ADR 0007)
 scripts/corrigir-prefetch.mjs   (pós-build do export estático)
 design-system/portfolio/MASTER.md
 docs/decisions/NNNN-titulo.md
+docs/redesign/   plano.md  home.md  esboco/ (referência, fora do build)
 .github/workflows/
 ```
 A estrutura muda com a reformulação (privacidade, headers, analytics); siga o ADR correspondente.

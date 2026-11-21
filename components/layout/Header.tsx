@@ -1,54 +1,125 @@
 'use client'
 
+import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { ControlePausa } from './ControlePausa'
 import styles from './Header.module.css'
 
-const LINKS = [
-  { href: '/projetos', texto: 'Projects' },
-  { href: '/sobre', texto: 'About' },
-  { href: '/contato', texto: 'Contact' },
+// Itens do menu: ids das seções da home (home.md §2). Na home são âncoras
+// (#about); nas páginas internas, /#about. Blog só aparece quando há posts
+// (ADR 0017).
+const MENU = [
+  { id: 'about', texto: 'About' },
+  { id: 'stack', texto: 'Stack' },
+  { id: 'experience', texto: 'Experience' },
+  { id: 'projects', texto: 'Projects' },
+  { id: 'blog', texto: 'Blog' },
+  { id: 'contact', texto: 'Contact' },
 ]
 
-type SecaoAtual = { numero: string; nome: string }
-
-export function Header() {
+export function Header({ temBlog }: { temBlog: boolean }) {
   const pathname = usePathname()
   const naHome = pathname === '/'
-  const [secao, setSecao] = useState<SecaoAtual | null>(null)
+  // Id da seção visível na home ('' no topo).
+  const [secaoAtiva, setSecaoAtiva] = useState('')
+  const [aberto, setAberto] = useState(false)
+  const botaoMenu = useRef<HTMLButtonElement>(null)
+  const cabecalho = useRef<HTMLElement>(null)
+  const lista = useRef<HTMLUListElement>(null)
+  const indicador = useRef<HTMLSpanElement>(null)
+  const haviaAtivo = useRef(false)
 
-  // Contador "SEC 01 · INTRO": só na home, lendo as seções marcadas com
-  // data-secao. O estado só muda dentro do callback do observer (fora da
-  // renderização), e o servidor nunca renderiza o contador, então não há
-  // divergência de hidratação.
+  // Seção visível na home: alimenta o caminho em texto (/projects, /contact...),
+  // que não altera a URL, e o item ativo do menu. A seção ativa é a que cruzou
+  // 45% da altura da janela.
+  // O estado só muda dentro do callback do observer, e o servidor nunca
+  // renderiza o caminho, então não há divergência de hidratação.
   useEffect(() => {
     if (!naHome) return
 
-    const elementos = Array.from(document.querySelectorAll<HTMLElement>('[data-secao]'))
+    const secoes = Array.from(document.querySelectorAll<HTMLElement>('[data-secao]'))
+    const visiveis = new Set<HTMLElement>()
+
+    const atualizar = () => {
+      // De cima para baixo: vale a última seção que já passou da linha.
+      const atual = secoes.filter((secao) => visiveis.has(secao)).at(-1)
+      setSecaoAtiva(atual?.dataset.secao ?? '')
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue
-          const indice = elementos.indexOf(entry.target as HTMLElement)
-          if (indice === -1) continue
-          setSecao({
-            numero: String(indice + 1).padStart(2, '0'),
-            nome: (entry.target as HTMLElement).dataset.secao ?? '',
-          })
+          const secao = entry.target as HTMLElement
+          if (entry.isIntersecting) visiveis.add(secao)
+          else visiveis.delete(secao)
         }
+        atualizar()
       },
-      // 48px = altura do header sticky.
-      { rootMargin: '-48px 0px -70% 0px', threshold: 0 },
+      // Faixa entre o header e 45% da janela: a seção cujo topo passou dela.
+      { rootMargin: '-64px 0px -55% 0px', threshold: 0 },
     )
 
-    for (const elemento of elementos) {
-      observer.observe(elemento)
-    }
-
+    for (const secao of secoes) observer.observe(secao)
     return () => observer.disconnect()
   }, [naHome])
+
+  // Sublinhado âmbar que desliza entre os itens (desktop). É um elemento só,
+  // posicionado por variáveis CSS (--x, --w) e movido pela transição do CSS: o
+  // GSAP não entra, e a pausa o deixa sem transição (Header.module.css). A
+  // primeira aparição não desliza do canto: salta direto.
+  useLayoutEffect(() => {
+    const itens = lista.current
+    const marca = indicador.current
+    if (!itens || !marca) return
+
+    const posicionar = () => {
+      const ativo = itens.querySelector<HTMLElement>('a[aria-current]')
+      if (!ativo) {
+        marca.dataset.visivel = 'false'
+        haviaAtivo.current = false
+        return
+      }
+      if (!haviaAtivo.current) {
+        marca.dataset.salto = ''
+        // Força o navegador a aplicar o salto antes de religar a transição.
+        void marca.offsetWidth
+      }
+      marca.style.setProperty('--x', `${ativo.offsetLeft}px`)
+      marca.style.setProperty('--w', String(ativo.offsetWidth))
+      marca.dataset.visivel = 'true'
+      if (!haviaAtivo.current) {
+        void marca.offsetWidth
+        delete marca.dataset.salto
+      }
+      haviaAtivo.current = true
+    }
+
+    posicionar()
+    window.addEventListener('resize', posicionar)
+    return () => window.removeEventListener('resize', posicionar)
+  }, [secaoAtiva, naHome, temBlog])
+
+  // Ímã do menu (fator 0,25, ponteiro fino). O GSAP sai do JavaScript inicial:
+  // este módulo só é baixado depois do carregamento, e só com mouse.
+  useEffect(() => {
+    const el = cabecalho.current
+    if (!el || !window.matchMedia('(pointer: fine)').matches) return
+
+    let ativo = true
+    let desfazer: (() => void) | undefined
+    import('@/lib/gsap').then(({ animar, ligarIma }) => {
+      if (ativo) desfazer = animar(el, (contexto) => ligarIma(el, contexto))
+    })
+
+    return () => {
+      ativo = false
+      desfazer?.()
+    }
+  }, [])
+
+  const fechar = () => setAberto(false)
 
   return (
     <>
@@ -56,33 +127,69 @@ export function Header() {
         Skip to content
       </a>
 
-      <header className={styles.header}>
-        <Link href="/" className={`t-label ${styles.nome}`}>
-          <span className={styles.nomeCompleto}>Arthur Augustinho</span>
-          <span className={styles.nomeCurto}>A. Augustinho</span>
-        </Link>
+      <header
+        ref={cabecalho}
+        className={styles.header}
+        onKeyDown={(evento) => {
+          if (evento.key === 'Escape' && aberto) {
+            fechar()
+            botaoMenu.current?.focus()
+          }
+        }}
+      >
+        <div className={styles.barra}>
+          <Link href="/" className={styles.marca} onClick={fechar}>
+            <span className={styles.quadrado} aria-hidden="true" />
+            <span className={styles.nomeCompleto}>Arthur Augustinho</span>
+            <span className={styles.nomeCurto}>A. Augustinho</span>
+          </Link>
 
-        {/* Sempre presente a partir de 900px (mesmo vazio) para o nav
-            não migrar para a coluna do meio fora da home. */}
-        <span className={`t-label ${styles.contador}`} aria-live="polite">
-          {naHome && secao ? `SEC ${secao.numero} · ${secao.nome}` : null}
-        </span>
+          <span className={`t-meta ${styles.caminho}`} aria-hidden="true">
+            {naHome && secaoAtiva ? `/${secaoAtiva}` : ''}
+          </span>
 
-        <nav aria-label="Main" className={styles.nav}>
-          {LINKS.map((link) => {
-            const atual = pathname === link.href || pathname.startsWith(`${link.href}/`)
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`t-label ${styles.link}`}
-                aria-current={atual ? 'page' : undefined}
-              >
-                {link.texto}
-              </Link>
-            )
-          })}
-        </nav>
+          <div className={styles.direita}>
+            <button
+              ref={botaoMenu}
+              type="button"
+              className={styles.botaoMenu}
+              aria-expanded={aberto}
+              aria-controls="menu-principal"
+              onClick={() => setAberto(!aberto)}
+            >
+              {aberto ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
+              Menu
+            </button>
+
+            <nav
+              id="menu-principal"
+              aria-label="Main"
+              className={`${styles.nav} ${aberto ? styles.navAberto : ''}`}
+            >
+              <ul ref={lista} className={styles.lista}>
+                {MENU.filter((item) => item.id !== 'blog' || temBlog).map((item) => {
+                  const atual = naHome && secaoAtiva === item.id
+                  return (
+                    <li key={item.id}>
+                      <Link
+                        href={naHome ? `#${item.id}` : `/#${item.id}`}
+                        className={`t-pequeno ${styles.link}`}
+                        aria-current={atual ? 'location' : undefined}
+                        data-ima={0.25}
+                        onClick={fechar}
+                      >
+                        {item.texto}
+                      </Link>
+                    </li>
+                  )
+                })}
+                <span ref={indicador} className={styles.indicador} aria-hidden="true" data-visivel="false" />
+              </ul>
+            </nav>
+
+            <ControlePausa />
+          </div>
+        </div>
       </header>
     </>
   )

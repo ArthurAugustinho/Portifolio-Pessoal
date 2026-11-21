@@ -10,9 +10,9 @@ export const dynamic = 'force-static'
 // ImageResponse (Satori) não lê variáveis CSS — os valores abaixo
 // espelham --bg, --ink e --ink-dim de tokens.css. Atualize os dois
 // juntos se a paleta mudar.
-const BG = '#0b0b0d'
-const INK = '#f5f5f7'
-const INK_DIM = '#86868b'
+const BG = '#0e1621'
+const INK = '#e9eef3'
+const INK_DIM = '#93a3b5'
 
 export default async function Image() {
   const interBold = await readFile(path.join(process.cwd(), 'app/Inter-Bold.woff'))

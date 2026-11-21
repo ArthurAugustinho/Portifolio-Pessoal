@@ -4,14 +4,29 @@
   gap: var(--space-1);
 }
 
+/* Campo: borda --line-ui (3:1 contra o fundo), porque o campo não tem texto
+   próprio que o identifique (MASTER). Foco: o anel âmbar global. */
 .controle {
   background: var(--surface);
-  border: 0;
+  border: 1px solid var(--line-ui);
   border-radius: var(--radius-sm);
-  padding: var(--space-2);
+  padding: 0.75rem 1rem;
   color: var(--ink);
   font-family: inherit;
   font-size: var(--text-body);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.controle:hover {
+  border-color: var(--ink-dim);
+}
+
+.controle[aria-invalid='true'] {
+  border-color: var(--error);
+}
+
+textarea.controle {
+  min-height: 9rem;
 }
 
 .erro {
