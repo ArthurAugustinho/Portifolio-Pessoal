@@ -1,11 +1,46 @@
 .placeholder {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-3);
   width: 100%;
   background: var(--surface-2);
   text-align: center;
   padding: var(--space-2);
+}
+
+/* Linha com três nós quadrados, no mesmo desenho dos nós da rota da home
+   (quadrado com borda e raio xs). Decorativa: tons de linha, sem acento. O nome
+   e a rota formam um conjunto só, centralizado, para não se separarem quando o
+   bloco é largo (página do projeto). */
+.rota {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 76%;
+  max-width: 24rem;
+  height: 14px;
+}
+
+.rota::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--line-3);
+}
+
+.no {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--line-ui);
+  border-radius: var(--radius-xs);
+  background: var(--surface-2);
 }
 
 /* O nome do projeto na capa sem imagem fica em --ink, mais forte que o

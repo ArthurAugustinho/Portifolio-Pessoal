@@ -116,7 +116,7 @@ Regras:
 - **Nó da rota**: quadrado de 18px, borda 2px `--ink` (ou `--accent` quando alcançado), fundo `--bg`, raio 3px.
 - **Bloco de contato**: tile com ícone e rótulo; os que não são link (Discord) copiam para a área de transferência e confirmam com "Copied".
 - **Prévia do projeto**: `<dialog>` com superfície `--surface`, borda `--line-2`, raio 10px; mídia, resumo, ícones, "The problem" e "View project" (botão primário).
-- Mantidos da v1: `JanelaNavegador` e `PlaceholderCapa` (este com as cores novas).
+- Mantidos da v1: `JanelaNavegador` e `PlaceholderCapa` (este com as cores novas). A capa sem imagem mostra o nome do projeto e uma rota parada (linha de 1px com três nós quadrados em `--line-3` e `--line-ui`, sem acento); some quando a imagem real existe.
 
 ## Acessibilidade
 

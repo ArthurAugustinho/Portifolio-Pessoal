@@ -25,6 +25,14 @@ export function PlaceholderCapa({
       aria-hidden="true"
     >
       <span className={`t-meta ${styles.texto}`}>{nome}</span>
+      {/* A rota do site (linha e nós quadrados), parada: marca que a imagem
+          ainda não chegou sem inventar uma. Sem movimento, então não passa
+          pelo controle de pausa. */}
+      <span className={styles.rota}>
+        <span className={styles.no} />
+        <span className={styles.no} />
+        <span className={styles.no} />
+      </span>
     </div>
   )
 }
