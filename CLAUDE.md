@@ -2,7 +2,7 @@
 
 Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já construídos, melhor do que o GitHub mostra. Público: recrutadores e tech leads (principalmente Irlanda e Reino Unido) e clientes de freelance; o visitante típico passa menos de dois minutos no site. Não é objetivo demonstrar variedade de tecnologias: menos stack é melhor.
 
-Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); faltam domínio, Resend/Turnstile/Analytics e conteúdo (ver `docs/redesign/plano.md`, Etapa 8). Projetos do MVP: Alexo, Mica Caffe, Finap e Pass+; o corpo do Finap está escrito, os outros ainda têm `TODO:` (capas também). As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
+Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); faltam domínio, Resend/Turnstile/Analytics e conteúdo (ver `docs/redesign/plano.md`, Etapa 8). Projetos do MVP: Alexo, Mica Café, Finap e Pass+; o corpo do Finap está escrito, os outros ainda têm `TODO:` (capas também). As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
 
 Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign/v2`; o design anterior fica na tag `v1-graphite`). Especificação em `docs/redesign/home.md` e plano em `docs/redesign/plano.md`; decisões nas ADRs 0012 a 0018.
 
