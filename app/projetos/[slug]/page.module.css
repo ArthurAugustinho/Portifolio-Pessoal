@@ -7,10 +7,12 @@
   padding: var(--space-4) var(--gutter) var(--space-6);
 }
 
-/* Coluna de leitura, alinhada à esquerda como o resto do site. */
+/* Coluna de leitura, alinhada à esquerda como o resto do site. 48rem: o texto
+   corrido fica em 44rem (mdxComponents.module.css) e o código e os diagramas
+   usam a coluna toda. */
 .coluna {
   width: 100%;
-  max-width: 40rem;
+  max-width: 48rem;
 }
 
 .larga {
