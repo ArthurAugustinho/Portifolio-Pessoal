@@ -21,7 +21,7 @@ links:
     url: "https://github.com/ArthurAugustinho/passmais-backend"
   - label: "Frontend repository"
     url: "https://github.com/Guilherme549/PassMais-frontend"
-capa: imagens/projetos/pass-mais/capa.png
+capa: imagens/projetos/pass-mais/capa.webp
 capturas: []
 ---
 
@@ -101,20 +101,16 @@ and a Spring Boot backend, talking over a REST API. The backend is a modular
 monolith — one application, one database — organised in the four layers of Clean
 Architecture.
 
-```
-Next.js  ──REST──>  Spring Boot  ──JPA──>  PostgreSQL
-                    │
-                    ├── interfaces      controllers, DTOs
-                    ├── application     use cases
-                    ├── domain          entities, rules
-                    └── infrastructure  JPA, security, config
-```
+<Figura
+  src="/imagens/projetos/pass-mais/arquitetura.svg"
+  alt="Architecture diagram. A load balancer sends traffic to two containers on ECS Fargate: the Next.js frontend, which calls the Spring Boot backend over REST. The backend has four layers (interfaces, application, domain and infrastructure) and reaches PostgreSQL on RDS through JPA. GitHub Actions deploys the containers."
+  width={760}
+  height={430}
+/>
 
 In production, the two containers run on ECS Fargate with a managed database on
 RDS and a load balancer in front. Deployment is automated with GitHub Actions.
 
-TODO: redraw this diagram as an image (Excalidraw works). The text block works,
-but a real diagram looks better on the page.
 
 ## Outcome
 

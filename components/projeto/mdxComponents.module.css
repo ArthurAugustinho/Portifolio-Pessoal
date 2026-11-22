@@ -56,6 +56,22 @@
   line-height: 1.5;
 }
 
+/* Imagem do corpo: ocupa a coluna e mantém a proporção do arquivo. A borda e o
+   fundo, quando existem, vêm do próprio SVG. Em tela estreita a imagem não
+   encolhe abaixo de 40rem (sem isso o texto de um diagrama ficaria com uns 5px):
+   a caixa rola na horizontal, como o bloco de código. */
+.figuraCaixa {
+  margin: var(--space-3) 0;
+  overflow-x: auto;
+}
+
+.figura {
+  display: block;
+  width: 100%;
+  min-width: 40rem;
+  height: auto;
+}
+
 /* O code dentro de pre não leva o estilo de código inline. */
 .pre code {
   padding: 0;

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-labelledby="t d" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="t">Pass+ architecture</title>
+  <desc id="d">A load balancer sends traffic to two containers on ECS Fargate: the Next.js frontend, which calls the Spring Boot backend over REST. The backend has four layers: interfaces, application, domain and infrastructure, and reaches PostgreSQL on RDS through JPA. GitHub Actions deploys the containers.</desc>
+  <!-- As cores espelham os tokens de app/tokens.css (surface, line-2, line-3, line-ui, bg, ink, ink-mute). Um SVG usado como imagem não lê variável CSS. -->
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#5f7896"/>
+    </marker>
+  </defs>
+  <rect x="0.5" y="0.5" width="759" height="429" rx="10" fill="#142030" stroke="#263a52"/>
+
+  <!-- Contêineres no ECS Fargate -->
+  <rect x="170" y="46" width="396" height="302" rx="8" fill="none" stroke="#2e4763" stroke-dasharray="6 5"/>
+  <text x="186" y="70" font-size="13" fill="#7f91a6">ECS Fargate</text>
+
+  <!-- Balanceador de carga -->
+  <rect x="28" y="130" width="110" height="64" rx="6" fill="#0e1621" stroke="#5f7896" stroke-width="1.5"/>
+  <text x="83" y="158" font-size="16" font-weight="600" fill="#e9eef3" text-anchor="middle">Load</text>
+  <text x="83" y="178" font-size="16" font-weight="600" fill="#e9eef3" text-anchor="middle">balancer</text>
+  <line x1="138" y1="150" x2="190" y2="150" stroke="#5f7896" stroke-width="1.5" marker-end="url(#seta)"/>
+
+  <!-- Next.js -->
+  <rect x="190" y="96" width="124" height="64" rx="6" fill="#0e1621" stroke="#5f7896" stroke-width="1.5"/>
+  <text x="252" y="124" font-size="16" font-weight="600" fill="#e9eef3" text-anchor="middle">Next.js</text>
+  <text x="252" y="144" font-size="12" fill="#7f91a6" text-anchor="middle">frontend</text>
+
+  <!-- REST -->
+  <line x1="314" y1="128" x2="400" y2="128" stroke="#5f7896" stroke-width="1.5" marker-end="url(#seta)"/>
+  <text x="357" y="118" font-size="12" fill="#7f91a6" text-anchor="middle">REST</text>
+
+  <!-- Spring Boot -->
+  <rect x="400" y="96" width="150" height="64" rx="6" fill="#0e1621" stroke="#5f7896" stroke-width="1.5"/>
+  <text x="475" y="124" font-size="16" font-weight="600" fill="#e9eef3" text-anchor="middle">Spring Boot</text>
+  <text x="475" y="144" font-size="12" fill="#7f91a6" text-anchor="middle">backend</text>
+
+  <!-- Quatro camadas do backend -->
+  <line x1="475" y1="160" x2="475" y2="182" stroke="#5f7896" stroke-width="1.5"/>
+  <g font-size="13" fill="#e9eef3" text-anchor="middle">
+    <rect x="400" y="182" width="150" height="32" rx="5" fill="#0e1621" stroke="#2e4763"/>
+    <text x="475" y="203">interfaces</text>
+    <rect x="400" y="222" width="150" height="32" rx="5" fill="#0e1621" stroke="#2e4763"/>
+    <text x="475" y="243">application</text>
+    <rect x="400" y="262" width="150" height="32" rx="5" fill="#0e1621" stroke="#2e4763"/>
+    <text x="475" y="283">domain</text>
+    <rect x="400" y="302" width="150" height="32" rx="5" fill="#0e1621" stroke="#2e4763"/>
+    <text x="475" y="323">infrastructure</text>
+  </g>
+  <g font-size="12" fill="#7f91a6" text-anchor="end">
+    <text x="388" y="203">controllers, DTOs</text>
+    <text x="388" y="243">use cases</text>
+    <text x="388" y="283">entities, rules</text>
+    <text x="388" y="323">JPA, security, config</text>
+  </g>
+
+  <!-- JPA e PostgreSQL no RDS -->
+  <line x1="550" y1="128" x2="610" y2="128" stroke="#5f7896" stroke-width="1.5" marker-end="url(#seta)"/>
+  <text x="580" y="118" font-size="12" fill="#7f91a6" text-anchor="middle">JPA</text>
+  <rect x="610" y="96" width="122" height="64" rx="6" fill="#0e1621" stroke="#5f7896" stroke-width="1.5"/>
+  <text x="671" y="124" font-size="16" font-weight="600" fill="#e9eef3" text-anchor="middle">PostgreSQL</text>
+  <text x="671" y="144" font-size="12" fill="#7f91a6" text-anchor="middle">RDS</text>
+
+  <!-- Entrega -->
+  <rect x="190" y="378" width="150" height="38" rx="6" fill="#0e1621" stroke="#5f7896" stroke-width="1.5"/>
+  <text x="265" y="402" font-size="15" font-weight="600" fill="#e9eef3" text-anchor="middle">GitHub Actions</text>
+  <line x1="265" y1="378" x2="265" y2="350" stroke="#5f7896" stroke-width="1.5" marker-end="url(#seta)"/>
+  <text x="277" y="368" font-size="12" fill="#7f91a6">deploy</text>
+</svg>
