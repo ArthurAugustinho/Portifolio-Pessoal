@@ -13,7 +13,7 @@ export function Trajetoria() {
       <div className={styles.texto}>
         <h2 className="t-h2">Background</h2>
         <p className="t-lead">
-          Full stack developer with a background in network infrastructure.
+          Full-stack developer with a background in network infrastructure.
         </p>
 
         <p>
@@ -25,7 +25,7 @@ export function Trajetoria() {
         </p>
         <p>
           At the Fábrica de Tecnologias Turing of UniEVANGÉLICA, I spent a year and a half as a
-          full stack developer. I worked on three systems — Psychology, Dentistry and Campus
+          full-stack developer. I worked on three systems — Psychology, Dentistry and Campus
           Security — building APIs in Node.js, Django and Spring Boot, modelling databases in
           PostgreSQL and SQL Server, and implementing authentication and access control. It is
           where I learned to investigate the root cause of production bugs instead of just

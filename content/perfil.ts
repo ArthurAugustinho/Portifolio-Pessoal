@@ -91,7 +91,7 @@ export const perfil = {
   },
 
   projetos: {
-    titulo: 'Projects I have shipped.',
+    titulo: 'Projects I have built.',
     subtitulo: 'Drag or use the arrows to browse. Open a card for a short preview.',
   },
 

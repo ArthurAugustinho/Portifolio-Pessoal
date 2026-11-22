@@ -6,7 +6,7 @@ import styles from './page.module.css'
 export const metadata: Metadata = metadataDaPagina({
   titulo: 'About',
   descricao:
-    'Full stack developer with a background in network infrastructure. Career at Fábrica de Tecnologias Turing, at Telgo Telecom and as a freelancer.',
+    'Full-stack developer with a background in network infrastructure. Career at Fábrica de Tecnologias Turing, at Telgo Telecom and as a freelancer.',
   caminho: '/sobre',
 })
 

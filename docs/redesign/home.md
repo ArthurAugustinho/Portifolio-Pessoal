@@ -15,7 +15,7 @@ Os textos em inglês abaixo são os aprovados no esboço. Não reescreva copy se
   #about      h2 "From network operations to software."
   #stack      h2 "What I work with, layer by layer."
   #experience h2 "Where I have worked."
-  #projects   h2 "Projects I have shipped."
+  #projects   h2 "Projects I have built."
   #blog       h2 "Posts from LinkedIn."           (só existe se houver posts)
   #contact    h2 "Open to full-time roles in Europe."
 <footer>  © 2026 Arthur Augustinho · Privacy

@@ -50,7 +50,7 @@ export default async function Image() {
             color: INK_DIM,
           }}
         >
-          Full stack developer
+          Full-stack developer
         </div>
       </div>
     ),
