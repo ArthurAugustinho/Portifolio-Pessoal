@@ -1,0 +1,12 @@
+# Fim de linha LF no repositório e na pasta de trabalho, em qualquer sistema.
+# Sem isto, o core.autocrlf do Windows reescreve para CRLF e o Git avisa a cada commit.
+* text=auto eol=lf
+
+# Binários: nunca converter.
+*.png binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.mp4 binary
+*.webm binary
