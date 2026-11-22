@@ -2,7 +2,7 @@
 
 Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já construídos, melhor do que o GitHub mostra. Público: recrutadores e tech leads (principalmente Irlanda e Reino Unido) e clientes de freelance; o visitante típico passa menos de dois minutos no site. Não é objetivo demonstrar variedade de tecnologias: menos stack é melhor.
 
-Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); faltam domínio, Resend/Turnstile/Analytics e conteúdo (ver `docs/redesign/plano.md`, Etapa 8). As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
+Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); faltam domínio, Resend/Turnstile/Analytics e conteúdo (ver `docs/redesign/plano.md`, Etapa 8). Projetos do MVP: Alexo, Mica Caffe, Finap e Pass+; o corpo do Finap está escrito, os outros ainda têm `TODO:` (capas também). As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
 
 Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign/v2`; o design anterior fica na tag `v1-graphite`). Especificação em `docs/redesign/home.md` e plano em `docs/redesign/plano.md`; decisões nas ADRs 0012 a 0018.
 
@@ -23,7 +23,7 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 - Instalar: `npm ci`
 - Desenvolvimento: `npm run dev`
 - Antes de todo commit: `npm run lint && npm run typecheck && npm run build`
-- Preview publicado: `https://portfolio.arthur-web.workers.dev` (Worker `portfolio`). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://portfolio.arthur-web.workers.dev NEXT_PUBLIC_INDEXAVEL=false npm run worker:deploy`. Só publique com confirmação do autor.
+- Preview publicado: `https://portfolio.arthur-web.workers.dev` (Worker `portfolio`). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://portfolio.arthur-web.workers.dev NEXT_PUBLIC_INDEXAVEL=false NEXT_PUBLIC_TURNSTILE_SITE_KEY= NEXT_PUBLIC_CF_ANALYTICS_TOKEN= npm run worker:deploy` (as duas últimas vazias mantêm o formulário e o analytics desligados no preview, mesmo que o `.env` local tenha valores). `worker:deploy` já roda o build e o pós-build. Só publique com confirmação do autor.
 
 ## Convenções
 - Design: seguir `design-system/portfolio/MASTER.md`. Nunca hex direto em componente; use as variáveis de `app/tokens.css`.
@@ -53,6 +53,7 @@ Não é opcional e não precisa ser pedido:
 ```
 app/
   layout.tsx  page.tsx  tokens.css  globals.css  fonts.ts
+  icon.svg  favicon.ico  apple-icon.png  opengraph-image.tsx  robots.ts  sitemap.ts
   sobre/  projetos/  projetos/[slug]/  contato/  privacy/  blog/
 components/
   ui/  layout/  projeto/  home/
