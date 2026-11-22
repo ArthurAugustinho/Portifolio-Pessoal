@@ -10,11 +10,62 @@ stack:
   - cloudflare
   - github-actions
 destaque: true
-problema: "TODO: [o que o café precisava do site, em 2 ou 3 frases]"
+problema: "A café's website has one job: get people through the door. On a phone that means the full menu with prices, whether the café is open right now and how to get there, loading fast, with an owner who can keep the menu up to date without a developer."
 papel: "Built solo"
 periodo: "November"
 links: []
 capturas: []
 ---
 
-TODO: [escrever o estudo de caso: o que o café precisava, o que foi construído (sem dados privados da cliente), 2 ou 3 decisões com o motivo e o estado atual]
+## The problem
+
+A café's website has one job: get people through the door. For a visitor on a phone that means three things, quickly: the menu with its prices, whether the café is open right now, and how to get there. The page puts "Get directions" first and calling second, and everything else supports those two.
+
+The menu is long, with 17 sections and 159 items, 27 of them with more than one price for sizes or bread. And a menu changes. The owner wanted to update items, prices, opening hours and a notice at the top of the page without waiting for a developer, and an edit made by mistake could never be allowed to break the page.
+
+## What I built
+
+A one-page site for a café in Sutton, made with Astro and no UI framework. It is static: HTML, CSS and three small inline scripts.
+
+**The page.** A wordmark in the style of the café's own sign, a hero with the directions and call buttons, an "Open now" or "Closed now" status worked out in London time, the full menu with a navigation between its sections, the weekly hours, a short story, a "Most popular" strip, and a link to the Google reviews with the themes paraphrased and no quotes. Without JavaScript the hours table is still there and only the live status is missing.
+
+**Photos.** Astro generates AVIF and WebP at several widths, with explicit width and height and the EXIF data removed. There is no gallery and no empty placeholder: the "Most popular" strip simply disappears if it has fewer than three dishes.
+
+**An editor for the owner.** The menu, the hours, the notice, the story and the photos are edited through a content editor (Pages CMS), with a short guide written for the owner. Every edit becomes a commit and reaches the site by itself: the publishing job takes about a minute and a half.
+
+**Structured data and sharing.** A `CafeOrCoffeeShop` description with the address and the opening hours, and a share image. There is deliberately no star-rating markup.
+
+## Decisions
+
+**Astro, not Next.js.** Next.js is the stack I know best, and I still ruled it out. A static export would send the React runtime to a page with almost no interaction, and its image component needs an external loader or loses the optimisation. Plain HTML would put 159 menu items in markup, so changing a price would mean editing it. Astro ships no JavaScript by default, renders the menu from typed JSON, and has the image pipeline ready.
+
+**Content as plain JSON, validated strictly at build time.** An edit that is wrong must never publish a broken page. Prices have to be numbers with at most two decimals, hours have to be HH:MM with the closing after the opening, texts have a maximum length, an image cannot have an empty description, an unknown key is rejected, every menu section has to be in the navigation and every photo has to exist. If any rule fails, the build fails with a clear message, nothing is published and the previous version stays online. A script simulates valid and invalid edits with real builds, and all 19 scenarios behave as expected.
+
+**A form the owner cannot break.** The menu items are flat (a price, an optional second and third price, and a group) so the form stays short, section titles and day names are read-only, the numbers of sections and days are fixed, and the files cannot be deleted. The goal was changing a price in at most four clicks after signing in.
+
+**A hosted editor instead of building an admin.** Pages CMS lets the owner sign in with an email code, without a GitHub account, and every edit is a commit, so there is a history and any change can be undone. If the service disappears, the site stays online and only the editing stops. I considered Decap CMS, which needs a GitHub account or an OAuth proxy and puts third-party JavaScript on the site, and a custom admin, which is more code and more attack surface for a single page, with the content outside the repository and the validation and history to rebuild. Asking me to edit every change defeated the purpose. The risk I accepted is a free service with no availability guarantee.
+
+**Publishing with GitHub Actions on every push.** The build step blocks invalid content before anything is deployed. The Cloudflare token has Pages permission only, the actions are pinned to a commit with read-only permissions, and when two edits come close together only the latest is published.
+
+**No third parties, and nothing made up.** No cookies, no external scripts, fonts or maps: the site makes no request to any other domain. Everything on the page was supplied or authorised by the owner. Nothing was invented, from dishes and prices to the history, and the photos are only the ones provided.
+
+## Architecture
+
+The content lives as JSON files in the repository, and every change goes through Git, so the site is always a build of what is in the repository.
+
+```
+CMS ──> Git commit ──> GitHub Actions ──> Cloudflare Pages
+owner   JSON files     validate, build   static site
+```
+
+The build validates the content files with Zod and generates the HTML and the images, and a separate check compares the menu on the page with its source item by item. The hosting is Cloudflare Pages, with the security headers set in a headers file.
+
+## Outcome
+
+The site is live on the café's own domain, served by Cloudflare. In the pre-launch review of the production build, Lighthouse on mobile gave 100 for accessibility and for best practices, and between 91 and 97 for performance across three runs. SEO was 69 on the test address only because its pages are kept out of search engines on purpose, and the same build without that header scored 100. At four screen widths the page made no request to another domain and printed nothing to the console, and all 17 menu sections and 159 items matched their source.
+
+## What was left out
+
+- Online ordering and booking: it is a single page by design, and real interaction such as ordering is what would make me revisit the choice of framework.
+- A custom admin area: a hosted editor does the job for one page.
+- A stable performance score of 95: it moves between 91 and 97 from run to run, and I decided to leave it as it is.
