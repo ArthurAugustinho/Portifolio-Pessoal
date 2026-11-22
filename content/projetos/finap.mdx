@@ -20,11 +20,77 @@ stack:
   - linux
   - tailscale
 destaque: true
-problema: "TODO: [o problema que o app resolve, em 2 ou 3 frases]"
+problema: "My finances lived in a spreadsheet that failed quietly: values typed as text that the formulas skipped, balances typed by hand that drifted from the entries, and card purchases counted twice, once on the bill and once as an expense."
 papel: "Built solo"
 periodo: "September–November"
 links: []
 capturas: []
 ---
 
-TODO: [escrever o estudo de caso: o problema da planilha, os módulos (Dashboard, Receitas, Despesas, Contas a pagar, Bancos e cartões, A receber e Metas), 2 ou 3 decisões com o motivo e o estado atual]
+## The problem
+
+My finances lived in a spreadsheet, and it kept lying without saying so. Some values were typed as text ("R$ 94,16"), so the SUMIF skipped them silently. Income, expenses and bills to pay sat on separate tabs, a "Monthly" status was mixed in with Pending and Paid, and instalments and outstanding debts lived in the notes field.
+
+The balance of each bank was typed by hand, so it drifted from the entries and nobody noticed. A card purchase could be counted twice, once on the bill and once as an expense. On top of that, the accounts are in four currencies (BRL, GBP, EUR and USD), so every consolidated total needed an exchange rate I could trace.
+
+## What I built
+
+Finap is a personal finance app for a single user. It keeps the structure of the spreadsheet — Dashboard, Income, Expenses, Bills to pay, Banks and cards, Receivables and Goals — but every screen is a view over one data model. The interface is in Portuguese.
+
+**Entries and balances.** Income, expenses, transfers and adjustments are one entity. Balances are calculated from the entries and never stored, and reconciling an account against a bank statement creates an explicit adjustment when the numbers differ.
+
+**Bills, instalments and recurrences.** Bills to pay are planned expenses. Recurring bills and instalment plans, for loans and purchases in parts, generate planned entries, and the outstanding balance and the next instalment are calculated. Credit cards have billing cycles: closing a bill sends its payment to Bills to pay, once per bill.
+
+**Receivables and goals.** Receivables track what people owe me, and each payment creates a linked income entry. Goals show progress from a linked account or from contributions, with the amount needed per month. A monthly budget per category compares planned, spent and remaining.
+
+**Several currencies.** Totals can be shown in a chosen currency, with flows converted at the rate of each entry's date and balances at a reference date, and every response lists the rate it used. Transfers between currencies show the implicit cost of the remittance.
+
+**Dashboard.** Eight cards per currency and consolidated, a summary by category and a 12-month chart with the same numbers in a table.
+
+**Statement import.** Bank statements come in as CSV, with a profile per bank, or as OFX. A preview separates new entries, possible duplicates and entries already imported, so importing the same file twice changes nothing, and categorisation rules sort what arrives. The file is never stored. Accounts in Brazil can also sync through an open finance aggregator.
+
+## Decisions
+
+**Money is never a floating-point number.** An amount is a decimal plus a currency, stored as NUMERIC(19,4) and CHAR(3) and sent as a string in JSON. The frontend does no monetary arithmetic: it formats and parses, and every total comes from the backend. A rule in the architecture tests forbids `double` and `float`. Keeping cents in a `long` was simpler, but it gets awkward with currencies of zero or three decimals and with exchange-rate divisions.
+
+**One source of exchange rates, and conversion as a projection.** Rates come from the PTAX of the Central Bank of Brazil, fetched by a daily job, so no external call happens during a request. Converted values are never persisted, because that would freeze rates and duplicate the truth. A missing rate is an explicit error, never a silent zero. A second source, such as the ECB, would only add inconsistency.
+
+**One entry model, and the balance derived from it.** Separate tables per tab would reproduce the problem of the spreadsheet, and a typed balance cannot be audited. Full double-entry bookkeeping is the most correct model, but for one user, transfer legs plus a kind give most of the benefit with far fewer concepts. The credit card is a liability account: a purchase is an expense on the card and paying the bill is a transfer, which removes the double counting.
+
+**A modular monolith with boundaries that are checked.** Java 25 and Spring Boot 4.1, with modules split into `api`, `application`, `domain` and `infra`. A module uses another only through its application services, and references across modules are by ID, never by JPA relationship. ArchUnit enforces this in the build, with fixtures that prove the rules actually detect a violation. I ruled out microservices, which would only add operational cost for one user, and a Next.js full-stack, which needs more care with money and a separate runner for the daily job.
+
+**Security before any exposure.** The app ran only on localhost until it had a single-user login (Argon2id, session cookie, CSRF, progressive lockout), a second factor (TOTP with one-time recovery codes), hardened headers, encrypted backups with a tested restore, and dependency and secret scanning in CI. The scanner caught vulnerable Tomcat and Jackson versions that came with Spring Boot, and I overrode them. "Hosting without auth because the URL is secret" was never an option.
+
+**Private network instead of a public login.** For production I chose a small VPS that is reachable only over Tailscale, with no port published to the internet and HTTPS from a Caddy proxy. Public HTTPS on a domain would open the login to the whole internet, which is a different class of risk for an app with one user.
+
+**Tax data captured now, tax calculated later.** Income entries record their nature, source country and tax withheld from the start, and there are reports by fiscal year, but the app calculates no tax. Rules that look official and are wrong are worse than no rules, and ignoring the fiscal side until needed would have meant retyping the history.
+
+## Architecture
+
+The frontend is a React SPA that Spring Boot serves from the same origin, so there is no CORS and there is one artifact to deploy. The contract is an OpenAPI document generated by the backend, and the TypeScript types and the client are generated from it. CRUD goes through Spring Data JPA, while balances and reports are explicit SQL.
+
+```
+React  ──REST──>  Spring Boot  ──JPA / SQL──>  PostgreSQL
+                  │
+                  ├── api            controllers, DTOs
+                  ├── application    use cases
+                  ├── domain         entities, rules
+                  └── infra          persistence, integrations
+```
+
+In production, Docker Compose runs PostgreSQL, the app, Caddy, Tailscale and a daily encrypted backup that is copied off the server.
+
+## Outcome
+
+Everything described above is implemented and tested: unit tests, architecture tests, integration tests against a real PostgreSQL with Testcontainers, and frontend tests with Vitest. GitHub Actions runs the backend build with formatting checks and the frontend lint, tests and build on every pull request, plus a weekly dependency scan. The repository documents its 17 architecture decisions as ADRs.
+
+The production setup is built and was validated locally and in CI. The mobile version (PWA) is delivered, and its manual test on Android and iOS depends on the app being on the server.
+
+TODO: [atualizar o estado quando o Finap estiver no ar: endereço de acesso e se já uso no dia a dia]
+
+## What was left out
+
+- Tax calculation, on purpose: the stories for it are blocked until the decisions behind them are made with an accountant.
+- Automatic bank sync for accounts in the UK: no aggregator for individuals fit the budget, so those accounts use CSV and OFX import.
+- Multiple users: the app is single-user by design, and a second user would make it a different project, with privacy law and isolation to deal with.
+- Public HTTPS access, in favour of the private network above.
