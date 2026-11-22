@@ -15,11 +15,70 @@ stack:
   - mercado-pago
   - docker
 destaque: true
-problema: "TODO: [o problema que a loja resolve, em 2 ou 3 frases]"
+problema: "Selling sportswear and football shirts online takes more than a catalogue: sizes and colours that each have their own stock, shirts personalised with a name and a number, a shipping price before the customer pays, and an admin panel to manage orders, returns and the storefront."
 papel: "Built solo"
 periodo: "March–June"
 links: []
 capturas: []
 ---
 
-TODO: [escrever o estudo de caso: o problema, o que foi construído (catálogo, checkout, pagamento, frete e painel de pedidos), 2 ou 3 decisões com o motivo e o estado atual]
+## The problem
+
+Selling sportswear and football shirts online takes more than a catalogue. Every product comes in sizes and colours that each have their own stock, a football shirt can be personalised with a name, a number and patches, and the customer expects a shipping price before paying and a way to follow the order afterwards.
+
+Behind the store there is also work that has to be done without touching code: changing the banners and featured products on the front page, creating discount coupons, handling returns and moderating reviews.
+
+TODO: [como a loja vendia antes do site e o que isso custava: planilha, redes sociais, loja de terceiros]
+
+## What I built
+
+Alexo is a full e-commerce platform in one Next.js application: the public store, the customer area, the checkout and the admin panel. The storefront is in Portuguese.
+
+**Catalogue and search.** Products have variants by colour and size, each with its own stock. The header search suggests products as you type, and the results page filters by colour, size and price, with every filter kept in the URL so a filtered search can be shared. A wishlist and a size recommender, which works from the customer's own measurements, sit on top.
+
+**Personalisation and coupons.** A shirt can carry a name, a number and patches, and the customisation adds its own price to the order. Coupons can be a percentage, a fixed amount, free shipping, or limited to a category.
+
+**Checkout and payment.** The customer identifies themselves, picks an address (the postcode is looked up automatically) and pays through Mercado Pago. Shipping is quoted through the Melhor Envio API for the postcode of the product's origin.
+
+**After the sale.** Each order has a timeline with the real tracking from the postal service. The customer can ask for a return, and can review a product only after receiving it, so the reviews are verified.
+
+**Admin panel.** An order management view with bulk status updates, the storefront (banners, featured products, brands, FAQ, trust badges and the support widget), coupons, returns, reviews, categories and size charts, product import from a file, and a dashboard. Sign-in is by email and password or with Google through Better Auth, and there are three roles: customer, admin and super admin.
+
+## Decisions
+
+**The variant is the unit that is sold.** The cart and the order always point to a product variant, never to the product. The price of each order item is a snapshot taken at the moment of purchase and never changes afterwards, so a later price update cannot rewrite what a customer paid. All prices are stored as integers in cents, never as decimal reais.
+
+**The order exists before the payment does.** When the customer confirms, the order, its items and the coupon usage are written in a single database transaction, and only then is the customer sent to Mercado Pago Checkout Pro. Payment is confirmed later, asynchronously: the webhook does not trust the notification, it reads the payment again from the Mercado Pago API and then marks the order as paid or cancelled.
+
+**Authorisation is checked twice.** The admin pages redirect when the role is not enough, and every Server Action rejects the call on its own as well. A mutation never relies on the middleware or on the page that rendered it.
+
+**Secrets never reach the browser.** The shipping token and the payment token are used only on the server. The browser calls an internal API route, which adds the token, sets a timeout of eight seconds on the carrier and returns the quotes sorted by price.
+
+**Reads on the server, mutations in Server Actions.** Pages read from the database in Server Components with Drizzle, with no `useEffect` fetching data. Every mutation is a Server Action in its own folder, with a Zod schema next to the logic, and the client-side screens use React Query through custom hooks.
+
+**Search engines see the right pages.** The old product-variant URL redirects permanently to the canonical product URL, which also carries canonical metadata, and the admin, cart and checkout routes are kept out of the index.
+
+## Architecture
+
+One monolith: the same application serves the store, the customer area and the admin panel. Pages are Server Components that read through Drizzle, mutations are Server Actions, and the few things that need a public endpoint (search suggestions, shipping quotes, tracking, uploads and the payment webhook) are API routes.
+
+```
+Browser ──> Next.js (App Router) ──Drizzle──> PostgreSQL
+              │
+              ├── Server Components   reads
+              ├── Server Actions      mutations, authorisation
+              └── API routes          search, shipping, webhook
+```
+
+The API routes talk to the outside services: Mercado Pago for payment, Melhor Envio for shipping quotes, ViaCEP for postcodes and Seu Rastreio for tracking. The database has 32 tables and 23 migrations generated by Drizzle Kit, and the application is also packaged as a Docker image.
+
+## Outcome
+
+Everything described above is implemented: the purchase flow from product page to payment confirmation, the customer area, and the admin panel with its three roles.
+
+TODO: [estado atual do Alexo: se está no ar, com que loja e desde quando, e se já recebeu pedidos reais]
+
+## What was left out
+
+- Automated tests: the project has none. The payment and shipping integrations were developed against the sandbox environments of Mercado Pago and Melhor Envio.
+- Real numbers on the dashboard: some of its metrics are estimates, and the dashboard labels them as such instead of presenting them as exact.
