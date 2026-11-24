@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, X } from 'lucide-react'
+import { CodeXml, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
@@ -139,7 +139,7 @@ export function Header({ temBlog }: { temBlog: boolean }) {
       >
         <div className={styles.barra}>
           <Link href="/" className={styles.marca} onClick={fechar}>
-            <span className={styles.quadrado} aria-hidden="true" />
+            <CodeXml className={styles.simbolo} size={26} strokeWidth={2.25} aria-hidden="true" />
             <span className={styles.nomeCompleto}>Arthur Augustinho</span>
             <span className={styles.nomeCurto}>A. Augustinho</span>
           </Link>

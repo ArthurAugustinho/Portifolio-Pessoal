@@ -36,7 +36,7 @@ Contraste medido contra o fundo indicado (WCAG 2.x). Texto pede 4,5:1; component
 
 O apelido `--rule` (antigo nome de `--line-1`) foi removido: nenhum CSS Module o usa mais.
 
-Os tons de linha do esboço (`#1F3045`, `#22344A`) foram consolidados em `--line-1` e `--line-2`. Componente nunca usa hex direto: só `var(--token)`. Exceções documentadas, onde o valor não pode ler variável CSS e por isso espelha o token: `app/opengraph-image.tsx` (Satori), o `themeColor` em `app/layout.tsx` (espelha `--bg`) e o ícone do site: `app/icon.svg`, `app/favicon.ico` e `app/apple-icon.png` (o quadrado da marca do header em `--ink` sobre `--bg`; o PNG e o ICO são renderizações do SVG, sem cantos arredondados no apple-icon porque o iOS arredonda sozinho). Bibliotecas que pedem cor em JavaScript (partículas) leem o token com `getComputedStyle`.
+Os tons de linha do esboço (`#1F3045`, `#22344A`) foram consolidados em `--line-1` e `--line-2`. Componente nunca usa hex direto: só `var(--token)`. Exceções documentadas, onde o valor não pode ler variável CSS e por isso espelha o token: `app/opengraph-image.tsx` (Satori), o `themeColor` em `app/layout.tsx` (espelha `--bg`) e o ícone do site: `app/icon.svg`, `app/favicon.ico` e `app/apple-icon.png` (o `</>` da marca do header em `--accent` sobre `--bg`; o PNG e o ICO são renderizações do SVG, sem cantos arredondados no apple-icon porque o iOS arredonda sozinho). Bibliotecas que pedem cor em JavaScript (partículas) leem o token com `getComputedStyle`.
 
 ### Uso do acento
 
@@ -46,6 +46,7 @@ O âmbar aparece só nestes papéis:
 2. Posição: sublinhado do item ativo no menu, esfera da rota e nós já alcançados.
 3. Sinal em movimento: pacote da órbita, cursor de digitação, ponto do chip de status.
 4. Foco e hover: anel de foco e hover de links.
+5. Marca: o `</>` do header, do ícone do site e do cartão de compartilhamento (ícone `code-xml` do Lucide). É o único uso do âmbar como desenho, e vale só para a marca.
 
 Nunca em parágrafo, título ou como preenchimento grande além do botão primário.
 
@@ -105,7 +106,7 @@ Regras:
 
 ## Componentes
 
-- **Header**: sticky, fundo `--bg`, borda inferior `--line-1`. Marca (quadrado de 14px com borda `--ink` + "Arthur Augustinho" em 650/112) seguida do caminho da seção em `.t-meta`. Menu em 16px, item ativo com sublinhado de 2px em `--accent` e `aria-current="location"`. Controle de pausa à direita.
+- **Header**: sticky, fundo `--bg`, borda inferior `--line-1`. Marca (o `</>` de 26px em `--accent` + "Arthur Augustinho" em 650/112) seguida do caminho da seção em `.t-meta`. Menu em 16px, item ativo com sublinhado de 2px em `--accent` e `aria-current="location"`. Controle de pausa à direita.
 - **Botão primário**: fundo `--accent`, texto `--on-accent` 650, raio 8px, altura 48px, padding horizontal 24px, ímã.
 - **Botão secundário**: fundo `--bg`, borda `--line-3`, texto `--ink` 600, mesmas medidas, ímã.
 - **Chip de status**: borda `--line-2`, raio 6px, 15px, texto `--ink-2`, ponto de 8px em `--accent`.

@@ -31,11 +31,11 @@
   white-space: nowrap;
 }
 
-.quadrado {
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--ink);
-  border-radius: var(--radius-xs);
+/* O </> da marca, em âmbar (um dos papéis do acento no MASTER). Decorativo: o
+   nome ao lado já identifica o link. */
+.simbolo {
+  flex: none;
+  color: var(--accent);
 }
 
 .nomeCurto {

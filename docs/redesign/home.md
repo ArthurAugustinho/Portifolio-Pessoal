@@ -33,7 +33,7 @@ Fontes de dados:
 ## 2. Comportamento global
 
 ### Header
-- Sticky no topo de todas as páginas. Marca: quadrado de 14px + "Arthur Augustinho" (link para `/`), seguido do caminho da seção visível (`/about`, `/stack`...; no topo da home, vazio). O caminho é `aria-hidden` e não altera a URL.
+- Sticky no topo de todas as páginas. Marca: `</>` em âmbar (26px) + "Arthur Augustinho" (link para `/`), seguido do caminho da seção visível (`/about`, `/stack`...; no topo da home, vazio). O caminho é `aria-hidden` e não altera a URL.
 - Menu: About, Stack, Experience, Projects, Blog (só com posts), Contact. Na home são âncoras (`#about`); nas páginas internas, `/#about`.
 - Seção ativa detectada com `IntersectionObserver` (já existe uma versão em `components/layout/Header.tsx`; reaproveite a lógica, não o visual): a seção cujo topo passou de 45% da altura da janela. O item ativo ganha `aria-current="location"` e o sublinhado âmbar, que desliza entre itens (300ms).
 - Ímã de 0,25 nos itens do menu (só `pointer: fine`, sem pausa).

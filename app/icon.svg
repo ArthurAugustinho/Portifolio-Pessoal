@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- O quadrado da marca do header (borda --ink, raio xs) sobre --bg. Os valores
-       espelham app/tokens.css: um SVG de ícone não lê variáveis CSS. -->
+  <!-- O simbolo da marca do header (o codigo-fonte entre sinais, em ambar) sobre o fundo escuro. Os valores espelham os tokens de app/tokens.css (bg e accent): um SVG de icone nao le variavel CSS. O desenho e o icone code-xml do Lucide, ampliado. -->
   <rect width="64" height="64" rx="14" fill="#0e1621"/>
-  <rect x="16" y="16" width="32" height="32" rx="6" fill="none" stroke="#e9eef3" stroke-width="6"/>
+  <g transform="translate(8 8) scale(2)" fill="none" stroke="#f2a93b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m18 16 4-4-4-4"/>
+    <path d="m6 8-4 4 4 4"/>
+    <path d="m14.5 4-5 16"/>
+  </g>
 </svg>

@@ -19,7 +19,7 @@ const INK_DIM = '#93a3b5'
 const LINE_2 = '#263a52'
 const ACCENT = '#f2a93b'
 
-// O cartão repete o hero: a marca do header, o nome em duas linhas (sobrenome
+// O cartão repete o hero: a marca do header (o </> em âmbar), o nome em duas linhas (sobrenome
 // em --ink-mute), o cargo e o chip de status com o ponto âmbar. A fonte é a
 // Inter porque o Satori só lê TTF, OTF e WOFF, e o Archivo do site é WOFF2.
 export default async function Image() {
@@ -40,15 +40,21 @@ export default async function Image() {
           fontWeight: 700,
         }}
       >
-        {/* Marca: o quadrado do header, ampliado. */}
-        <div
-          style={{
-            width: 44,
-            height: 44,
-            border: `5px solid ${INK}`,
-            borderRadius: 8,
-          }}
-        />
+        {/* Marca: o </> do header (ícone code-xml do Lucide), ampliado, em âmbar. */}
+        <svg
+          width={72}
+          height={72}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke={ACCENT}
+          strokeWidth={2.25}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m18 16 4-4-4-4" />
+          <path d="m6 8-4 4 4 4" />
+          <path d="m14.5 4-5 16" />
+        </svg>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
