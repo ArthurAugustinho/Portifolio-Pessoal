@@ -46,7 +46,7 @@ A sequência mantém a indexação bloqueada (`NEXT_PUBLIC_INDEXAVEL=false`, `ro
 | 7 | Claude, feito em 2026-11-24 (o wrangler o fez no deploy do passo 3, e a configuração agora é explícita) | Depois de tudo conferido, `"workers_dev": false` em `wrangler.jsonc`, para o `workers.dev` parar de responder e não competir com o domínio (consequência já prevista acima). |
 | 8 | Claude, feito em 2026-11-24 | Atualizar o `CLAUDE.md` (comando de publicar e endereço) e este ADR para "domínio no ar". |
 
-Atualização de 2026-11-24: o formulário foi removido (0019), então a Resend e o Turnstile saíram do plano; restam Web Analytics e a abertura da indexação. O texto abaixo é o plano original.
+Atualização de 2026-11-24: o formulário foi removido (0019), então a Resend e o Turnstile saíram do plano; o Web Analytics ficou ligado pela injeção automática da Cloudflare (0009), e resta a abertura da indexação. O texto abaixo é o plano original.
 
 Depois do domínio, na ordem: Resend (verificar o domínio com SPF, DKIM e DMARC e trocar `CONTACT_FROM_EMAIL` por um endereço do domínio), Turnstile (permitir o host `arthuraugustinho.dev` no widget), Web Analytics (o site por hostname) e, por fim, `NEXT_PUBLIC_INDEXAVEL=true` com o Search Console.
 

@@ -1,6 +1,6 @@
 # 0009. Cloudflare Web Analytics para métricas de visita
 
-- Status: Aceita
+- Status: Aceita (atualizada em 2026-11-24: o beacon é injetado pela Cloudflare, não pelo código do site)
 - Data: 2026-11-10
 
 ## Contexto
@@ -17,6 +17,8 @@ O site é usado em candidaturas de emprego e para captar freelance, e hoje não 
 
 ## Decisão
 B. Sem banner de consentimento, porque não há cookie não essencial. Isso precisa ser verificado na revisão pré-lançamento.
+
+Atualização de 2026-11-24: o site foi cadastrado no painel (Web Analytics, host `arthuraugustinho.dev`) com a configuração automática, e a Cloudflare injeta o `beacon.min.js` no HTML na borda. Por isso o `layout.tsx` não carrega o script e não existe `NEXT_PUBLIC_CF_ANALYTICS_TOKEN`. A CSP (0008) continua liberando `static.cloudflareinsights.com` e `cloudflareinsights.com`. Se a injeção automática for desligada no painel, o analytics para de coletar até alguém carregar o script no código. Nunca ligar as duas formas ao mesmo tempo, porque o beacon seria duplicado.
 
 ## Consequências
 - Positivas: visitas, páginas, origem do tráfego e desempenho real, sem custo e sem cookies.
