@@ -57,6 +57,8 @@ const frontmatterSchema = z
     problema: z.string().min(1),
     links: z.array(z.object({ label: z.string().min(1), url: z.url() }).strict()).default([]),
     capa: z.string().min(1).optional(),
+    // Descrição do que a capa mostra, para leitor de tela. Obrigatória com capa.
+    capaAlt: z.string().min(1).optional(),
     video: z.object({ src: z.string().min(1), poster: z.string().min(1) }).strict().optional(),
     capturas: z
       .array(
@@ -102,6 +104,7 @@ export type Projeto = {
   problema: string
   links: ProjetoLink[]
   capa?: string
+  capaAlt?: string
   video?: ProjetoVideo
   capturas: ProjetoCaptura[]
   conteudo: string
@@ -143,6 +146,12 @@ export function getProjeto(slug: string): Projeto | null {
     )
   }
 
+  if (frontmatter.capa && !frontmatter.capaAlt) {
+    throw new Error(
+      `${arquivo}: toda capa precisa de capaAlt, com a descrição do que a imagem mostra (nunca "imagem do projeto").`,
+    )
+  }
+
   // Com a indexação liberada, texto de preenchimento não pode ir ao ar:
   // o build falha em vez de publicar um TODO.
   if (INDEXAVEL && (content.includes('TODO:') || JSON.stringify(data).includes('TODO:'))) {
@@ -163,6 +172,7 @@ export function getProjeto(slug: string): Projeto | null {
     problema: frontmatter.problema,
     links: frontmatter.links,
     capa: resolverCaminhoPublico(frontmatter.capa),
+    capaAlt: frontmatter.capaAlt,
     video: resolverVideo(frontmatter.video),
     capturas: resolverCapturas(frontmatter.capturas),
     conteudo: content,

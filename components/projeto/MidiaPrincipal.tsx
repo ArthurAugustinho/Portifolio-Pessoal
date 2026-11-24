@@ -23,7 +23,7 @@ export function MidiaPrincipal({ projeto }: MidiaPrincipalProps) {
       <JanelaNavegador>
         <Image
           src={projeto.capa}
-          alt={`Screenshot of the ${projeto.nome} project`}
+          alt={projeto.capaAlt ?? ''}
           width={1280}
           height={720}
           sizes="(min-width: 1088px) 68rem, 100vw"

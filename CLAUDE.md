@@ -30,7 +30,7 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 - Mobile-first: testar em 375px antes de considerar uma seção pronta; responsivo até 1920px.
 - Movimento: siga o catálogo do MASTER. Toda animação é criada dentro de `gsap.matchMedia()` e obedece ao controle de pausa global; CSS para hover e foco, GSAP só para sequência, scroll e física.
 - Perfil (About, ficha, experiência, contatos, camadas da Stack) só em `content/perfil.ts`; tecnologias e ícones só em `lib/tecnologias.ts`.
-- Conteúdo de projeto só em `content/projetos/*.mdx`, nunca espalhado em componentes. O schema do frontmatter está em `lib/projetos.ts`; o nome do arquivo é o `slug`.
+- Conteúdo de projeto só em `content/projetos/*.mdx`, nunca espalhado em componentes. O schema do frontmatter está em `lib/projetos.ts`; o nome do arquivo é o `slug`. Toda `capa` exige `capaAlt`, com a descrição do que a imagem mostra; sem ele o build falha.
 - Mídia ausente em `public/` cai no placeholder, nunca numa imagem quebrada. Imagens via `next/image`, com `width`/`height` explícitos, já otimizadas (WebP/AVIF) no repositório.
 - Uma tarefa por vez. Não avance para a próxima sem confirmação.
 - Antes de instalar qualquer pacote ou criar arquivo fora da estrutura abaixo, pergunte.

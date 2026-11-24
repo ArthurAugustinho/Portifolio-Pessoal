@@ -15,7 +15,7 @@ export function PreviaProjeto({ projeto }: { projeto: Projeto }) {
       {projeto.capa ? (
         <Image
           src={projeto.capa}
-          alt={`Screenshot of the ${projeto.nome} project`}
+          alt={projeto.capaAlt ?? ''}
           width={640}
           height={360}
           sizes="(min-width: 640px) 640px, 100vw"
