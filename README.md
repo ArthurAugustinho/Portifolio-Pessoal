@@ -8,7 +8,7 @@ Personal portfolio of Arthur Augustinho, a full-stack developer based in Europe.
 - CSS Modules on top of design tokens (`app/tokens.css`), Archivo variable font through `next/font`
 - Project case studies in MDX, compiled with `@mdx-js/mdx` and validated with Zod
 - GSAP for motion (hero, route, carousel), with a global pause control; a small canvas for the particle background
-- Contact form handled by a Cloudflare Worker (Resend for email, Turnstile against spam)
+- Contact by plain email, with no form and no backend
 - Hosting on Cloudflare, with the static export served as Worker assets
 
 ## Running locally
@@ -18,7 +18,7 @@ npm ci
 npm run dev
 ```
 
-The site runs without any environment variable. Copy `.env.example` to `.env` only to try the contact form (it needs Resend and Turnstile keys) or to change the site URL.
+The site runs without any environment variable. Copy `.env.example` to `.env` only to change the site URL or to turn on the analytics token.
 
 Before committing:
 

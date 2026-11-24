@@ -52,8 +52,3 @@ export function metadataDaPagina({
     },
   }
 }
-
-// O formulário de contato só aparece com a chave pública do Turnstile no
-// build (ADR 0007). Sem ela o widget não carrega e o envio nunca passaria
-// na verificação; nesse caso a página oferece só o e-mail.
-export const FORMULARIO_ATIVO = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)

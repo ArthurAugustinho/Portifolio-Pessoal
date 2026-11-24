@@ -2,14 +2,14 @@
 
 Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já construídos, melhor do que o GitHub mostra. Público: recrutadores e tech leads (principalmente Irlanda e Reino Unido) e clientes de freelance; o visitante típico passa menos de dois minutos no site. Não é objetivo demonstrar variedade de tecnologias: menos stack é melhor.
 
-Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); faltam domínio, Resend/Turnstile/Analytics e conteúdo (ver `docs/redesign/plano.md`, Etapa 8). Projetos do MVP: Alexo, Mica Café, Finap e Pass+; o corpo do Finap está escrito, os outros ainda têm `TODO:` (capas também). As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), formulário em Worker (0007), CSP via `_headers` (0008).
+Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); o domínio já está no ar e faltam o Web Analytics e a abertura da indexação (ver `docs/redesign/plano.md`, Etapa 8, e a 0010). Projetos do MVP: Alexo, Mica Café, Finap e Pass+, todos com corpo e capa, sem `TODO:`. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), contato só por e-mail, sem formulário nem Worker (0019, que substitui a 0007), CSP via `_headers` (0008).
 
 Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign/v2`; o design anterior fica na tag `v1-graphite`). Especificação em `docs/redesign/home.md` e plano em `docs/redesign/plano.md`; decisões nas ADRs 0012 a 0018.
 
 ## Stack
 - Next.js (App Router) · TypeScript estrito · CSS Modules com os tokens de `app/tokens.css`
 - Conteúdo em MDX em `content/projetos/`, compilado com `@mdx-js/mdx` (0003) e validado com Zod em `lib/projetos.ts`
-- `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, em cores da marca, com logos copiados de outros acervos para as que faltam e Lucide para os métodos (0016) · React Hook Form + Zod no formulário · Resend para o e-mail
+- `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, em cores da marca, com logos copiados de outros acervos para as que faltam e Lucide para os métodos (0016) · Zod para validar o conteúdo
 - Posts do LinkedIn em MDX em `content/posts/`, validados em `lib/posts.ts` (0017)
 - Movimento: GSAP com `@gsap/react` (0013); fundo de partículas conforme a 0015; órbita 3D do hero em CSS 3D, sem three.js (0014)
 - Hospedagem: Cloudflare (domínio próprio `arthuraugustinho.dev`, sem www, no ar desde 2026-11-24 com a indexação bloqueada; o `workers.dev` está desligado; ADR 0010)
@@ -23,7 +23,7 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 - Instalar: `npm ci`
 - Desenvolvimento: `npm run dev`
 - Antes de todo commit: `npm run lint && npm run typecheck && npm run build`
-- Site publicado: `https://arthuraugustinho.dev` (Worker `portfolio`, indexação bloqueada). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev NEXT_PUBLIC_INDEXAVEL=false NEXT_PUBLIC_TURNSTILE_SITE_KEY= NEXT_PUBLIC_CF_ANALYTICS_TOKEN= npm run worker:deploy` (as duas últimas vazias mantêm o formulário e o analytics desligados no preview, mesmo que o `.env` local tenha valores). `worker:deploy` já roda o build e o pós-build. Só publique com confirmação do autor.
+- Site publicado: `https://arthuraugustinho.dev` (Worker `portfolio`, indexação bloqueada). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev NEXT_PUBLIC_INDEXAVEL=false NEXT_PUBLIC_CF_ANALYTICS_TOKEN= npm run worker:deploy` (a variável do analytics vazia o mantém desligado no preview, mesmo que o `.env` local tenha valor). `worker:deploy` já roda o build e o pós-build. Só publique com confirmação do autor.
 
 ## Convenções
 - Design: seguir `design-system/portfolio/MASTER.md`. Nunca hex direto em componente; use as variáveis de `app/tokens.css`.
@@ -60,7 +60,7 @@ components/
 content/projetos/*.mdx   content/posts/*.mdx   content/perfil.ts
 lib/            projetos.ts  posts.ts  tecnologias.ts  movimento.ts  gsap.ts  schemas.ts  site.ts
 public/imagens/  public/video/
-worker/index.ts   wrangler.jsonc   (Worker do formulário, ADR 0007)
+wrangler.jsonc   (só publica os arquivos de out/, sem código de Worker, ADR 0019)
 scripts/corrigir-prefetch.mjs   (pós-build do export estático)
 design-system/portfolio/MASTER.md
 docs/decisions/NNNN-titulo.md

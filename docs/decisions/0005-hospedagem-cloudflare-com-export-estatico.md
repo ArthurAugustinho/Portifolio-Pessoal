@@ -1,6 +1,6 @@
 # 0005. Hospedagem na Cloudflare com export estático do Next.js
 
-- Status: Aceita
+- Status: Aceita (atualizada em 2026-11-24: sem o formulário, o Worker não tem mais código, pela 0019)
 - Data: 2026-11-10
 
 ## Contexto

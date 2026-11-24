@@ -1,6 +1,6 @@
 # 0007. Formulário de contato em Worker, seguindo a receita do Devkit
 
-- Status: Aceita
+- Status: Substituída pela 0019 (o formulário, o Worker, o Turnstile e o Resend foram removidos em 2026-11-24)
 - Data: 2026-11-10
 
 ## Contexto

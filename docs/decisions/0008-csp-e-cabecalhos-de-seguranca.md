@@ -1,6 +1,6 @@
 # 0008. CSP com 'unsafe-inline' em script e cabeçalhos de segurança via _headers
 
-- Status: Aceita
+- Status: Aceita (atualizada em 2026-11-24: sem o Turnstile, pela 0019)
 - Data: 2026-11-10
 
 ## Contexto
@@ -10,7 +10,7 @@ A revisão pré-lançamento do Devkit pede Content-Security-Policy, Strict-Trans
 - não há servidor para gerar nonce por requisição;
 - o Next.js injeta scripts inline para a hidratação.
 
-O site carrega dois terceiros: o Turnstile (0007) e o Cloudflare Web Analytics (0009).
+O site carrega um terceiro: o Cloudflare Web Analytics (0009). O Turnstile (0007) saiu com o formulário (0019).
 
 ## Alternativas consideradas
 ### A. CSP estrita com nonce
@@ -33,7 +33,7 @@ O site carrega dois terceiros: o Turnstile (0007) e o Cloudflare Web Analytics (
 C. Política inicial, a ajustar na implementação conferindo o console do navegador:
 
 ```
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
 Strict-Transport-Security: max-age=31536000; includeSubDomains
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin

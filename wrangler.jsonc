@@ -1,12 +1,10 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "portfolio",
-  "main": "./worker/index.ts",
   "compatibility_date": "2026-11-10",
+  // Site 100% estático (ADR 0019): não há código de Worker, só os arquivos de out/.
   "assets": {
     "directory": "./out",
-    // Estáticos saem direto do out/. O Worker só roda para /api/*.
-    "run_worker_first": ["/api/*"],
     "not_found_handling": "404-page"
   },
   // Domínio próprio (ADR 0010): o apex é o host canônico e o www também fica
@@ -22,8 +20,5 @@
   // (ADR 0010). Sem estas duas linhas o wrangler desliga os dois sozinho e avisa
   // a cada deploy.
   "workers_dev": false,
-  "preview_urls": false,
-  // Segredos (RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL e
-  // TURNSTILE_SECRET_KEY) entram por `wrangler secret put`, nunca aqui.
-  "observability": { "enabled": true }
+  "preview_urls": false
 }

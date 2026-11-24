@@ -104,7 +104,6 @@ export const perfil = {
   contato: {
     titulo: 'Open to full-time roles in Europe.',
     texto: 'Based in Europe and open to relocation. Write to me about a role or a project.',
-    linkFormulario: 'Use the contact form',
     github: 'https://github.com/ArthurAugustinho',
     linkedin: 'https://www.linkedin.com/in/arthur-augustinho-46076522b/',
     // TODO: [@ do Instagram]. Vazio, o bloco não aparece.

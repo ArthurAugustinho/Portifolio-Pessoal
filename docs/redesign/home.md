@@ -151,7 +151,7 @@ ADR 0017. Subtítulo: "What I am building, learning and reading." Link "See all 
 - Título `.t-h2-grande` centralizado: "Open to full-time roles in Europe."
 - Texto: "Based in Europe and open to relocation. Write to me about a role or a project."
 - Botão que copia o e-mail (ímã 0,2), mostrando o endereço e um ícone de cópia; confirmação "Copied" em região `aria-live="polite"`. Sem a API de área de transferência, o botão vira link `mailto:`.
-- Link para o formulário: "Use the contact form" → `/contato`.
+- ~~Link para o formulário~~: removido em 2026-11-24 com o formulário (ADR 0019).
 - Blocos (`<nav aria-label="Profiles">`): GitHub, LinkedIn, Instagram, Gmail, Discord. Instagram e Discord ficam ocultos enquanto o campo estiver vazio em `content/perfil.ts`. Discord não tem link público por nome de usuário: o bloco copia o usuário.
 
 ## 11. Páginas internas
