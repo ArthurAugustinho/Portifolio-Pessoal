@@ -15,7 +15,9 @@ const PESSOA = {
   jobTitle: 'Full-stack developer',
   description: 'Full-stack developer based in Europe.',
   url: SITE_URL,
+  // O Discord fica de fora: o link de perfil só abre para quem está logado.
   sameAs: blocosDeContato()
+    .filter((bloco) => bloco.id !== 'discord')
     .map((bloco) => bloco.href)
     .filter((href): href is string => Boolean(href?.startsWith('https://'))),
 }

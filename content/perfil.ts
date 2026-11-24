@@ -106,11 +106,12 @@ export const perfil = {
     texto: 'Based in Europe and open to relocation. Write to me about a role or a project.',
     github: 'https://github.com/ArthurAugustinho',
     linkedin: 'https://www.linkedin.com/in/arthur-augustinho-46076522b/',
-    // TODO: [@ do Instagram]. Vazio, o bloco não aparece.
-    instagram: '',
-    // TODO: [usuário do Discord]. Vazio, o bloco não aparece. O Discord não
-    // tem link público por nome de usuário: o bloco copia o usuário.
-    discord: '',
+    // Vazio, o bloco não aparece.
+    instagram: '@arthur_augustin',
+    // ID numérico do perfil (vira link para discord.com/users/<ID>) ou nome de
+    // usuário (o Discord não tem link por nome: o bloco copia o usuário). Vazio,
+    // o bloco não aparece.
+    discord: '577307015496335370',
   },
 }
 
@@ -143,7 +144,14 @@ export function blocosDeContato(): PerfilContato[] {
       : null,
     { id: 'gmail', rotulo: 'Gmail', icone: { tipo: 'simple-icons', slug: 'gmail' }, href: `mailto:${EMAIL}` },
     discord
-      ? { id: 'discord', rotulo: 'Discord', icone: { tipo: 'simple-icons', slug: 'discord' }, copiar: discord }
+      ? {
+          id: 'discord',
+          rotulo: 'Discord',
+          icone: { tipo: 'simple-icons', slug: 'discord' },
+          ...(/^[0-9]+$/.test(discord)
+            ? { href: `https://discord.com/users/${discord}` }
+            : { copiar: discord }),
+        }
       : null,
   ]
   return blocos.filter((bloco): bloco is PerfilContato => bloco !== null)
