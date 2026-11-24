@@ -85,9 +85,7 @@ In production, Docker Compose runs PostgreSQL, the app, Caddy, Tailscale and a d
 
 Everything described above is implemented and tested: unit tests, architecture tests, integration tests against a real PostgreSQL with Testcontainers, and frontend tests with Vitest. GitHub Actions runs the backend build with formatting checks and the frontend lint, tests and build on every pull request, plus a weekly dependency scan. The repository documents its 17 architecture decisions as ADRs.
 
-The production setup is built and was validated locally and in CI. The mobile version (PWA) is delivered, and its manual test on Android and iOS depends on the app being on the server.
-
-TODO: [atualizar o estado quando o Finap estiver no ar: endereço de acesso e se já uso no dia a dia]
+The production setup was validated locally and in CI before going live. The app now runs on a private server, reachable only over Tailscale, and I use it day to day. The mobile version (PWA) is delivered.
 
 ## What was left out
 
