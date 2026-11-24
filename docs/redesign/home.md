@@ -109,7 +109,7 @@ Linha vertical à esquerda das seções About → Contact (gutter de 64px no des
   - Testing: JUnit and Mockito, Selenium, Cypress, Pytest, Postman, Insomnia
   - Tools: Git, GitHub, VS Code, Figma, Trello, Maven, npm
   - Methods: Clean Architecture, Gitflow, Scrum, Kanban, MVP, Prototyping, Conventional Commits, ADRs, CI/CD
-- Ícones pelo registro (ADR 0016). Métodos não são marcas: usam monograma (Ca, Gf, Sc...).
+- Ícones pelo registro (ADR 0016). Métodos não são marcas: usam ícones do Lucide em cores de apoio (ADR 0016, atualização de 2026-11-23).
 - Sem animação nesta seção.
 - Celular: nome da camada acima da grade; tiles em duas ou três colunas.
 

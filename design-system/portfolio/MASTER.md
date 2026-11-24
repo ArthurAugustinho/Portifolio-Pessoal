@@ -110,7 +110,7 @@ Regras:
 - **Botão primário**: fundo `--accent`, texto `--on-accent` 650, raio 8px, altura 48px, padding horizontal 24px, ímã.
 - **Botão secundário**: fundo `--bg`, borda `--line-3`, texto `--ink` 600, mesmas medidas, ímã.
 - **Chip de status**: borda `--line-2`, raio 6px, 15px, texto `--ink-2`, ponto de 8px em `--accent`.
-- **Tile de tecnologia**: 112 × 88px, borda `--line-2`, raio 10px, ícone em `currentColor` acima do nome em `.t-meta`. Logo do Simple Icons e monograma usam o mesmo tile (ADR 0016).
+- **Tile de tecnologia**: 112 × 88px, borda `--line-2`, raio 10px, ícone na cor da marca acima do nome em `.t-meta`. Logo do Simple Icons, imagem colorida e ícone de método usam o mesmo tile (ADR 0016). Se a cor da marca tem menos de 3:1 de contraste com `--surface-2`, o componente a clareia até chegar a 3:1; o que é cinza (preto, grafite) vira `--ink`.
 - **Card de projeto**: superfície `--surface`, borda `--line-2`, raio 10px, capa 16:10, nome em `.t-h3`, resumo, papel e anos em `.t-meta`, fileira de ícones.
 - **Card de experiência**: cargo em `.t-h3`, período e organização em `.t-meta`, até três pontos.
 - **Ficha do About**: pares rótulo (`.t-meta`, `--ink-dim`) e valor (`--ink`), separados por `--line-1`.

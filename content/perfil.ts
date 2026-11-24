@@ -5,7 +5,7 @@
 // Tecnologias e ícones ficam em lib/tecnologias.ts; projetos, em
 // content/projetos/*.mdx.
 
-import type { CamadaId, Icone } from '@/lib/tecnologias'
+import { img, type CamadaId, type Icone } from '@/lib/tecnologias'
 
 export const EMAIL = 'arthuraugustinho35@gmail.com'
 
@@ -132,8 +132,8 @@ export function blocosDeContato(): PerfilContato[] {
   const { github, linkedin, instagram, discord } = perfil.contato
   const blocos: (PerfilContato | null)[] = [
     { id: 'github', rotulo: 'GitHub', icone: { tipo: 'simple-icons', slug: 'github' }, href: github },
-    // LinkedIn é marca da Microsoft e não está no Simple Icons (ADR 0016).
-    { id: 'linkedin', rotulo: 'LinkedIn', icone: { tipo: 'monograma', texto: 'in' }, href: linkedin },
+    // LinkedIn não está no Simple Icons: logo colorido copiado para public/imagens/tecnologias/ (ADR 0016).
+    { id: 'linkedin', rotulo: 'LinkedIn', icone: img('linkedin'), href: linkedin },
     instagram
       ? {
           id: 'instagram',

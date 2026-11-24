@@ -20,3 +20,10 @@
 .semBorda {
   border: 0;
 }
+
+/* Logo colorido em arquivo (public/imagens/tecnologias/): cabe no quadrado sem
+   deformar, mesmo o que não é quadrado (o Java é mais alto que largo). */
+.imagem {
+  flex: none;
+  object-fit: contain;
+}

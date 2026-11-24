@@ -5,12 +5,19 @@
 // por qualquer componente, inclusive de cliente, sem levar os SVGs junto. O
 // desenho de cada logo é resolvido em components/ui/IconeTecnologia.tsx.
 //
-// Sem logo no Simple Icons (marca excluída a pedido do dono: Java, AWS,
-// Microsoft e o que não existe no pacote): monograma. Métodos não são marcas
-// e também usam monograma.
+// Todo ícone aparece na cor da marca (ADR 0016, atualização de 2026-11-23). Há
+// quatro tipos:
+//   simple-icons  logo do pacote Simple Icons, com a cor da marca do próprio pacote;
+//   imagem        logo colorido copiado para public/imagens/tecnologias/, para as
+//                 marcas que o Simple Icons não tem (Java, AWS, Microsoft, Zabbix...);
+//   lucide        ícone do Lucide com cor de apoio, para os métodos, que não são marcas;
+//   monograma     reserva, sem uso hoje.
+// A cor é ajustada no componente quando ficaria apagada sobre o fundo escuro.
 
 export type Icone =
   | { tipo: 'simple-icons'; slug: string }
+  | { tipo: 'imagem'; arquivo: string }
+  | { tipo: 'lucide'; nome: string; cor: string }
   | { tipo: 'monograma'; texto: string }
 
 export const CAMADAS = [
@@ -33,7 +40,10 @@ export type Tecnologia = {
 }
 
 const logo = (slug: string): Icone => ({ tipo: 'simple-icons', slug })
-const mono = (texto: string): Icone => ({ tipo: 'monograma', texto })
+// arquivo: nome do SVG em public/imagens/tecnologias/ (sem a extensão).
+export const img = (arquivo: string): Icone => ({ tipo: 'imagem', arquivo })
+// nome: chave do ícone em components/ui/IconeTecnologia.tsx.
+const lucide = (nome: string, cor: string): Icone => ({ tipo: 'lucide', nome, cor })
 
 export const TECNOLOGIAS: readonly Tecnologia[] = [
   // Interface
@@ -50,7 +60,7 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   { id: 'tanstack-query', nome: 'TanStack Query', camada: 'interface', icone: logo('tanstack') },
 
   // API
-  { id: 'java', nome: 'Java', camada: 'api', icone: mono('Jv') },
+  { id: 'java', nome: 'Java', camada: 'api', icone: img('java') },
   { id: 'spring-boot', nome: 'Spring Boot', camada: 'api', icone: logo('springboot') },
   { id: 'spring-security', nome: 'Spring Security', camada: 'api', icone: logo('springsecurity') },
   { id: 'nodejs', nome: 'Node.js', camada: 'api', icone: logo('nodedotjs') },
@@ -65,15 +75,15 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   // Data
   { id: 'postgresql', nome: 'PostgreSQL', camada: 'data', icone: logo('postgresql') },
   { id: 'flyway', nome: 'Flyway', camada: 'data', icone: logo('flyway') },
-  { id: 'sql-server', nome: 'SQL Server', camada: 'data', icone: mono('Sq') },
+  { id: 'sql-server', nome: 'SQL Server', camada: 'data', icone: img('sql-server') },
   { id: 'drizzle', nome: 'Drizzle ORM', camada: 'data', icone: logo('drizzle') },
   { id: 'mysql', nome: 'MySQL', camada: 'data', icone: logo('mysql') },
 
   // Infrastructure
   { id: 'docker', nome: 'Docker', camada: 'infrastructure', icone: logo('docker') },
-  { id: 'aws-ecs-fargate', nome: 'AWS ECS Fargate', camada: 'infrastructure', icone: mono('Aw') },
+  { id: 'aws-ecs-fargate', nome: 'AWS ECS Fargate', camada: 'infrastructure', icone: img('aws-ecs-fargate') },
   { id: 'cloudflare', nome: 'Cloudflare', camada: 'infrastructure', icone: logo('cloudflare') },
-  { id: 'zabbix', nome: 'Zabbix', camada: 'infrastructure', icone: mono('Zb') },
+  { id: 'zabbix', nome: 'Zabbix', camada: 'infrastructure', icone: img('zabbix') },
   { id: 'grafana', nome: 'Grafana', camada: 'infrastructure', icone: logo('grafana') },
   { id: 'terraform', nome: 'Terraform', camada: 'infrastructure', icone: logo('terraform') },
   { id: 'linux', nome: 'Linux', camada: 'infrastructure', icone: logo('linux') },
@@ -92,7 +102,7 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   // Tools
   { id: 'git', nome: 'Git', camada: 'tools', icone: logo('git') },
   { id: 'github', nome: 'GitHub', camada: 'tools', icone: logo('github') },
-  { id: 'vscode', nome: 'VS Code', camada: 'tools', icone: mono('Vs') },
+  { id: 'vscode', nome: 'VS Code', camada: 'tools', icone: img('vscode') },
   { id: 'figma', nome: 'Figma', camada: 'tools', icone: logo('figma') },
   { id: 'trello', nome: 'Trello', camada: 'tools', icone: logo('trello') },
   { id: 'maven', nome: 'Maven', camada: 'tools', icone: logo('apachemaven') },
@@ -100,15 +110,15 @@ export const TECNOLOGIAS: readonly Tecnologia[] = [
   { id: 'vite', nome: 'Vite', camada: 'tools', icone: logo('vite') },
 
   // Methods
-  { id: 'clean-architecture', nome: 'Clean Architecture', camada: 'methods', icone: mono('Ca') },
-  { id: 'gitflow', nome: 'Gitflow', camada: 'methods', icone: mono('Gf') },
-  { id: 'scrum', nome: 'Scrum', camada: 'methods', icone: mono('Sc') },
-  { id: 'kanban', nome: 'Kanban', camada: 'methods', icone: mono('Kb') },
-  { id: 'mvp', nome: 'MVP', camada: 'methods', icone: mono('Mp') },
-  { id: 'prototyping', nome: 'Prototyping', camada: 'methods', icone: mono('Pr') },
-  { id: 'conventional-commits', nome: 'Conventional Commits', camada: 'methods', icone: mono('Cc') },
-  { id: 'adrs', nome: 'ADRs', camada: 'methods', icone: mono('Ad') },
-  { id: 'ci-cd', nome: 'CI/CD', camada: 'methods', icone: mono('Ci') },
+  { id: 'clean-architecture', nome: 'Clean Architecture', camada: 'methods', icone: lucide('layers', '#2DD4BF') },
+  { id: 'gitflow', nome: 'Gitflow', camada: 'methods', icone: lucide('git-branch', '#F05133') },
+  { id: 'scrum', nome: 'Scrum', camada: 'methods', icone: lucide('refresh-cw', '#38BDF8') },
+  { id: 'kanban', nome: 'Kanban', camada: 'methods', icone: lucide('square-kanban', '#A78BFA') },
+  { id: 'mvp', nome: 'MVP', camada: 'methods', icone: lucide('rocket', '#FB7185') },
+  { id: 'prototyping', nome: 'Prototyping', camada: 'methods', icone: lucide('pencil-ruler', '#A3E635') },
+  { id: 'conventional-commits', nome: 'Conventional Commits', camada: 'methods', icone: lucide('git-commit-horizontal', '#FE5196') },
+  { id: 'adrs', nome: 'ADRs', camada: 'methods', icone: lucide('scroll-text', '#34D399') },
+  { id: 'ci-cd', nome: 'CI/CD', camada: 'methods', icone: lucide('infinity', '#60A5FA') },
 ]
 
 const POR_ID = new Map(TECNOLOGIAS.map((tecnologia) => [tecnologia.id, tecnologia]))

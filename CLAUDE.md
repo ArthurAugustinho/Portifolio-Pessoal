@@ -9,7 +9,7 @@ Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign
 ## Stack
 - Next.js (App Router) · TypeScript estrito · CSS Modules com os tokens de `app/tokens.css`
 - Conteúdo em MDX em `content/projetos/`, compilado com `@mdx-js/mdx` (0003) e validado com Zod em `lib/projetos.ts`
-- `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, com monograma de reserva (0016) · React Hook Form + Zod no formulário · Resend para o e-mail
+- `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, em cores da marca, com logos copiados de outros acervos para as que faltam e Lucide para os métodos (0016) · React Hook Form + Zod no formulário · Resend para o e-mail
 - Posts do LinkedIn em MDX em `content/posts/`, validados em `lib/posts.ts` (0017)
 - Movimento: GSAP com `@gsap/react` (0013); fundo de partículas conforme a 0015; órbita 3D do hero em CSS 3D, sem three.js (0014)
 - Hospedagem: Cloudflare (preview em workers.dev; domínio próprio pendente, ADR 0010)

@@ -1,4 +1,17 @@
 import {
+  GitBranch,
+  GitCommitHorizontal,
+  Infinity as Infinito,
+  Layers,
+  type LucideIcon,
+  PencilRuler,
+  RefreshCw,
+  Rocket,
+  ScrollText,
+  SquareKanban,
+} from 'lucide-react'
+import Image from 'next/image'
+import {
   siAngular,
   siApachemaven,
   siAstro,
@@ -108,10 +121,61 @@ const LOGOS: Record<string, SimpleIcon> = {
   vite: siVite,
 }
 
+// Ícones do Lucide dos métodos (não são marcas): a chave é o "nome" do registro.
+const LUCIDE: Record<string, LucideIcon> = {
+  layers: Layers,
+  'git-branch': GitBranch,
+  'refresh-cw': RefreshCw,
+  'square-kanban': SquareKanban,
+  rocket: Rocket,
+  'pencil-ruler': PencilRuler,
+  'git-commit-horizontal': GitCommitHorizontal,
+  'scroll-text': ScrollText,
+  infinity: Infinito,
+}
+
+// Fundo mais claro em que o ícone aparece (--surface-2 de tokens.css, que um SVG
+// não lê). A cor da marca precisa de 3:1 contra ele (WCAG 1.4.11, gráficos): o
+// preto do Next.js ou do GitHub, por exemplo, sumiria no fundo escuro.
+const FUNDO_MAIS_CLARO = [0x1b, 0x2a, 0x3d]
+
+function canais(hex: string): number[] {
+  const h = hex.replace('#', '')
+  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16))
+}
+
+function luminancia([r, g, b]: number[]): number {
+  const [R, G, B] = [r, g, b].map((v) => {
+    const c = v / 255
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  })
+  return 0.2126 * R + 0.7152 * G + 0.0722 * B
+}
+
+function contraste(a: number[], b: number[]): number {
+  const [claro, escuro] = [luminancia(a), luminancia(b)].sort((x, y) => y - x)
+  return (claro + 0.05) / (escuro + 0.05)
+}
+
+// Cor da marca pronta para o fundo escuro. Cinza (preto, grafite) não tem matiz
+// para preservar e vira --ink; uma cor com matiz e pouco contraste (o azul do
+// C++, o roxo do Insomnia) é clareada, em passos, até chegar a 3:1.
+export function corVisivel(hex: string): string {
+  const rgb = canais(hex)
+  if (contraste(rgb, FUNDO_MAIS_CLARO) >= 3) return `#${hex.replace('#', '')}`
+  if (Math.max(...rgb) - Math.min(...rgb) < 32) return 'var(--ink)'
+  let atual = rgb
+  for (let passo = 1; passo <= 20; passo++) {
+    atual = rgb.map((v) => Math.round(v + (255 - v) * passo * 0.05))
+    if (contraste(atual, FUNDO_MAIS_CLARO) >= 3) break
+  }
+  return `#${atual.map((v) => v.toString(16).padStart(2, '0')).join('')}`
+}
+
 type Props = {
   icone: Icone
-  // Lado em px. O logo e o monograma ocupam o mesmo quadrado, para a mistura
-  // dos dois no mesmo tile não parecer quebrada.
+  // Lado em px. Logo, imagem e monograma ocupam o mesmo quadrado, para a mistura
+  // no mesmo tile não parecer quebrada.
   tamanho?: number
   // Monograma sem a borda própria, para quando o ícone já está dentro de um chip.
   semBorda?: boolean
@@ -131,6 +195,40 @@ export function IconeTecnologia({ icone, tamanho = 32, semBorda = false }: Props
     )
   }
 
+  if (icone.tipo === 'imagem') {
+    // Logo colorido copiado para public/imagens/tecnologias/. Decorativo (alt vazio).
+    return (
+      <Image
+        src={`/imagens/tecnologias/${icone.arquivo}.svg`}
+        alt=""
+        aria-hidden="true"
+        width={tamanho}
+        height={tamanho}
+        // Inline porque um height: auto global esticava o que não é quadrado (o Java
+        // saía com 32 x 43). O quadrado é fixo e a imagem cabe nele (object-fit).
+        style={{ width: tamanho, height: tamanho }}
+        className={styles.imagem}
+      />
+    )
+  }
+
+  if (icone.tipo === 'lucide') {
+    const Desenho = LUCIDE[icone.nome]
+    if (!Desenho) {
+      throw new Error(`IconeTecnologia: ícone do Lucide "${icone.nome}" sem entrada em components/ui/IconeTecnologia.tsx`)
+    }
+    return (
+      <Desenho
+        aria-hidden="true"
+        focusable="false"
+        size={tamanho}
+        strokeWidth={1.75}
+        className={styles.logo}
+        style={{ color: corVisivel(icone.cor) }}
+      />
+    )
+  }
+
   const logo = LOGOS[icone.slug]
   if (!logo) {
     throw new Error(`IconeTecnologia: slug "${icone.slug}" sem import em components/ui/IconeTecnologia.tsx`)
@@ -145,6 +243,7 @@ export function IconeTecnologia({ icone, tamanho = 32, semBorda = false }: Props
       height={tamanho}
       fill="currentColor"
       className={styles.logo}
+      style={{ color: corVisivel(logo.hex) }}
     >
       <path d={logo.path} />
     </svg>
