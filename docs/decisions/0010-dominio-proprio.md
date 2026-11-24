@@ -1,6 +1,6 @@
 # 0010. Registrar domínio próprio para o site e o envio de e-mail
 
-- Status: Aceita (domínio registrado e no ar em 2026-11-24, com o redirecionamento do www e o HTTP forçado conferidos; a indexação segue bloqueada até o fim da entrega final)
+- Status: Aceita (domínio registrado e no ar em 2026-11-24, com o redirecionamento do www e o HTTP forçado conferidos; a indexação foi aberta no mesmo dia, depois de a entrega final ficar pronta)
 - Situação em 2026-11-19: o site está publicado em `https://portfolio.arthur-web.workers.dev` como preview provisório, com a indexação bloqueada. O domínio próprio, a Resend (SPF, DKIM e DMARC) e o Web Analytics ficam para a entrega final.
 - Data: 2026-11-10
 
@@ -56,6 +56,6 @@ Nada no código tem o endereço escrito à mão: o sitemap, o `robots.txt`, as t
 
 - **Registro:** `arthuraugustinho.dev` criado em 2026-11-24 e válido até 2027-11-24, na Cloudflare Registrar, com os nameservers da própria Cloudflare.
 - **No ar:** o Worker `portfolio` responde em `https://arthuraugustinho.dev` e em `https://www.arthuraugustinho.dev` (domínios personalizados). O certificado é emitido pelo Let's Encrypt, e os cabeçalhos de segurança (HSTS, CSP, nosniff, Referrer-Policy e Permissions-Policy) estão presentes. A tag canônica, o `og:url`, o `og:image`, o sitemap e o JSON-LD já usam o host novo.
-- **Indexação:** continua bloqueada (`robots.txt` com `Disallow: /`), de propósito, até o fim da entrega final.
+- **Indexação:** aberta em 2026-11-24 (`NEXT_PUBLIC_INDEXAVEL=true`, `robots.txt` com `Allow: /` e o sitemap com 9 páginas, todas com canonical no apex). O autor confirmou as datas da trajetória antes. Resta cadastrar o sitemap no Search Console (propriedade de Domínio, verificação por TXT no DNS, feita pelo autor).
 - **`workers.dev` desligado:** o endereço antigo (`portfolio.arthur-web.workers.dev`) responde 404. O `wrangler` o desligou sozinho no deploy que ligou o domínio, porque o arquivo não dizia o contrário, e a configuração passou a ser explícita (`workers_dev` e `preview_urls` falsos).
 - **Redirecionamentos (conferidos em 2026-11-24):** `https://www.arthuraugustinho.dev/qualquer/caminho?x=1` vai para `https://arthuraugustinho.dev/qualquer/caminho?x=1` (301), e `http://`, no apex e no www, vai para `https://` (301); `http://www` chega ao apex em dois saltos. A regra do www usa **Wildcard pattern** e exige `https://www.arthuraugustinho.dev/*` com destino `https://arthuraugustinho.dev/${1}`: a primeira tentativa, sem `/*` e sem `${1}`, não casava com nada, porque o modo wildcard compara o endereço inteiro, com o caminho.

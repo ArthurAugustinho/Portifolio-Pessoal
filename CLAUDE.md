@@ -2,7 +2,7 @@
 
 Portfólio pessoal. Objetivo único: mostrar com clareza os projetos já construídos, melhor do que o GitHub mostra. Público: recrutadores e tech leads (principalmente Irlanda e Reino Unido) e clientes de freelance; o visitante típico passa menos de dois minutos no site. Não é objetivo demonstrar variedade de tecnologias: menos stack é melhor.
 
-Estado: reformulação concluída em código e publicada como preview (indexação bloqueada); o domínio e o Web Analytics já estão no ar e falta a abertura da indexação (ver `docs/redesign/plano.md`, Etapa 8, e a 0010). Projetos do MVP: Alexo, Mica Café, Finap e Pass+, todos com corpo e capa, sem `TODO:`. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), contato só por e-mail, sem formulário nem Worker (0019, que substitui a 0007), CSP via `_headers` (0008).
+Estado: reformulação concluída em código e publicada em `arthuraugustinho.dev` com a indexação aberta desde 2026-11-24; faltam o Search Console (propriedade de domínio e sitemap, feitos pelo autor), a passada com leitor de tela e o PageSpeed Insights (ver `docs/redesign/plano.md`, Etapa 8, e a 0010). Projetos do MVP: Alexo, Mica Café, Finap e Pass+, todos com corpo e capa, sem `TODO:`. As decisões em `docs/decisions/` valem mesmo antes de implementadas: site somente em inglês (0011, que substitui a 0004), Cloudflare com export estático (0005), contato só por e-mail, sem formulário nem Worker (0019, que substitui a 0007), CSP via `_headers` (0008).
 
 Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign/v2`; o design anterior fica na tag `v1-graphite`). Especificação em `docs/redesign/home.md` e plano em `docs/redesign/plano.md`; decisões nas ADRs 0012 a 0018.
 
@@ -12,7 +12,7 @@ Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign
 - `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, em cores da marca, com logos copiados de outros acervos para as que faltam e Lucide para os métodos (0016) · Zod para validar o conteúdo
 - Posts do LinkedIn em MDX em `content/posts/`, validados em `lib/posts.ts` (0017)
 - Movimento: GSAP com `@gsap/react` (0013); fundo de partículas conforme a 0015; órbita 3D do hero em CSS 3D, sem three.js (0014)
-- Hospedagem: Cloudflare (domínio próprio `arthuraugustinho.dev`, sem www, no ar desde 2026-11-24 com a indexação bloqueada; o `workers.dev` está desligado; ADR 0010)
+- Hospedagem: Cloudflare (domínio próprio `arthuraugustinho.dev`, sem www, no ar desde 2026-11-24, indexável desde o mesmo dia; o `workers.dev` está desligado; ADR 0010)
 - Decisões e motivos: `docs/decisions/` (use a skill "Registrar decisão técnica (ADR)" do Devkit para novas)
 
 As ADRs 0012 a 0018 estão `Aceita`; ainda assim, cada instalação de pacote pede confirmação.
@@ -23,7 +23,7 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 - Instalar: `npm ci`
 - Desenvolvimento: `npm run dev`
 - Antes de todo commit: `npm run lint && npm run typecheck && npm run build`
-- Site publicado: `https://arthuraugustinho.dev` (Worker `portfolio`, indexação bloqueada). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev NEXT_PUBLIC_INDEXAVEL=false npm run worker:deploy`. O Web Analytics é injetado pela própria Cloudflare no HTML (ADR 0009), sem variável nem código no site. `worker:deploy` já roda o build e o pós-build. Só publique com confirmação do autor.
+- Site publicado: `https://arthuraugustinho.dev` (Worker `portfolio`, indexável). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev NEXT_PUBLIC_INDEXAVEL=true npm run worker:deploy`. O Web Analytics é injetado pela própria Cloudflare no HTML (ADR 0009), sem variável nem código no site. `worker:deploy` já roda o build e o pós-build. Só publique com confirmação do autor.
 
 ## Convenções
 - Design: seguir `design-system/portfolio/MASTER.md`. Nunca hex direto em componente; use as variáveis de `app/tokens.css`.
