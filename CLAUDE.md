@@ -12,7 +12,7 @@ Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign
 - `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, em cores da marca, com logos copiados de outros acervos para as que faltam e Lucide para os métodos (0016) · React Hook Form + Zod no formulário · Resend para o e-mail
 - Posts do LinkedIn em MDX em `content/posts/`, validados em `lib/posts.ts` (0017)
 - Movimento: GSAP com `@gsap/react` (0013); fundo de partículas conforme a 0015; órbita 3D do hero em CSS 3D, sem three.js (0014)
-- Hospedagem: Cloudflare (preview em workers.dev; domínio próprio pendente, ADR 0010)
+- Hospedagem: Cloudflare (preview em workers.dev; domínio escolhido, `arthuraugustinho.dev`, ainda não registrado, ADR 0010)
 - Decisões e motivos: `docs/decisions/` (use a skill "Registrar decisão técnica (ADR)" do Devkit para novas)
 
 As ADRs 0012 a 0018 estão `Aceita`; ainda assim, cada instalação de pacote pede confirmação.
