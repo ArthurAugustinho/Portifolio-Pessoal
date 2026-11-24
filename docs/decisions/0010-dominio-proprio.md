@@ -1,6 +1,6 @@
 # 0010. Registrar domínio próprio para o site e o envio de e-mail
 
-- Status: Aceita (domínio registrado e no ar em 2026-11-24, com a indexação bloqueada; faltam o redirecionamento do www e o HTTP forçado, que são do autor)
+- Status: Aceita (domínio registrado e no ar em 2026-11-24, com o redirecionamento do www e o HTTP forçado conferidos; a indexação segue bloqueada até o fim da entrega final)
 - Situação em 2026-11-19: o site está publicado em `https://portfolio.arthur-web.workers.dev` como preview provisório, com a indexação bloqueada. O domínio próprio, a Resend (SPF, DKIM e DMARC) e o Web Analytics ficam para a entrega final.
 - Data: 2026-11-10
 
@@ -40,8 +40,8 @@ A sequência mantém a indexação bloqueada (`NEXT_PUBLIC_INDEXAVEL=false`, `ro
 | 1 | Autor, feito em 2026-11-24 | Registrar `arthuraugustinho.dev` na Cloudflare Registrar e ligar a renovação automática. O pagamento é do autor. |
 | 2 | Autor, feito | Conferir que a zona aparece na conta, ativa. |
 | 3 | Claude, feito em 2026-11-24 | Em `wrangler.jsonc`, acrescentar `routes` com `arthuraugustinho.dev` e `www.arthuraugustinho.dev` como `custom_domain: true` e republicar com `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev`. O mesmo se faz pelo painel (Workers e Pages, o Worker `portfolio`, Domains e Routes). |
-| 4 | Autor | Redirect Rule: host `www.arthuraugustinho.dev` vai para `https://arthuraugustinho.dev` com 301, preservando caminho e query. |
-| 5 | Autor | Ligar "Always Use HTTPS" nas configurações de SSL/TLS da zona. O `workers.dev` responde 200 em HTTP hoje; no domínio isso precisa ser 301 para HTTPS. |
+| 4 | Autor, feito e conferido em 2026-11-24 | Redirect Rule: host `www.arthuraugustinho.dev` vai para `https://arthuraugustinho.dev` com 301, preservando caminho e query. |
+| 5 | Autor, feito e conferido em 2026-11-24 | Ligar "Always Use HTTPS" nas configurações de SSL/TLS da zona. O `workers.dev` responde 200 em HTTP hoje; no domínio isso precisa ser 301 para HTTPS. |
 | 6 | Claude, feito em 2026-11-24 | Conferir por comando: `https://` com 200 e sem `X-Robots-Tag`, `http://` com 301, `www` com 301, certificado, HSTS, cabeçalhos, `canonical`, `robots.txt` e sitemap com o host novo. |
 | 7 | Claude, feito em 2026-11-24 (o wrangler o fez no deploy do passo 3, e a configuração agora é explícita) | Depois de tudo conferido, `"workers_dev": false` em `wrangler.jsonc`, para o `workers.dev` parar de responder e não competir com o domínio (consequência já prevista acima). |
 | 8 | Claude, feito em 2026-11-24 | Atualizar o `CLAUDE.md` (comando de publicar e endereço) e este ADR para "domínio no ar". |
@@ -56,4 +56,4 @@ Nada no código tem o endereço escrito à mão: o sitemap, o `robots.txt`, as t
 - **No ar:** o Worker `portfolio` responde em `https://arthuraugustinho.dev` e em `https://www.arthuraugustinho.dev` (domínios personalizados). O certificado é emitido pelo Let's Encrypt, e os cabeçalhos de segurança (HSTS, CSP, nosniff, Referrer-Policy e Permissions-Policy) estão presentes. A tag canônica, o `og:url`, o `og:image`, o sitemap e o JSON-LD já usam o host novo.
 - **Indexação:** continua bloqueada (`robots.txt` com `Disallow: /`), de propósito, até o fim da entrega final.
 - **`workers.dev` desligado:** o endereço antigo (`portfolio.arthur-web.workers.dev`) responde 404. O `wrangler` o desligou sozinho no deploy que ligou o domínio, porque o arquivo não dizia o contrário, e a configuração passou a ser explícita (`workers_dev` e `preview_urls` falsos).
-- **Pendências do autor, no painel da Cloudflare:** o redirecionamento 301 do `www` para o apex (passo 4) e "Always Use HTTPS" (passo 5). Hoje `http://arthuraugustinho.dev` e `https://www.arthuraugustinho.dev` respondem 200, sem redirecionar. Os navegadores já forçam HTTPS no `.dev`, que está na lista de pré-carregamento, mas robôs e `curl` ainda veem o HTTP.
+- **Redirecionamentos (conferidos em 2026-11-24):** `https://www.arthuraugustinho.dev/qualquer/caminho?x=1` vai para `https://arthuraugustinho.dev/qualquer/caminho?x=1` (301), e `http://`, no apex e no www, vai para `https://` (301); `http://www` chega ao apex em dois saltos. A regra do www usa **Wildcard pattern** e exige `https://www.arthuraugustinho.dev/*` com destino `https://arthuraugustinho.dev/${1}`: a primeira tentativa, sem `/*` e sem `${1}`, não casava com nada, porque o modo wildcard compara o endereço inteiro, com o caminho.
