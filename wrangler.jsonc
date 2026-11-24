@@ -9,6 +9,20 @@
     "run_worker_first": ["/api/*"],
     "not_found_handling": "404-page"
   },
+  // Domínio próprio (ADR 0010): o apex é o host canônico e o www também fica
+  // ligado ao Worker, para existir no DNS e receber a regra de redirecionamento
+  // (301 para o apex) feita no painel da Cloudflare. A zona precisa estar ativa
+  // na conta; cada deploy confere e mantém o DNS e o certificado.
+  "routes": [
+    { "pattern": "arthuraugustinho.dev", "custom_domain": true },
+    { "pattern": "www.arthuraugustinho.dev", "custom_domain": true }
+  ],
+  // O endereço workers.dev e as URLs de pré-visualização ficam desligados: o site
+  // vive no domínio próprio, e o workers.dev não pode competir com ele na busca
+  // (ADR 0010). Sem estas duas linhas o wrangler desliga os dois sozinho e avisa
+  // a cada deploy.
+  "workers_dev": false,
+  "preview_urls": false,
   // Segredos (RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL e
   // TURNSTILE_SECRET_KEY) entram por `wrangler secret put`, nunca aqui.
   "observability": { "enabled": true }

@@ -12,7 +12,7 @@ Redesign v2 (identidade "Rota") já está em `master` (merge da branch `redesign
 - `next/font` com Archivo variável · Lucide para ícones de interface · Simple Icons para marcas de tecnologia, em cores da marca, com logos copiados de outros acervos para as que faltam e Lucide para os métodos (0016) · React Hook Form + Zod no formulário · Resend para o e-mail
 - Posts do LinkedIn em MDX em `content/posts/`, validados em `lib/posts.ts` (0017)
 - Movimento: GSAP com `@gsap/react` (0013); fundo de partículas conforme a 0015; órbita 3D do hero em CSS 3D, sem three.js (0014)
-- Hospedagem: Cloudflare (preview em workers.dev; domínio escolhido, `arthuraugustinho.dev`, ainda não registrado, ADR 0010)
+- Hospedagem: Cloudflare (domínio próprio `arthuraugustinho.dev`, sem www, no ar desde 2026-11-24 com a indexação bloqueada; o `workers.dev` está desligado; ADR 0010)
 - Decisões e motivos: `docs/decisions/` (use a skill "Registrar decisão técnica (ADR)" do Devkit para novas)
 
 As ADRs 0012 a 0018 estão `Aceita`; ainda assim, cada instalação de pacote pede confirmação.
@@ -23,7 +23,7 @@ Não adicione nada fora desta lista sem perguntar. Nunca adicione: biblioteca de
 - Instalar: `npm ci`
 - Desenvolvimento: `npm run dev`
 - Antes de todo commit: `npm run lint && npm run typecheck && npm run build`
-- Preview publicado: `https://portfolio.arthur-web.workers.dev` (Worker `portfolio`). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://portfolio.arthur-web.workers.dev NEXT_PUBLIC_INDEXAVEL=false NEXT_PUBLIC_TURNSTILE_SITE_KEY= NEXT_PUBLIC_CF_ANALYTICS_TOKEN= npm run worker:deploy` (as duas últimas vazias mantêm o formulário e o analytics desligados no preview, mesmo que o `.env` local tenha valores). `worker:deploy` já roda o build e o pós-build. Só publique com confirmação do autor.
+- Site publicado: `https://arthuraugustinho.dev` (Worker `portfolio`, indexação bloqueada). Para republicar, force as variáveis de build no comando, porque o Next lê o `.env` local: `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev NEXT_PUBLIC_INDEXAVEL=false NEXT_PUBLIC_TURNSTILE_SITE_KEY= NEXT_PUBLIC_CF_ANALYTICS_TOKEN= npm run worker:deploy` (as duas últimas vazias mantêm o formulário e o analytics desligados no preview, mesmo que o `.env` local tenha valores). `worker:deploy` já roda o build e o pós-build. Só publique com confirmação do autor.
 
 ## Convenções
 - Design: seguir `design-system/portfolio/MASTER.md`. Nunca hex direto em componente; use as variáveis de `app/tokens.css`.

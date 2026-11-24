@@ -1,6 +1,6 @@
 # 0010. Registrar domínio próprio para o site e o envio de e-mail
 
-- Status: Aceita (nome, registrador e host canônico definidos em 2026-11-23; o domínio ainda não foi registrado)
+- Status: Aceita (domínio registrado e no ar em 2026-11-24, com a indexação bloqueada; faltam o redirecionamento do www e o HTTP forçado, que são do autor)
 - Situação em 2026-11-19: o site está publicado em `https://portfolio.arthur-web.workers.dev` como preview provisório, com a indexação bloqueada. O domínio próprio, a Resend (SPF, DKIM e DMARC) e o Web Analytics ficam para a entrega final.
 - Data: 2026-11-10
 
@@ -37,15 +37,23 @@ A sequência mantém a indexação bloqueada (`NEXT_PUBLIC_INDEXAVEL=false`, `ro
 
 | # | Quem | Passo |
 | --- | --- | --- |
-| 1 | Autor | Registrar `arthuraugustinho.dev` na Cloudflare Registrar e ligar a renovação automática. O pagamento é do autor. |
-| 2 | Autor | Conferir que a zona aparece na conta, ativa. |
-| 3 | Claude, com ok | Em `wrangler.jsonc`, acrescentar `routes` com `arthuraugustinho.dev` e `www.arthuraugustinho.dev` como `custom_domain: true` e republicar com `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev`. O mesmo se faz pelo painel (Workers e Pages, o Worker `portfolio`, Domains e Routes). |
+| 1 | Autor, feito em 2026-11-24 | Registrar `arthuraugustinho.dev` na Cloudflare Registrar e ligar a renovação automática. O pagamento é do autor. |
+| 2 | Autor, feito | Conferir que a zona aparece na conta, ativa. |
+| 3 | Claude, feito em 2026-11-24 | Em `wrangler.jsonc`, acrescentar `routes` com `arthuraugustinho.dev` e `www.arthuraugustinho.dev` como `custom_domain: true` e republicar com `NEXT_PUBLIC_SITE_URL=https://arthuraugustinho.dev`. O mesmo se faz pelo painel (Workers e Pages, o Worker `portfolio`, Domains e Routes). |
 | 4 | Autor | Redirect Rule: host `www.arthuraugustinho.dev` vai para `https://arthuraugustinho.dev` com 301, preservando caminho e query. |
 | 5 | Autor | Ligar "Always Use HTTPS" nas configurações de SSL/TLS da zona. O `workers.dev` responde 200 em HTTP hoje; no domínio isso precisa ser 301 para HTTPS. |
-| 6 | Claude | Conferir por comando: `https://` com 200 e sem `X-Robots-Tag`, `http://` com 301, `www` com 301, certificado, HSTS, cabeçalhos, `canonical`, `robots.txt` e sitemap com o host novo. |
-| 7 | Claude, com ok | Depois de tudo conferido, `"workers_dev": false` em `wrangler.jsonc`, para o `workers.dev` parar de responder e não competir com o domínio (consequência já prevista acima). |
-| 8 | Claude | Atualizar o `CLAUDE.md` (comando de publicar e endereço) e este ADR para "domínio no ar". |
+| 6 | Claude, feito em 2026-11-24 | Conferir por comando: `https://` com 200 e sem `X-Robots-Tag`, `http://` com 301, `www` com 301, certificado, HSTS, cabeçalhos, `canonical`, `robots.txt` e sitemap com o host novo. |
+| 7 | Claude, feito em 2026-11-24 (o wrangler o fez no deploy do passo 3, e a configuração agora é explícita) | Depois de tudo conferido, `"workers_dev": false` em `wrangler.jsonc`, para o `workers.dev` parar de responder e não competir com o domínio (consequência já prevista acima). |
+| 8 | Claude, feito em 2026-11-24 | Atualizar o `CLAUDE.md` (comando de publicar e endereço) e este ADR para "domínio no ar". |
 
 Depois do domínio, na ordem: Resend (verificar o domínio com SPF, DKIM e DMARC e trocar `CONTACT_FROM_EMAIL` por um endereço do domínio), Turnstile (permitir o host `arthuraugustinho.dev` no widget), Web Analytics (o site por hostname) e, por fim, `NEXT_PUBLIC_INDEXAVEL=true` com o Search Console.
 
 Nada no código tem o endereço escrito à mão: o sitemap, o `robots.txt`, as tags canônicas e o cartão de compartilhamento leem `NEXT_PUBLIC_SITE_URL`, e a CSP e o HSTS não dependem do host.
+
+## Situação em 2026-11-24
+
+- **Registro:** `arthuraugustinho.dev` criado em 2026-11-24 e válido até 2027-11-24, na Cloudflare Registrar, com os nameservers da própria Cloudflare.
+- **No ar:** o Worker `portfolio` responde em `https://arthuraugustinho.dev` e em `https://www.arthuraugustinho.dev` (domínios personalizados). O certificado é emitido pelo Let's Encrypt, e os cabeçalhos de segurança (HSTS, CSP, nosniff, Referrer-Policy e Permissions-Policy) estão presentes. A tag canônica, o `og:url`, o `og:image`, o sitemap e o JSON-LD já usam o host novo.
+- **Indexação:** continua bloqueada (`robots.txt` com `Disallow: /`), de propósito, até o fim da entrega final.
+- **`workers.dev` desligado:** o endereço antigo (`portfolio.arthur-web.workers.dev`) responde 404. O `wrangler` o desligou sozinho no deploy que ligou o domínio, porque o arquivo não dizia o contrário, e a configuração passou a ser explícita (`workers_dev` e `preview_urls` falsos).
+- **Pendências do autor, no painel da Cloudflare:** o redirecionamento 301 do `www` para o apex (passo 4) e "Always Use HTTPS" (passo 5). Hoje `http://arthuraugustinho.dev` e `https://www.arthuraugustinho.dev` respondem 200, sem redirecionar. Os navegadores já forçam HTTPS no `.dev`, que está na lista de pré-carregamento, mas robôs e `curl` ainda veem o HTTP.
