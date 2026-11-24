@@ -69,7 +69,7 @@ Nunca em parágrafo, título ou como preenchimento grande além do botão primá
 
 O mínimo do `.t-hero` encolhe em tela estreita: "Augustinho" mede 6,3em a `wdth` 118 e, a 56px, passa de 335px (celular de 375px). No hero da home o tamanho também tem teto pela coluna do texto (`Hero.module.css`, `.texto .titulo`): `min(clamp acima, 100cqw / 6,8)`, porque "Augustinho." mede cerca de 6,55em (6,67em com o cursor) e a linha não quebra. Em desktop isso dá cerca de 99px em vez de 116px e mantém 4rem (mais ou menos 80px de folga) entre o nome e a órbita. Código em MDX usa a pilha monoespaçada do sistema (`--font-mono`); nada é baixado e a fonte não aparece em rótulos. `.t-lead` (1,25rem, `--ink-2`) continua para a descrição de página interna.
 
-A classe visual não decide a tag: o nível do heading segue a hierarquia da página. Comprimento de linha de texto corrido: até 34rem (cerca de 70 caracteres) na home e em `/sobre`; no corpo das páginas de projeto, até 44rem (cerca de 78 caracteres) numa coluna de 48rem, porque ali o texto é longo e uma coluna de 34rem deixava mais da metade da tela vazia.
+A classe visual não decide a tag: o nível do heading segue a hierarquia da página. Comprimento de linha de texto corrido: até 34rem (cerca de 70 caracteres) na home e em `/sobre`; no corpo das páginas de projeto, a letra vai de 18px (celular) a 21px (a partir de uns 1100px) e a linha chega a 52rem (cerca de 80 caracteres), numa coluna de 56rem, porque ali o texto é longo, fica sozinho na coluna, e a coluna de 34rem com letra de 18px deixava mais da metade da tela vazia.
 
 ## Espaço, grade e forma
 

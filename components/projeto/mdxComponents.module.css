@@ -10,15 +10,18 @@
   margin-top: var(--space-4);
 }
 
-/* Texto corrido do estudo de caso: até 44rem, cerca de 78 caracteres por linha
-   (MASTER). A coluna da página tem 48rem; código e imagens usam a coluna toda. */
+/* Texto corrido do estudo de caso: letra de --texto-projeto (18 a 21px, definido
+   em page.module.css) e linha de até 52rem, cerca de 80 caracteres (MASTER). A
+   coluna da página tem 56rem; código e imagens usam a coluna toda. */
 .p {
-  max-width: 44rem;
+  max-width: 52rem;
   margin: var(--space-2) 0;
+  font-size: var(--texto-projeto, 1em);
 }
 
 .lista {
-  max-width: 44rem;
+  max-width: 52rem;
+  font-size: var(--texto-projeto, 1em);
   margin: var(--space-2) 0;
   padding-left: var(--space-3);
   list-style: disc;
