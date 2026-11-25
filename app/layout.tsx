@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Header } from '@/components/layout/Header'
+import { FalhasRede } from '@/components/layout/FalhasRede'
 import { Particulas } from '@/components/layout/Particulas'
 import { Rodape } from '@/components/layout/Rodape'
 import { SCRIPT_MOVIMENTO } from '@/lib/movimento'
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       </head>
       <body>
         <Particulas />
+        <FalhasRede />
         <Header temBlog={temPosts()} />
         <main id="main">{children}</main>
         <Rodape />
