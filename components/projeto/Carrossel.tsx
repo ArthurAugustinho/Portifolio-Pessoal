@@ -40,13 +40,12 @@ function pararVideo(video: HTMLVideoElement) {
 
 // A rolagem horizontal é do navegador (toque, trackpad, roda, teclado). Aqui
 // entram as setas, ← →, a prévia em <dialog> (ADR 0018) e o vídeo do card. O
-// arrasto com inércia, o cursor "Drag"/"Open" e o Flip carregam sob demanda, na
-// primeira interação (CarrosselMovimento.ts).
+// arrasto com inércia e o Flip carregam sob demanda, na primeira interação
+// (CarrosselMovimento.ts).
 export function Carrossel({ cabecalho, cards, previas }: Props) {
   const faixa = useRef<HTMLDivElement>(null)
   const lista = useRef<HTMLUListElement>(null)
   const dialogo = useRef<HTMLDialogElement>(null)
-  const cursor = useRef<HTMLSpanElement>(null)
   const gatilho = useRef<HTMLElement | null>(null)
   const movimento = useRef<Movimento | null>(null)
   const desfazerMovimento = useRef<(() => void) | undefined>(undefined)
@@ -111,14 +110,14 @@ export function Carrossel({ cabecalho, cards, previas }: Props) {
 
   // Primeira interação com a faixa (ponteiro em cima, foco num card ou toque):
   // baixa o Draggable, o InertiaPlugin e o Flip, uma vez só.
-  function carregar(ponto: { x: number; y: number } | null) {
+  function carregar() {
     if (carregando.current) return
     carregando.current = true
     void import('./CarrosselMovimento').then((modulo) => {
       // Se saiu da página enquanto baixava, `carregando` já foi zerado.
-      if (!carregando.current || !faixa.current || !cursor.current) return
+      if (!carregando.current || !faixa.current) return
       movimento.current = modulo
-      desfazerMovimento.current = modulo.iniciar({ faixa: faixa.current, cursor: cursor.current }, ponto)
+      desfazerMovimento.current = modulo.iniciar(faixa.current)
     })
   }
 
@@ -134,7 +133,6 @@ export function Carrossel({ cabecalho, cards, previas }: Props) {
     // O diálogo cresce a partir do card (Flip); sem o módulo carregado, ou com a
     // pausa, abre de uma vez.
     const card = gatilho.current?.closest('article')
-    if (cursor.current) movimento.current?.esconderCursor({ cursor: cursor.current })
     if (card) movimento.current?.abrirComFlip(el, card)
   }, [aberta])
 
@@ -205,7 +203,7 @@ export function Carrossel({ cabecalho, cards, previas }: Props) {
   }
 
   function aoFocar(evento: FocusEvent<HTMLElement>) {
-    carregar(null)
+    carregar()
     tocar((evento.target as Element).closest('article'))
   }
 
@@ -267,7 +265,7 @@ export function Carrossel({ cabecalho, cards, previas }: Props) {
         onFocus={aoFocar}
         onBlur={aoDesfocar}
         onPointerEnter={(evento) => {
-          if (evento.pointerType === 'mouse') carregar({ x: evento.clientX, y: evento.clientY })
+          if (evento.pointerType === 'mouse') carregar()
         }}
       >
         <ul
@@ -280,13 +278,6 @@ export function Carrossel({ cabecalho, cards, previas }: Props) {
           {cards}
         </ul>
       </div>
-
-      {/* Cursor contextual: decorativo, só com ponteiro fino e movimento ativo. */}
-      <span ref={cursor} className={styles.cursor} aria-hidden="true">
-        <span data-rotulo className="t-meta">
-          Drag
-        </span>
-      </span>
 
       <dialog
         ref={dialogo}

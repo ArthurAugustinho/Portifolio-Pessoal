@@ -52,7 +52,7 @@ Fontes de dados:
 ADR 0015. Em todas as páginas, fixo, atrás do conteúdo. Inicia depois do primeiro paint útil; para com a aba oculta e com a pausa. Ligações ao cursor só com `pointer: fine`.
 
 ### Cursor contextual
-Sobre a faixa do carrossel: rótulo "Drag" seguindo o ponteiro; sobre um card: "Open". Círculo de 76px com borda `--ink`, texto em `.t-meta`. `aria-hidden`, só `pointer: fine`, desligado com pausa. O cursor nativo continua visível.
+Removido em 2026-11-24 a pedido do autor (rótulo "Drag"/"Open" em círculo que seguia o ponteiro). A faixa usa só `grab`/`grabbing` do CSS.
 
 ### Footer
 "© 2026 Arthur Augustinho" e link "Privacy" (`/privacy`). O ano vem do build, não fixo no código.

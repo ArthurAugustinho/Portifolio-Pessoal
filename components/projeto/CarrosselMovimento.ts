@@ -1,10 +1,10 @@
-// Movimento do carrossel (Etapa 5): arrasto com inércia, cursor "Drag" e "Open"
-// e o Flip entre o card e a prévia. Este módulo carrega por import dinâmico na
+// Movimento do carrossel (Etapa 5): arrasto com inércia e o Flip entre o card e
+// a prévia. Este módulo carrega por import dinâmico na
 // primeira interação com a faixa (ADR 0013): Draggable, InertiaPlugin e Flip
 // ficam fora do JavaScript inicial da home.
 //
 // Tudo passa por animar() (gsap.matchMedia): "reduzir movimento" e a pausa
-// global desligam o cursor e a inércia, e o Flip abre e fecha sem animação.
+// global desligam a inércia, e o Flip abre e fecha sem animação.
 
 import { Draggable } from 'gsap/Draggable'
 import { Flip } from 'gsap/Flip'
@@ -16,11 +16,6 @@ gsap.registerPlugin(Draggable, InertiaPlugin, Flip)
 
 const DURACAO_FLIP = 0.45
 
-type Elementos = {
-  faixa: HTMLElement
-  cursor: HTMLElement
-}
-
 // Depois de um arrasto, o navegador ainda dispara o click do card; o Carrossel
 // pergunta aqui para não abrir a prévia no fim de um gesto de arrastar.
 let arrastouAgora = false
@@ -31,7 +26,7 @@ export function acabouDeArrastar() {
 // Arrasto com o mouse sobre a mesma rolagem nativa: trackpad, roda, toque e
 // teclado continuam funcionando, porque a faixa segue sendo um overflow-x.
 // Toque fica de fora (ponteiro grosso): é a rolagem nativa, com snap no CSS.
-function ligarArrasto({ faixa, cursor }: Elementos, { pausado }: Contexto) {
+function ligarArrasto(faixa: HTMLElement, { pausado }: Contexto) {
   faixa.setAttribute('data-arrasto', '')
 
   const [arrastavel] = Draggable.create(faixa, {
@@ -43,9 +38,6 @@ function ligarArrasto({ faixa, cursor }: Elementos, { pausado }: Contexto) {
     onDragStart: () => {
       arrastouAgora = true
       faixa.setAttribute('data-arrastando', '')
-      // Ao começar a arrastar, o cursor passa a dizer "Drag" mesmo sobre um card.
-      const rotulo = cursor.querySelector('[data-rotulo]')
-      if (rotulo) rotulo.textContent = 'Drag'
     },
     onRelease: () => {
       faixa.removeAttribute('data-arrastando')
@@ -64,77 +56,12 @@ function ligarArrasto({ faixa, cursor }: Elementos, { pausado }: Contexto) {
   }
 }
 
-// Rótulo que acompanha o ponteiro: "Drag" sobre a faixa, "Open" sobre um card.
-// Decorativo, só ponteiro fino e sem pausa; o cursor nativo continua visível.
-function ligarCursor(
-  { faixa, cursor }: Elementos,
-  { contextSafe }: Contexto,
-  ponto: { x: number; y: number } | null,
-) {
-  const rotulo = cursor.querySelector<HTMLElement>('[data-rotulo]')
-  if (!rotulo) return
-
-  const irParaX = gsap.quickTo(cursor, 'x', { duration: 0.25, ease: 'power3.out' })
-  const irParaY = gsap.quickTo(cursor, 'y', { duration: 0.25, ease: 'power3.out' })
-  gsap.set(cursor, { autoAlpha: 0, scale: 0.6 })
-
-  const mostrar = contextSafe(() =>
-    gsap.to(cursor, { autoAlpha: 1, scale: 1, duration: 0.15, ease: 'power2.out', overwrite: 'auto' }),
-  ) as () => void
-  const esconder = contextSafe(() =>
-    gsap.to(cursor, { autoAlpha: 0, scale: 0.6, duration: 0.15, ease: 'power2.out', overwrite: 'auto' }),
-  ) as () => void
-
-  const seguir = (evento: { clientX: number; clientY: number; target: EventTarget | null }) => {
-    irParaX(evento.clientX)
-    irParaY(evento.clientY)
-    // Arrastando, o rótulo é sempre "Drag"; fora disso, "Open" só sobre um card.
-    const sobreCard =
-      !faixa.hasAttribute('data-arrastando') &&
-      (evento.target as Element | null)?.closest('a[data-previa], article')
-    const texto = sobreCard ? 'Open' : 'Drag'
-    if (rotulo.textContent !== texto) rotulo.textContent = texto
-  }
-
-  const entrar = contextSafe((evento: PointerEvent) => {
-    seguir(evento)
-    mostrar()
-  }) as EventListener
-  const mover = contextSafe((evento: PointerEvent) => seguir(evento)) as EventListener
-  const sair = contextSafe(() => esconder()) as EventListener
-
-  faixa.addEventListener('pointerenter', entrar)
-  faixa.addEventListener('pointermove', mover)
-  faixa.addEventListener('pointerleave', sair)
-
-  // O módulo carrega com o ponteiro já em cima da faixa: não perde o primeiro
-  // pointerenter.
-  if (ponto) {
-    seguir({ clientX: ponto.x, clientY: ponto.y, target: document.elementFromPoint(ponto.x, ponto.y) })
-    mostrar()
-  }
-
-  return () => {
-    faixa.removeEventListener('pointerenter', entrar)
-    faixa.removeEventListener('pointermove', mover)
-    faixa.removeEventListener('pointerleave', sair)
-  }
-}
-
 // Liga o movimento da faixa. Devolve a limpeza.
-export function iniciar(elementos: Elementos, ponto: { x: number; y: number } | null) {
-  return animar(elementos.faixa, (contexto) => {
+export function iniciar(faixa: HTMLElement) {
+  return animar(faixa, (contexto) => {
     if (!contexto.ponteiroFino) return
-
-    const limpezas: (void | (() => void))[] = [ligarArrasto(elementos, contexto)]
-    if (!contexto.pausado) limpezas.push(ligarCursor(elementos, contexto, ponto))
-    return () => limpezas.forEach((limpar) => limpar?.())
+    return ligarArrasto(faixa, contexto)
   })
-}
-
-// O cursor some enquanto a prévia está aberta.
-export function esconderCursor({ cursor }: Pick<Elementos, 'cursor'>) {
-  gsap.to(cursor, { autoAlpha: 0, scale: 0.6, duration: 0.1, overwrite: 'auto' })
 }
 
 // Flip: o <dialog> cresce a partir do card (e volta a ele ao fechar). Com a

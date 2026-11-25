@@ -77,7 +77,7 @@ Aceite: com "reduzir movimento" ou pausa, a página fica idêntica à da Etapa 3
 ## Etapa 5 — Carrossel interativo e prévia animada
 
 - Draggable (`type: 'scrollLeft'`) e InertiaPlugin por import dinâmico (§8).
-- Cursor contextual "Drag" / "Open" (home.md §2).
+- Cursor contextual "Drag" / "Open" (home.md §2): removido em 2026-11-24.
 - Vídeo no hover e no foco do card (§8).
 - Flip do card até o `<dialog>` e de volta ao fechar.
 

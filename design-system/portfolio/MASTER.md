@@ -94,7 +94,7 @@ Tokens: `--ease-out` `cubic-bezier(0.22, 1, 0.36, 1)` · `--dur-fast` 150ms (cor
 | Header | Seção visível | Sublinhado âmbar e caminho `/secao` | Troca sem transição | Igual |
 | Rota com esfera | Scroll | Esfera acompanha o progresso; nó alcançado fica âmbar | Esfera e nós seguem o scroll sem suavização | Igual |
 | Partículas | Contínuo | Até 80 (desktop) / 30 (celular); ligação 140px; cursor 170px | Um quadro parado | Sem cursor |
-| Carrossel | Arrasto, setas, teclado | Inércia; cursor "Drag" e "Open" | Sem inércia | Toque nativo |
+| Carrossel | Arrasto, setas, teclado | Inércia no arrasto | Sem inércia | Toque nativo |
 | Prévia | Clique no card | Flip do card ao diálogo em 450ms | Abre sem animação | Igual |
 | Vídeo do card | Hover ou foco | Vídeo mudo em loop no lugar da capa | Capa parada | Capa parada |
 
@@ -102,7 +102,7 @@ Regras:
 
 - O movimento que começa sozinho e dura mais de 5 segundos (linha de stacks, órbita, partículas) precisa de um controle visível para pausar (WCAG 2.2.2). O controle fica no header e vale para o site inteiro.
 - `prefers-reduced-motion: reduce` liga a pausa por padrão; o visitante pode reativar o movimento pelo mesmo controle.
-- O cursor nativo continua visível sempre. Cursor contextual é um rótulo que acompanha o ponteiro, decorativo (`aria-hidden`), só com `pointer: fine`.
+- O cursor nativo não é substituído nem acompanhado por rótulo: o carrossel usa só `grab` e `grabbing` do CSS.
 
 ## Componentes
 

@@ -127,37 +127,3 @@
     opacity: 0;
   }
 }
-
-/* ---- Cursor contextual ("Drag" sobre a faixa, "Open" sobre um card) ----
-   Círculo de 76px com borda --ink, decorativo e fora da interação. Oculto até o
-   movimento carregar; o cursor nativo continua visível por cima. */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 76px;
-  height: 76px;
-  margin: -38px 0 0 -38px;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
-  background: var(--bg);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.cursor > span {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-/* Só com mouse. */
-@media not (pointer: fine) {
-  .cursor {
-    display: none;
-  }
-}
