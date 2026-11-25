@@ -94,6 +94,8 @@ Tokens: `--ease-out` `cubic-bezier(0.22, 1, 0.36, 1)` · `--dur-fast` 150ms (cor
 | Header | Seção visível | Sublinhado âmbar e caminho `/secao` | Troca sem transição | Igual |
 | Rota com esfera | Scroll | Esfera acompanha o progresso; nó alcançado fica âmbar | Esfera e nós seguem o scroll sem suavização | Igual |
 | Partículas | Contínuo | Até 80 (desktop) / 30 (celular); ligação 140px; cursor 170px | Um quadro parado | Sem cursor |
+| Falhas de rede | Contínuo, só com o hero visível | Até 3 falhas (18–32 px/s); órbita a 140px, captura em 1,2 s ("200 OK") | Nada desenhado | Desligado (só ponteiro fino) |
+| Entrada lateral | Scroll, uma vez por bloco | Opacidade e 40px (24px no celular) pela esquerda, 0,7s `power3.out`; só o que está abaixo da tela | Nada escondido | Igual, 24px |
 | Carrossel | Arrasto, setas, teclado | Inércia no arrasto | Sem inércia | Toque nativo |
 | Prévia | Clique no card | Flip do card ao diálogo em 450ms | Abre sem animação | Igual |
 | Vídeo do card | Hover ou foco | Vídeo mudo em loop no lugar da capa | Capa parada | Capa parada |

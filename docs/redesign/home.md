@@ -54,6 +54,12 @@ ADR 0015. Em todas as páginas, fixo, atrás do conteúdo. Inicia depois do prim
 ### Cursor contextual
 Removido em 2026-11-24 a pedido do autor (rótulo "Drag"/"Open" em círculo que seguia o ponteiro). A faixa usa só `grab`/`grabbing` do CSS.
 
+### Entrada lateral das seções
+`RevelaLateral` (`components/home/`), sem marcação própria. Os elementos com `data-revela` (h2 das seções, texto e ficha de About, cada camada do Stack, cada cargo, subtítulo de Projects, bloco de Contact) que estão abaixo da tela ao montar começam com `opacity: 0` e `x: -40` (24 no celular) e entram em 0,7s (`power3.out`, stagger até 0,08s) ao chegar a 88% da altura, uma vez. Fora: o hero (LCP), os cards e a trilha do carrossel, e os rótulos das seções (presos ao nó da rota). Só `opacity`, nunca `visibility` (o Tab continua alcançando); `focusin` revela na hora o bloco que recebe foco. Pausado ou "reduzir movimento": nada é escondido. GSAP e ScrollTrigger por import dinâmico.
+
+### Falhas de rede
+`FalhasRede` (`components/layout/`), canvas 2D próprio logo acima do de partículas, `aria-hidden`, só `pointer: fine`. Até 3 falhas (`timeout`, `503`, `ECONNRESET`...) nascem fora da tela, só com o hero visível, e vagam a 18–32 px/s. O cursor a menos de 140px põe uma em órbita (raio 34px, 2,6 rad/s) com linha, círculo, arco de progresso e círculo tracejado; depois de 1,2s ela é capturada: o rótulo embaralha até "200 OK" e o anel achata e some em 0,9s. Cursor a mais de 224px ou fora da janela: a falha escapa pela tangente. O loop só roda com a aba visível e o hero a 30% ou mais (ou com falha ativa); pausa para e limpa. Integrado por dt, igual a 60 e 120 Hz.
+
 ### Footer
 "© 2026 Arthur Augustinho" e link "Privacy" (`/privacy`). O ano vem do build, não fixo no código.
 
