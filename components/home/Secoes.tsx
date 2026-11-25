@@ -20,12 +20,12 @@ export function Sobre() {
 
   return (
     <Secao id="about" rotulo="About">
-      <h2 id="about-titulo" className={`t-h2 ${styles.titulo}`}>
+      <h2 id="about-titulo" data-revela className={`t-h2 ${styles.titulo}`}>
         {sobre.titulo}
       </h2>
 
       <div className={styles.sobre}>
-        <div className={styles.textoSobre}>
+        <div data-revela className={styles.textoSobre}>
           {sobre.paragrafos.map((paragrafo) => (
             <p key={paragrafo}>{paragrafo}</p>
           ))}
@@ -34,7 +34,7 @@ export function Sobre() {
           </p>
         </div>
 
-        <dl className={styles.ficha}>
+        <dl data-revela className={styles.ficha}>
           {sobre.ficha.map((item) => (
             <div key={item.id} className={styles.fichaLinha}>
               <dt className="t-meta">{item.rotulo}</dt>
@@ -52,7 +52,7 @@ export function Stack() {
 
   return (
     <Secao id="stack" rotulo="Stack">
-      <h2 id="stack-titulo" className={`t-h2 ${styles.titulo}`}>
+      <h2 id="stack-titulo" data-revela className={`t-h2 ${styles.titulo}`}>
         {stack.titulo}
       </h2>
       <p className={styles.subtitulo}>{stack.subtitulo}</p>
@@ -62,7 +62,7 @@ export function Stack() {
           const camada = CAMADAS.find((item) => item.id === camadaId)
           if (!camada) return null
           return (
-            <div key={camada.id} className={styles.camada}>
+            <div key={camada.id} data-revela className={styles.camada}>
               <h3 className={styles.nomeCamada}>{camada.nome}</h3>
               <ul className={styles.tiles}>
                 {tecnologiasDaCamada(camada.id).map((tecnologia) => (
@@ -85,13 +85,13 @@ export function Experiencia() {
 
   return (
     <Secao id="experience" rotulo="Experience">
-      <h2 id="experience-titulo" className={`t-h2 ${styles.titulo}`}>
+      <h2 id="experience-titulo" data-revela className={`t-h2 ${styles.titulo}`}>
         {experiencia.titulo}
       </h2>
 
       <ol className={styles.cargos}>
         {experiencia.cargos.map((cargo) => (
-          <li key={`${cargo.cargo}-${cargo.periodo}`} className={styles.cargo}>
+          <li key={`${cargo.cargo}-${cargo.periodo}`} data-revela className={styles.cargo}>
             <div className={styles.cargoTopo}>
               <h3 className="t-h3">{cargo.cargo}</h3>
               <p className={`t-meta ${styles.periodo}`}>{cargo.periodo}</p>
@@ -122,10 +122,10 @@ export function Projetos() {
       <Carrossel
         cabecalho={
           <>
-            <h2 id="projects-titulo" className={`t-h2 ${styles.titulo}`}>
+            <h2 id="projects-titulo" data-revela className={`t-h2 ${styles.titulo}`}>
               {perfil.projetos.titulo}
             </h2>
-            <p className={styles.subtituloSecao}>{perfil.projetos.subtitulo}</p>
+            <p data-revela className={styles.subtituloSecao}>{perfil.projetos.subtitulo}</p>
           </>
         }
         cards={projetos.map((projeto) => (
@@ -180,7 +180,7 @@ export function Contato() {
 
   return (
     <Secao id="contact" rotulo="Contact" ultima>
-      <div className={contato.contato}>
+      <div data-revela className={contato.contato}>
         <h2 id="contact-titulo" className={`t-h2-grande ${contato.titulo}`}>
           {dados.titulo}
         </h2>

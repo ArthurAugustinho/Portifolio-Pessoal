@@ -1,4 +1,5 @@
 import { Hero } from '@/components/home/Hero'
+import { RevelaLateral } from '@/components/home/RevelaLateral'
 import { Rota } from '@/components/home/Rota'
 import { Blog, Contato, Experiencia, Projetos, Sobre, Stack } from '@/components/home/Secoes'
 import { blocosDeContato, perfil } from '@/content/perfil'
@@ -32,6 +33,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(PESSOA).replace(/</g, '\\u003c') }}
       />
+      <RevelaLateral />
       <Hero />
       <Rota>
         <Sobre />

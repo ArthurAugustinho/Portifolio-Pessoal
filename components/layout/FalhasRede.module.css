@@ -1,0 +1,11 @@
+/* Mesmo posicionamento do canvas de Particulas, logo acima dele: com o mesmo
+   z-index, vence quem vem depois no DOM, e FalhasRede é montada depois. Segue
+   atrás do conteúdo, decorativo e fora da interação. */
+.falhas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
